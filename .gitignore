@@ -1,0 +1,8 @@
+# Java
+*.class
+*.jar
+*.log
+*.tmp
+*.swp
+bin/
+out/
