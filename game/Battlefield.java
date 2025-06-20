@@ -1,16 +1,6 @@
 package game;
 
-import piece.Army;
-import piece.Generals;
 import piece.Units;
-import piece.siegemachines.Ballista;
-import piece.siegemachines.Cannon;
-import piece.siegemachines.Catapult;
-import piece.troops.Archer;
-import piece.troops.Armored;
-import piece.troops.Cavalry;
-import piece.troops.Engineer;
-import piece.troops.Infantry;
 
 public class Battlefield {
 	
@@ -21,33 +11,10 @@ public class Battlefield {
 	//campo di battaglia come array di unità (ovvero truppe, macchine d'assedio e generali)
 	public Units[][] battlefield;
 
-	private final Infantry[] infantry;
-	private final Archer[] archers;
-	private final Armored[] armored;
-	private final Cavalry[] cavalry;
-	private final Engineer[] engineers;
-	private final Units[] specials;
-	private final Cannon[] cannons;
-	private final Ballista[] ballistas;
-	private final Catapult[] catapults;
-
-	private Generals g;
-	private Army a;
 	private boolean isHost;
 
 	public Battlefield() {
     	this.battlefield = new Units[Y][X];
-
-		infantry = a.getInfantry();
-		archers = a.getArchers();
-		armored = a.getArmored();
-		cavalry = a.getCavalry();
-		engineers = a.getEngineers();
-		specials = a.getSpecials();
-		cannons = a.getCannons();
-		ballistas = a.getBallistas();
-		catapults = a.getCatapults();
-
 	}
 
 	public int getX() {

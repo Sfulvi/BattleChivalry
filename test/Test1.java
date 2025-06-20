@@ -3,8 +3,7 @@ package test;
 import game.Battlefield;
 import game.MyException;
 import game.Player;
-import piece.generals.KingArthur;
-import piece.generals.Leonida;
+import piece.generals.*;
 
 public class Test1 {
     public static void main(String[] args) {
