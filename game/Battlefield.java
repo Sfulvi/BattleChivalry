@@ -21,15 +21,15 @@ public class Battlefield {
 	//campo di battaglia come array di unità (ovvero truppe, macchine d'assedio e generali)
 	public Units[][] battlefield;
 
-	private Infantry[] infantry;
-	private Archer[] archers;
-	private Armored[] armored;
-	private Cavalry[] cavalry;
-	private Engineer[] engineers;
-	private Units[] specials;
-	private Cannon[] cannons;
-	private Ballista[] ballistas;
-	private Catapult[] catapults;
+	private final Infantry[] infantry;
+	private final Archer[] archers;
+	private final Armored[] armored;
+	private final Cavalry[] cavalry;
+	private final Engineer[] engineers;
+	private final Units[] specials;
+	private final Cannon[] cannons;
+	private final Ballista[] ballistas;
+	private final Catapult[] catapults;
 
 	private Generals g;
 	private Army a;
@@ -65,7 +65,7 @@ public class Battlefield {
 	//metodo che schiera le unità in base al generale scelto
 	public void deploy(Player player) {
 
-        	//metto il generale nella posizione (1,4) se il giocatore è host, altrimenti nella posizione (13, 4)
+        //metto il generale nella posizione (1,4) se il giocatore è host, altrimenti nella posizione (13, 4)
 		//la posizione del generale è la stessa per tutti gli eserciti
 		if(isHost) {
 			this.battlefield[4][1] = g;
@@ -853,6 +853,7 @@ public class Battlefield {
 		return this.battlefield[x][y];
 	}
 
+    @Override
 	public String toString(){
 		String s="";
 

@@ -11,5 +11,7 @@ public interface Units {
     public void attacked(int damage);
     public boolean isAlive();
     public void recharge();
+    public void setX(int i);
+    public void setY(int i);
 
 }

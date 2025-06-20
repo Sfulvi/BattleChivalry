@@ -57,6 +57,7 @@ public class Player {
         return this.general;
     }
 
+    @Override
     public String toString(){
         String s = "";
         
