@@ -1,5 +1,7 @@
 package piece.troops;
 
+import piece.Troops;
+
 public class Archer extends Troops {
     public Archer(String name, boolean faction) {
         super(name, 80, 40, 3, 1, 1, 2, faction);

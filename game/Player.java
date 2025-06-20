@@ -1,5 +1,7 @@
 package game;
 
+import piece.Generals;
+
 public class Player {
     
     private static final int MAX_AP = 0; //?

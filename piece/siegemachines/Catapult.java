@@ -1,5 +1,9 @@
 package piece.siegemachines;
 
+import game.Battlefield;
+import piece.SiegeMachines;
+import piece.Units;
+
 public class Catapult extends SiegeMachines{
 
     public Catapult(String name, boolean faction) {

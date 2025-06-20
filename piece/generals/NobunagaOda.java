@@ -1,5 +1,7 @@
 package piece.generals;
 
+import piece.Generals;
+
 public class NobunagaOda extends Generals{
 	
 	public NobunagaOda(boolean player) {

@@ -1,5 +1,8 @@
 package piece;
 
+import game.Battlefield;
+import game.MyException;
+
 public class Troops implements Units{
     private String name;
     private int hp;

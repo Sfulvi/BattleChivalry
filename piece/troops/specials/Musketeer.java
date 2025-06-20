@@ -1,5 +1,7 @@
 package piece.troops.specials;
 
+import piece.Troops;
+
 public class Musketeer extends Troops{
 
 	public Musketeer( String name, boolean faction) {

@@ -1,5 +1,17 @@
 package game;
 
+import piece.Army;
+import piece.Generals;
+import piece.Units;
+import piece.siegemachines.Ballista;
+import piece.siegemachines.Cannon;
+import piece.siegemachines.Catapult;
+import piece.troops.Archer;
+import piece.troops.Armored;
+import piece.troops.Cavalry;
+import piece.troops.Engineer;
+import piece.troops.Infantry;
+
 public class Battlefield {
 	
 	//lunghezza e larghezza del campo

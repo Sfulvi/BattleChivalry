@@ -1,5 +1,7 @@
 package piece.generals;
 
+import piece.Generals;
+
 public class KingArthur extends Generals{
 	
 	public KingArthur(boolean player) {

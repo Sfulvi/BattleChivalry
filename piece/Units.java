@@ -1,5 +1,8 @@
 package piece;
 
+import game.Battlefield;
+import game.MyException;
+
 public interface Units {
     
     public void move(Battlefield position, int orientation)throws MyException;

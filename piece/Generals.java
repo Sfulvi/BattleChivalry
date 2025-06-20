@@ -1,5 +1,8 @@
 package piece;
 
+import game.Battlefield;
+import game.MyException;
+
 public class Generals implements Units{
 	public int maxStamina;
 	public String name;

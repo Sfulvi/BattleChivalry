@@ -1,5 +1,20 @@
 package piece;
 
+import piece.siegemachines.Ballista;
+import piece.siegemachines.Cannon;
+import piece.siegemachines.Catapult;
+import piece.troops.Archer;
+import piece.troops.Armored;
+import piece.troops.Cavalry;
+import piece.troops.Engineer;
+import piece.troops.Infantry;
+import piece.troops.specials.Berserker;
+import piece.troops.specials.Gladiator;
+import piece.troops.specials.Knight;
+import piece.troops.specials.Musketeer;
+import piece.troops.specials.Samurai;
+import piece.troops.specials.Spartan;
+
 public class Army {
 	private String general;
 	private Infantry[] infantry;

@@ -1,5 +1,7 @@
 package piece.troops.specials;
 
+import piece.Troops;
+
 public class Gladiator extends Troops{
 
 	public Gladiator( String name, boolean faction) {

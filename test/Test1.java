@@ -1,5 +1,11 @@
 package test;
 
+import game.Battlefield;
+import game.MyException;
+import game.Player;
+import piece.generals.KingArthur;
+import piece.generals.Leonida;
+
 public class Test1 {
     public static void main(String[] args) {
         // Creazione players con scelta del generale

@@ -1,5 +1,7 @@
 package piece.generals;
 
+import piece.Generals;
+
 public class Leonida extends Generals{
 	
 	public Leonida(boolean player) {
