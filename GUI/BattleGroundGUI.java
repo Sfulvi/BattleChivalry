@@ -23,27 +23,27 @@ public class BattleGroundGUI {
         int unitsSize = 60;
         
         //assegno chiavi alle immagini e richiamo resizeIcon
-        images.put("recharge", resizeIcon("images\\icons\\recharge.png",        iconsSize, iconsSize));
-        images.put("attack", resizeIcon("images\\icons\\attack.png",            iconsSize, iconsSize));
-        images.put("move", resizeIcon("images\\icons\\move.png",                iconsSize, iconsSize));
+        images.put("recharge", resizeIcon("../img/icons/recharge.png",        iconsSize, iconsSize));
+        images.put("attack", resizeIcon("\"../img/icons/attack.png",            iconsSize, iconsSize));
+        images.put("move", resizeIcon("\"../img/icons/move.png",                iconsSize, iconsSize));
 
-        images.put("archer", resizeIcon("images\\troops\\archer.png",           unitsSize, unitsSize));
-        images.put("armored", resizeIcon("images\\troops\\armored.png",         unitsSize, unitsSize));
-        images.put("cavalry", resizeIcon("images\\troops\\cavalry.png",         unitsSize, unitsSize));
-        images.put("engineer", resizeIcon("images\\troops\\engineer.png",       unitsSize, unitsSize));
-        images.put("infantry", resizeIcon("images\\troops\\infantry.png",       unitsSize, unitsSize));
+        images.put("archer", resizeIcon("../img/troops/archer.png",           unitsSize, unitsSize));
+        images.put("armored", resizeIcon("../img/troops/armored.png",         unitsSize, unitsSize));
+        images.put("cavalry", resizeIcon("../img/troops/cavalry.png",         unitsSize, unitsSize));
+        images.put("engineer", resizeIcon("../img/troops/engineer.png",       unitsSize, unitsSize));
+        images.put("infantry", resizeIcon("../img/troops/infantry.png",       unitsSize, unitsSize));
 
-        images.put("suntzu", resizeIcon("images\\generals\\sunTzu.png",         unitsSize, unitsSize));
-        images.put("nobunaga", resizeIcon("images\\generals\\nobunagaOda.png",  unitsSize, unitsSize));
-        images.put("arthur", resizeIcon("images\\generals\\kingArthur.png",     unitsSize, unitsSize));
-        images.put("julius", resizeIcon("images\\generals\\juliusCaesar.png",   unitsSize, unitsSize));
-        images.put("leonidas", resizeIcon("images\\generals\\leonidas.png",     unitsSize, unitsSize));
-        images.put("ragnar", resizeIcon("images\\generals\\ragnar.png",         unitsSize, unitsSize));
-        images.put("ghandi", resizeIcon("images\\generals\\ghandi.png",         unitsSize, unitsSize));
+        images.put("suntzu", resizeIcon("../img/generals/sunTzu.png",         unitsSize, unitsSize));
+        images.put("nobunaga", resizeIcon("../img/generals/nobunagaOda.png",  unitsSize, unitsSize));
+        images.put("arthur", resizeIcon("../img/generals/kingArthur.png",     unitsSize, unitsSize));
+        images.put("julius", resizeIcon("../img/generals/juliusCaesar.png",   unitsSize, unitsSize));
+        images.put("leonidas", resizeIcon("../img/generals/leonidas.png",     unitsSize, unitsSize));
+        images.put("ragnar", resizeIcon("../img/generals/ragnar.png",         unitsSize, unitsSize));
+        images.put("ghandi", resizeIcon("../img/generals/ghandi.png",         unitsSize, unitsSize));
 
-        images.put("catapult", resizeIcon("images\\siege\\catapult.png",        unitsSize, unitsSize));
+        images.put("catapult", resizeIcon("../img/siege/catapult.png",        unitsSize, unitsSize));
 
-        images.put("special", resizeIcon("images\\specials\\special.png",       unitsSize, unitsSize));
+        images.put("special", resizeIcon("../img/specials/special.png",       unitsSize, unitsSize));
         
         return images;
     }
