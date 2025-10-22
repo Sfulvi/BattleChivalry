@@ -1,6 +1,8 @@
 package game;
 
 import piece.Units;
+import piece.siegemachines.*;
+import piece.troops.*;
 
 public class Battlefield {
 	
@@ -11,7 +13,15 @@ public class Battlefield {
 	//campo di battaglia come array di unità (ovvero truppe, macchine d'assedio e generali)
 	public Units[][] battlefield;
 
-	private boolean isHost;
+	private	Cannon[] cannons = null;
+	private Engineer[] engineers = null;
+	private Units[] specials = null;
+	private Infantry[] infantry = null;
+	private Armored[] armored = null;
+	private Ballista[] ballistas = null;
+	private Cavalry[] cavalry = null;
+	private Archer[] archers = null;
+	private Catapult[] catapults = null;
 
 	public Battlefield() {
     	this.battlefield = new Units[Y][X];
@@ -34,266 +44,698 @@ public class Battlefield {
 
         //metto il generale nella posizione (1,4) se il giocatore è host, altrimenti nella posizione (13, 4)
 		//la posizione del generale è la stessa per tutti gli eserciti
-		if(isHost) {
-			this.battlefield[4][1] = g;
-                	g.setX(1);
-                	g.setY(4);
-        	}
-
-        	else {
-                	this.battlefield[4][13] = g;
-                	g.setX(13);
-                	g.setY(4);
+		if(player.isHost) {
+			this.battlefield[4][1] = player.getGeneral();
+            this.battlefield[4][1].setX(1);
+            this.battlefield[4][1].setY(4);
+		} else {
+			this.battlefield[4][13] = player.getGeneral();
+			this.battlefield[4][13].setX(13);
+			this.battlefield[4][13].setY(4);
 		}
 		
 		//in base al generale scelto, metto le altre unità nelle loro posizioni predefinite
-		switch(g.getName()) {
+		switch(player.getGeneral().getName()) {
 			
 			//test
 			case "Ghandi":
 				break;
 				
 			case "Sun Tzu":
-				
-				if(isHost) {
+				this.cannons = ((piece.Army)player.getGeneral().army).getCannons();	
+				this.engineers = ((piece.Army)player.getGeneral().army).getEngineers();
+				this.specials = ((piece.Army)player.getGeneral().army).getSpecials();
+				this.infantry = ((piece.Army)player.getGeneral().army).getInfantry();
+				this.armored = ((piece.Army)player.getGeneral().army).getArmored();
 
-		
-					this.battlefield[2][0] = cannons[0];
-					this.battlefield[6][0] = cannons[1];
-					this.battlefield[3][0] = engineers[0];
-					this.battlefield[7][0] = engineers[1];
-					this.battlefield[3][1] = specials[0];
-					this.battlefield[5][1] = specials[1];
-					this.battlefield[3][2] = infantry[0];
-					this.battlefield[4][2] = infantry[1];
-					this.battlefield[5][2] = infantry[2];
-					this.battlefield[2][2] = armored[0];
-					this.battlefield[6][2] = armored[1];
+				if(player.isHost) {
 
-					setCoordinates("Sun Tzu", true);
-			
+					
+					this.battlefield[2][0] = this.cannons[0];
+					this.battlefield[2][0].setX(0);
+					this.battlefield[2][0].setY(2);
+
+					this.battlefield[6][0] = this.cannons[1];
+					this.battlefield[6][0].setX(0);
+					this.battlefield[6][0].setY(6);
+
+					this.battlefield[3][0] = this.engineers[0];
+					this.battlefield[3][0].setX(0);
+					this.battlefield[3][0].setY(3);
+
+					this.battlefield[7][0] = this.engineers[1];
+					this.battlefield[7][0].setX(0);
+					this.battlefield[7][0].setY(7);
+
+					this.battlefield[3][1] = this.specials[0];
+					this.battlefield[3][1].setX(1);
+					this.battlefield[3][1].setY(3);
+
+					this.battlefield[5][1] = this.specials[1];
+					this.battlefield[5][1].setX(1);
+					this.battlefield[5][1].setY(5);
+
+					this.battlefield[3][2] = this.infantry[0];
+					this.battlefield[3][2].setX(2);
+					this.battlefield[3][2].setY(3);
+
+					this.battlefield[4][2] = this.infantry[1];
+					this.battlefield[4][2].setX(2);
+					this.battlefield[4][2].setY(4);
+
+					this.battlefield[5][2] = this.infantry[2];
+					this.battlefield[5][2].setX(2);
+					this.battlefield[5][2].setY(5);
+
+					this.battlefield[2][2] = this.armored[0];
+					this.battlefield[2][2].setX(2);
+					this.battlefield[2][2].setY(2);
+
+					this.battlefield[6][2] = this.armored[1];
+					this.battlefield[6][2].setX(2);
+					this.battlefield[6][2].setY(6);
 				}
 				
 				else {
 
-					this.battlefield[2][14] = cannons[0];
-					this.battlefield[6][14] = cannons[1];
-					this.battlefield[3][14] = engineers[0];
-					this.battlefield[7][14] = engineers[1];
-					this.battlefield[3][13] = specials[0];
-					this.battlefield[5][13] = specials[1];
-					this.battlefield[3][12] = infantry[0];
-					this.battlefield[4][12] = infantry[1];
-					this.battlefield[5][12] = infantry[2];
-					this.battlefield[2][12] = armored[0];
-					this.battlefield[6][12] = armored[1];
+					this.battlefield[2][14] = this.cannons[0];
+					this.battlefield[2][14].setX(14);
+					this.battlefield[2][14].setY(2);
 
-					setCoordinates("Sun Tzu", false);
-			
+					this.battlefield[6][14] = this.cannons[1];
+					this.battlefield[6][14].setX(14);
+					this.battlefield[6][14].setY(6);
+
+					this.battlefield[3][14] = this.engineers[0];
+					this.battlefield[3][14].setX(14);
+					this.battlefield[3][14].setY(3);
+
+					this.battlefield[7][14] = this.engineers[1];
+					this.battlefield[7][14].setX(14);
+					this.battlefield[7][14].setY(7);
+
+					this.battlefield[3][13] = this.specials[0];
+					this.battlefield[3][13].setX(13);
+					this.battlefield[3][13].setY(3);
+
+					this.battlefield[5][13] = this.specials[1];
+					this.battlefield[5][13].setX(13);
+					this.battlefield[5][13].setY(5);
+
+					this.battlefield[3][12] = this.infantry[0];
+					this.battlefield[3][12].setX(12);
+					this.battlefield[3][12].setY(3);
+
+					this.battlefield[4][12] = this.infantry[1];
+					this.battlefield[4][12].setX(12);
+					this.battlefield[4][12].setY(4);
+
+					this.battlefield[5][12] = this.infantry[2];
+					this.battlefield[5][12].setX(12);
+					this.battlefield[5][12].setY(5);
+
+					this.battlefield[2][12] = this.armored[0];
+					this.battlefield[2][12].setX(12);
+					this.battlefield[2][12].setY(2);
+
+					this.battlefield[6][12] = this.armored[1];
+					this.battlefield[6][12].setX(12);
+					this.battlefield[6][12].setY(6);
 				}
 				
 				break;
 
 			case "Nobunaga Oda":
-		
-				if(isHost) {
-			
-					this.battlefield[4][0] = ballistas[0];
-					this.battlefield[5][0] = engineers[0];
-					this.battlefield[1][1] = cavalry[0];
-					this.battlefield[7][1] = cavalry[1];
-					this.battlefield[2][1] = archers[0];
-					this.battlefield[3][1] = archers[1];
-					this.battlefield[5][1] = archers[2];
-					this.battlefield[6][1] = archers[3];
-					this.battlefield[2][2] = infantry[0];
-					this.battlefield[6][2] = infantry[1];
-					this.battlefield[3][2] = specials[0];
-					this.battlefield[5][2] = specials[1];
-					this.battlefield[4][2] = armored[0];
+				this.ballistas = ((piece.Army)player.getGeneral().army).getBallistas();	
+				this.engineers = ((piece.Army)player.getGeneral().army).getEngineers();
+				this.cavalry = ((piece.Army)player.getGeneral().army).getCavalry();
+				this.specials = ((piece.Army)player.getGeneral().army).getSpecials();
+				this.infantry = ((piece.Army)player.getGeneral().army).getInfantry();
+				this.archers = ((piece.Army)player.getGeneral().army).getArchers();
+				this.armored = ((piece.Army)player.getGeneral().army).getArmored();
 
-					setCoordinates("Nobunaga Oda", true);
+				if(player.isHost) {
+			
+					this.battlefield[4][0] = this.ballistas[0];
+					this.battlefield[4][0].setX(0);
+					this.battlefield[4][0].setY(4);
+
+					this.battlefield[5][0] = this.engineers[0];
+					this.battlefield[5][0].setX(0);
+					this.battlefield[5][0].setY(5);
+
+					this.battlefield[1][1] = this.cavalry[0];
+					this.battlefield[1][1].setX(1);
+					this.battlefield[1][1].setY(1);
+
+					this.battlefield[7][1] = this.cavalry[1];
+					this.battlefield[7][1].setX(1);
+					this.battlefield[7][1].setY(7);
+
+					this.battlefield[2][1] = this.archers[0];
+					this.battlefield[2][1].setX(1);
+					this.battlefield[2][1].setY(2);
+
+					this.battlefield[3][1] = this.archers[1];
+					this.battlefield[3][1].setX(1);
+					this.battlefield[3][1].setY(3);
+
+					this.battlefield[5][1] = this.archers[2];
+					this.battlefield[5][1].setX(1);
+					this.battlefield[5][1].setY(5);
+
+					this.battlefield[6][1] = this.archers[3];
+					this.battlefield[6][1].setX(1);
+					this.battlefield[6][1].setY(6);
+
+					this.battlefield[2][2] = this.infantry[0];
+					this.battlefield[2][2].setX(2);
+					this.battlefield[2][2].setY(2);
+
+					this.battlefield[6][2] = this.infantry[1];
+					this.battlefield[6][2].setX(2);
+					this.battlefield[6][2].setY(6);
+
+					this.battlefield[3][2] = this.specials[0];
+					this.battlefield[3][2].setX(2);
+					this.battlefield[3][2].setY(3);
+
+					this.battlefield[5][2] = this.specials[1];
+					this.battlefield[5][2].setX(2);
+					this.battlefield[5][2].setY(5);
+
+					this.battlefield[4][2] = this.armored[0];
+					this.battlefield[4][2].setX(2);
+					this.battlefield[4][2].setY(4);
 				}
 		
 				else {
 			
-					this.battlefield[4][14] = ballistas[0];
-					this.battlefield[5][14] = engineers[0];
-					this.battlefield[1][13] = cavalry[0];
-					this.battlefield[7][13] = cavalry[1];
-					this.battlefield[2][13] = archers[0];
-					this.battlefield[3][13] = archers[1];
-					this.battlefield[5][13] = archers[2];
-					this.battlefield[6][13] = archers[3];
-					this.battlefield[2][12] = infantry[0];
-					this.battlefield[6][12] = infantry[1];
-					this.battlefield[3][12] = specials[0];
-					this.battlefield[5][12] = specials[1];
-					this.battlefield[4][12] = armored[0];
+					this.battlefield[4][14] = this.ballistas[0];
+					this.battlefield[4][14].setX(14);
+					this.battlefield[4][14].setY(4);
 
-					setCoordinates("Nobunaga Oda", false);
+					this.battlefield[5][14] = this.engineers[0];
+					this.battlefield[5][14].setX(14);
+					this.battlefield[5][14].setY(5);
+
+					this.battlefield[1][13] = this.cavalry[0];
+					this.battlefield[1][13].setX(13);
+					this.battlefield[1][13].setY(1);
+
+					this.battlefield[7][13] = this.cavalry[1];
+					this.battlefield[7][13].setX(13);
+					this.battlefield[7][13].setY(7);
+
+					this.battlefield[2][13] = this.archers[0];
+					this.battlefield[2][13].setX(13);
+					this.battlefield[2][13].setY(2);
+
+					this.battlefield[3][13] = this.archers[1];
+					this.battlefield[3][13].setX(13);
+					this.battlefield[3][13].setY(3);
+
+					this.battlefield[5][13] = this.archers[2];
+					this.battlefield[5][13].setX(13);
+					this.battlefield[5][13].setY(5);
+
+					this.battlefield[6][13] = this.archers[3];
+					this.battlefield[6][13].setX(13);
+					this.battlefield[6][13].setY(6);
+
+					this.battlefield[2][12] = this.infantry[0];
+					this.battlefield[2][12].setX(12);
+					this.battlefield[2][12].setY(2);
+
+					this.battlefield[6][12] = this.infantry[1];
+					this.battlefield[6][12].setX(12);
+					this.battlefield[6][12].setY(6);
+
+					this.battlefield[3][12] = this.specials[0];
+					this.battlefield[3][12].setX(12);
+					this.battlefield[3][12].setY(3);
+
+					this.battlefield[5][12] = this.specials[1];
+					this.battlefield[5][12].setX(12);
+					this.battlefield[5][12].setY(5);
+
+					this.battlefield[4][12] = this.armored[0];
+					this.battlefield[4][12].setX(12);
+					this.battlefield[4][12].setY(4);
 				}
 				
 				break;
 
 			case "King Arthur":
-		
-				if(isHost) {
-			
-					this.battlefield[2][0] = catapults[0];
-					this.battlefield[5][0] = catapults[1];
-					this.battlefield[3][0] = engineers[0];
-					this.battlefield[6][0] = engineers[1];
-					this.battlefield[1][1] = cavalry[0];
-					this.battlefield[7][1] = cavalry[1];
-					this.battlefield[3][1] = archers[0];
-					this.battlefield[5][1] = archers[1];
-					this.battlefield[2][2] = infantry[0];
-					this.battlefield[4][2] = infantry[1];
-					this.battlefield[6][2] = infantry[2];
-					this.battlefield[3][2] = specials[0];
-					this.battlefield[5][2] = specials[1];
+				this.catapults = ((piece.Army)player.getGeneral().army).getCatapults();
+				this.engineers = ((piece.Army)player.getGeneral().army).getEngineers();
+				this.cavalry = ((piece.Army)player.getGeneral().army).getCavalry();
+				this.specials = ((piece.Army)player.getGeneral().army).getSpecials();
+				this.infantry = ((piece.Army)player.getGeneral().army).getInfantry();
+				this.archers = ((piece.Army)player.getGeneral().army).getArchers();
+				this.armored = ((piece.Army)player.getGeneral().army).getArmored();
 
-					setCoordinates("King Arthur", true);
+				if(player.isHost) {
+			
+					this.battlefield[2][0] = this.catapults[0];
+					this.battlefield[2][0].setX(0);
+					this.battlefield[2][0].setY(2);
+
+					this.battlefield[5][0] = this.catapults[1];
+					this.battlefield[5][0].setX(0);
+					this.battlefield[5][0].setY(5);
+
+					this.battlefield[3][0] = this.engineers[0];
+					this.battlefield[3][0].setX(0);
+					this.battlefield[3][0].setY(3);
+
+					this.battlefield[6][0] = this.engineers[1];
+					this.battlefield[6][0].setX(0);
+					this.battlefield[6][0].setY(6);
+
+					this.battlefield[1][1] = this.cavalry[0];
+					this.battlefield[1][1].setX(1);
+					this.battlefield[1][1].setY(1);
+
+					this.battlefield[7][1] = this.cavalry[1];
+					this.battlefield[7][1].setX(1);
+					this.battlefield[7][1].setY(7);
+
+					this.battlefield[3][1] = this.archers[0];
+					this.battlefield[3][1].setX(1);
+					this.battlefield[3][1].setY(3);
+
+					this.battlefield[5][1] = this.archers[1];
+					this.battlefield[5][1].setX(1);
+					this.battlefield[5][1].setY(5);
+
+					this.battlefield[2][2] = this.infantry[0];
+					this.battlefield[2][2].setX(2);
+					this.battlefield[2][2].setY(2);
+
+					this.battlefield[4][2] = this.infantry[1];
+					this.battlefield[4][2].setX(2);
+					this.battlefield[4][2].setY(4);
+
+					this.battlefield[6][2] = this.infantry[2];
+					this.battlefield[6][2].setX(2);
+					this.battlefield[6][2].setY(6);
+
+					this.battlefield[3][2] = this.specials[0];
+					this.battlefield[3][2].setX(2);
+					this.battlefield[3][2].setY(3);
+
+					this.battlefield[5][2] = this.specials[1];
+					this.battlefield[5][2].setX(2);
+					this.battlefield[5][2].setY(5);
 				}
 		
 				else {
 			
-					this.battlefield[2][14] = catapults[0];
-					this.battlefield[5][14] = catapults[1];
-					this.battlefield[3][14] = engineers[0];
-					this.battlefield[6][14] = engineers[1];
-					this.battlefield[1][13] = cavalry[0];
-					this.battlefield[7][13] = cavalry[1];
-					this.battlefield[3][13] = archers[0];
-					this.battlefield[5][13] = archers[1];
-					this.battlefield[2][12] = infantry[0];
-					this.battlefield[4][12] = infantry[1];
-					this.battlefield[6][12] = infantry[2];
-					this.battlefield[3][12] = specials[0];
-					this.battlefield[5][12] = specials[1];
+					this.battlefield[2][14] = this.catapults[0];
+					this.battlefield[2][14].setX(14);
+					this.battlefield[2][14].setY(2);
 
-					setCoordinates("King Arthur", false);
+					this.battlefield[5][14] = this.catapults[1];
+					this.battlefield[5][14].setX(14);
+					this.battlefield[5][14].setY(5);
+
+					this.battlefield[3][14] = this.engineers[0];
+					this.battlefield[3][14].setX(14);
+					this.battlefield[3][14].setY(3);
+
+					this.battlefield[6][14] = this.engineers[1];
+					this.battlefield[6][14].setX(14);
+					this.battlefield[6][14].setY(6);
+
+					this.battlefield[1][13] = this.cavalry[0];
+					this.battlefield[1][13].setX(13);
+					this.battlefield[1][13].setY(1);
+
+					this.battlefield[7][13] = this.cavalry[1];
+					this.battlefield[7][13].setX(13);
+					this.battlefield[7][13].setY(7);
+
+					this.battlefield[3][13] = this.archers[0];
+					this.battlefield[3][13].setX(13);
+					this.battlefield[3][13].setY(3);
+
+					this.battlefield[5][13] = this.archers[1];
+					this.battlefield[5][13].setX(13);
+					this.battlefield[5][13].setY(5);
+
+					this.battlefield[2][12] = this.infantry[0];
+					this.battlefield[2][12].setX(12);
+					this.battlefield[2][12].setY(2);
+
+					this.battlefield[4][12] = this.infantry[1];
+					this.battlefield[4][12].setX(12);
+					this.battlefield[4][12].setY(4);
+
+					this.battlefield[6][12] = this.infantry[2];
+					this.battlefield[6][12].setX(12);
+					this.battlefield[6][12].setY(6);
+
+					this.battlefield[3][12] = this.specials[0];
+					this.battlefield[3][12].setX(12);
+					this.battlefield[3][12].setY(3);
+
+					this.battlefield[5][12] = this.specials[1];
+					this.battlefield[5][12].setX(12);
+					this.battlefield[5][12].setY(5);
 				}
 				
 				break;
 
 			case "Julius Caesar":
-		
-				if(isHost) {
-			
-					this.battlefield[2][0] = catapults[0];
-					this.battlefield[5][0] = ballistas[0];
-					this.battlefield[3][0] = engineers[0];
-					this.battlefield[6][0] = engineers[1];
-					this.battlefield[3][1] = archers[0];
-					this.battlefield[5][1] = archers[1];
-					this.battlefield[2][2] = specials[0];
-					this.battlefield[6][2] = specials[1];
-					this.battlefield[3][2] = armored[0];
-					this.battlefield[4][2] = armored[1];
-					this.battlefield[5][2] = armored[2];
+				this.catapults = ((piece.Army)player.getGeneral().army).getCatapults();
+				this.ballistas = ((piece.Army)player.getGeneral().army).getBallistas();
+				this.engineers = ((piece.Army)player.getGeneral().army).getEngineers();
+				this.archers = ((piece.Army)player.getGeneral().army).getArchers
+				this.specials = ((piece.Army)player.getGeneral().army).getSpecials();
+				this.armored = ((piece.Army)player.getGeneral().army).getArmored();
 
-					setCoordinates("Julius Caesar", true);
+				if(player.isHost) {
+			
+					this.battlefield[2][0] = this.catapults[0];
+					this.battlefield[2][0].setX(0);
+					this.battlefield[2][0].setY(2);
+
+					this.battlefield[5][0] = this.ballistas[0];
+					this.battlefield[5][0].setX(0);
+					this.battlefield[5][0].setY(5);
+
+					this.battlefield[3][0] = this.engineers[0];
+					this.battlefield[3][0].setX(0);
+					this.battlefield[3][0].setY(3);
+
+					this.battlefield[6][0] = this.engineers[1];
+					this.battlefield[6][0].setX(0);
+					this.battlefield[6][0].setY(6);
+
+					this.battlefield[3][1] = this.archers[0];
+					this.battlefield[3][1].setX(1);
+					this.battlefield[3][1].setY(3);
+
+					this.battlefield[5][1] = this.archers[1];
+					this.battlefield[5][1].setX(1);
+					this.battlefield[5][1].setY(5);
+
+					this.battlefield[2][2] = this.specials[0];
+					this.battlefield[2][2].setX(2);
+					this.battlefield[2][2].setY(2);
+
+					this.battlefield[6][2] = this.specials[1];
+					this.battlefield[6][2].setX(2);
+					this.battlefield[6][2].setY(6);
+
+					this.battlefield[3][2] = this.armored[0];
+					this.battlefield[3][2].setX(2);
+					this.battlefield[3][2].setY(3);
+
+					this.battlefield[4][2] = this.armored[1];
+					this.battlefield[4][2].setX(2);
+					this.battlefield[4][2].setY(4);
+
+					this.battlefield[5][2] = this.armored[2];
+					this.battlefield[5][2].setX(2);
+					this.battlefield[5][2].setY(5);
 				}
 		
 				else {
 
-					this.battlefield[2][14] = catapults[0];
-					this.battlefield[5][14] = ballistas[0];
-					this.battlefield[3][14] = engineers[0];
-					this.battlefield[6][14] = engineers[1];
-					this.battlefield[3][13] = archers[0];
-					this.battlefield[5][13] = archers[1];
-					this.battlefield[2][12] = specials[0];
-					this.battlefield[6][12] = specials[1];
-					this.battlefield[3][12] = armored[0];
-					this.battlefield[4][12] = armored[1];
-					this.battlefield[5][12] = armored[2];
+					this.battlefield[2][14] = this.catapults[0];
+					this.battlefield[2][14].setX(14);
+					this.battlefield[2][14].setY(2);
 
-					setCoordinates("Julius Caesar", false);
+					this.battlefield[5][14] = this.ballistas[0];
+					this.battlefield[5][14].setX(14);
+					this.battlefield[5][14].setY(5);
+
+					this.battlefield[3][14] = this.engineers[0];
+					this.battlefield[3][14].setX(14);
+					this.battlefield[3][14].setY(3);
+
+					this.battlefield[6][14] = this.engineers[1];
+					this.battlefield[6][14].setX(14);
+					this.battlefield[6][14].setY(6);
+
+					this.battlefield[3][13] = this.archers[0];
+					this.battlefield[3][13].setX(13);
+					this.battlefield[3][13].setY(3);
+
+					this.battlefield[5][13] = this.archers[1];
+					this.battlefield[5][13].setX(13);
+					this.battlefield[5][13].setY(5);
+
+					this.battlefield[2][12] = this.specials[0];
+					this.battlefield[2][12].setX(12);
+					this.battlefield[2][12].setY(2);
+
+					this.battlefield[6][12] = this.specials[1];
+					this.battlefield[6][12].setX(12);
+					this.battlefield[6][12].setY(6);
+
+					this.battlefield[3][12] = this.armored[0];
+					this.battlefield[3][12].setX(12);
+					this.battlefield[3][12].setY(3);
+
+					this.battlefield[4][12] = this.armored[1];
+					this.battlefield[4][12].setX(12);
+					this.battlefield[4][12].setY(4);
+
+					this.battlefield[5][12] = this.armored[2];
+					this.battlefield[5][12].setX(12);
+					this.battlefield[5][12].setY(5);
 				}
 				
 				break;
 
 			case "Leonida":
-		
-				if(isHost) {
+				this.catapults = ((piece.Army)player.getGeneral().army).getCatapults();
+				this.engineers = ((piece.Army)player.getGeneral().army).getEngineers();
+				this.cavalry = ((piece.Army)player.getGeneral().army).getCavalry();
+				this.archers = ((piece.Army)player.getGeneral().army).getArchers();
+				this.specials = ((piece.Army)player.getGeneral().army).getSpecials();
 
-					this.battlefield[4][0] = catapults[0];
-					this.battlefield[5][0] = engineers[0];
-					this.battlefield[1][1] = cavalry[0];
-					this.battlefield[7][1] = cavalry[1];
-					this.battlefield[2][1] = archers[0];
-					this.battlefield[3][1] = archers[1];
-					this.battlefield[5][1] = archers[2];
-					this.battlefield[6][1] = archers[3];
-					this.battlefield[2][2] = specials[0];
-					this.battlefield[3][2] = specials[1];
-					this.battlefield[5][2] = specials[2];
-					this.battlefield[6][2] = specials[3];
+				if(player.isHost) {
 
-					setCoordinates("Leonida", true);
+					this.battlefield[4][0] = this.catapults[0];
+					this.battlefield[4][0].setX(0);
+					this.battlefield[4][0].setY(4);
+
+					this.battlefield[5][0] = this.engineers[0];
+					this.battlefield[5][0].setX(0);
+					this.battlefield[5][0].setY(5);
+
+					this.battlefield[1][1] = this.cavalry[0];
+					this.battlefield[1][1].setX(1);
+					this.battlefield[1][1].setY(1);
+
+					this.battlefield[7][1] = this.cavalry[1];
+					this.battlefield[7][1].setX(1);
+					this.battlefield[7][1].setY(7);
+
+					this.battlefield[2][1] = this.archers[0];
+					this.battlefield[2][1].setX(1);
+					this.battlefield[2][1].setY(2);
+
+					this.battlefield[3][1] = this.archers[1];
+					this.battlefield[3][1].setX(1);
+					this.battlefield[3][1].setY(3);
+
+					this.battlefield[5][1] = this.archers[2];
+					this.battlefield[5][1].setX(1);
+					this.battlefield[5][1].setY(5);
+
+					this.battlefield[6][1] = this.archers[3];
+					this.battlefield[6][1].setX(1);
+					this.battlefield[6][1].setY(6);
+
+					this.battlefield[2][2] = this.specials[0];
+					this.battlefield[2][2].setX(2);
+					this.battlefield[2][2].setY(2);
+
+					this.battlefield[3][2] = this.specials[1];
+					this.battlefield[3][2].setX(2);
+					this.battlefield[3][2].setY(3);
+
+					this.battlefield[5][2] = this.specials[2];
+					this.battlefield[5][2].setX(2);
+					this.battlefield[5][2].setY(5);
+
+					this.battlefield[6][2] = this.specials[3];
+					this.battlefield[6][2].setX(2);
+					this.battlefield[6][2].setY(6);
 				}
 		
 				else {
 
-					this.battlefield[4][14] = catapults[0];
-					this.battlefield[5][14] = engineers[0];
-					this.battlefield[1][13] = cavalry[0];
-					this.battlefield[7][13] = cavalry[1];
-					this.battlefield[2][13] = archers[0];
-					this.battlefield[3][13] = archers[1];
-					this.battlefield[5][13] = archers[2];
-					this.battlefield[6][13] = archers[3];
-					this.battlefield[2][12] = specials[0];
-					this.battlefield[3][12] = specials[1];
-					this.battlefield[5][12] = specials[2];
-					this.battlefield[6][12] = specials[3];
-					
-					setCoordinates("Leonida", false);
+					this.battlefield[4][14] = this.catapults[0];
+					this.battlefield[4][14].setX(14);
+					this.battlefield[4][14].setY(4);
+
+					this.battlefield[5][14] = this.engineers[0];
+					this.battlefield[5][14].setX(14);
+					this.battlefield[5][14].setY(5);
+
+					this.battlefield[1][13] = this.cavalry[0];
+					this.battlefield[1][13].setX(13);
+					this.battlefield[1][13].setY(1);
+
+					this.battlefield[7][13] = this.cavalry[1];
+					this.battlefield[7][13].setX(13);
+					this.battlefield[7][13].setY(7);
+
+					this.battlefield[2][13] = this.archers[0];
+					this.battlefield[2][13].setX(13);
+					this.battlefield[2][13].setY(2);
+
+					this.battlefield[3][13] = this.archers[1];
+					this.battlefield[3][13].setX(13);
+					this.battlefield[3][13].setY(3);
+
+					this.battlefield[5][13] = this.archers[2];
+					this.battlefield[5][13].setX(13);
+					this.battlefield[5][13].setY(5);
+
+					this.battlefield[6][13] = this.archers[3];
+					this.battlefield[6][13].setX(13);
+					this.battlefield[6][13].setY(6);
+
+					this.battlefield[2][12] = this.specials[0];
+					this.battlefield[2][12].setX(12);
+					this.battlefield[2][12].setY(2);
+
+					this.battlefield[3][12] = this.specials[1];
+					this.battlefield[3][12].setX(12);
+					this.battlefield[3][12].setY(3);
+
+					this.battlefield[5][12] = this.specials[2];
+					this.battlefield[5][12].setX(12);
+					this.battlefield[5][12].setY(5);
+
+					this.battlefield[6][12] = this.specials[3];
+					this.battlefield[6][12].setX(12);
+					this.battlefield[6][12].setY(6);
 				}
 				
 				break;
 
 			case "Ragnar":
-		
-				if(isHost) {
+				this.cavalry = ((piece.Army)player.getGeneral().army).getCavalry();
+				this.specials = ((piece.Army)player.getGeneral().army).getSpecials();
+				this.archers = ((piece.Army)player.getGeneral().army).getArchers();
+				this.armored = ((piece.Army)player.getGeneral().army).getArmored();
 
-					this.battlefield[0][1] = cavalry[0];
-					this.battlefield[1][1] = cavalry[1];
-					this.battlefield[7][1] = cavalry[2];
-					this.battlefield[8][1] = cavalry[3];
-					this.battlefield[2][1] = specials[0];
-					this.battlefield[6][1] = specials[1];
-					this.battlefield[3][1] = archers[0];
-					this.battlefield[5][1] = archers[1];
-					this.battlefield[2][2] = armored[0];
-					this.battlefield[6][2] = armored[1];
-					this.battlefield[3][2] = specials[2];
-					this.battlefield[4][2] = specials[3];
-					this.battlefield[5][2] = specials[4];
+				if(player.isHost) {
 
-					setCoordinates("Ragnar", true);
+					this.battlefield[0][1] = this.cavalry[0];
+					this.battlefield[0][1].setX(1);
+					this.battlefield[0][1].setY(0);
+
+					this.battlefield[1][1] = this.cavalry[1];
+					this.battlefield[1][1].setX(1);
+					this.battlefield[1][1].setY(1);
+
+					this.battlefield[7][1] = this.cavalry[2];
+					this.battlefield[7][1].setX(1);
+					this.battlefield[7][1].setY(7);
+
+					this.battlefield[8][1] = this.cavalry[3];
+					this.battlefield[8][1].setX(1);
+					this.battlefield[8][1].setY(8);
+
+					this.battlefield[2][1] = this.specials[0];
+					this.battlefield[2][1].setX(1);
+					this.battlefield[2][1].setY(2);
+
+					this.battlefield[6][1] = this.specials[1];
+					this.battlefield[6][1].setX(1);
+					this.battlefield[6][1].setY(6);
+
+					this.battlefield[3][2] = this.specials[2];
+					this.battlefield[3][2].setX(2);
+					this.battlefield[3][2].setY(3);
+
+					this.battlefield[4][2] = this.specials[3];
+					this.battlefield[4][2].setX(2);
+					this.battlefield[4][2].setY(4);
+
+					this.battlefield[5][2] = this.specials[4];
+					this.battlefield[5][2].setX(2);
+					this.battlefield[5][2].setY(5);
+
+					this.battlefield[3][1] = this.archers[0];
+					this.battlefield[3][1].setX(1);
+					this.battlefield[3][1].setY(3);
+
+					this.battlefield[5][1] = this.archers[1];
+					this.battlefield[5][1].setX(1);
+					this.battlefield[5][1].setY(5);
+
+					this.battlefield[2][2] = this.armored[0];
+					this.battlefield[2][2].setX(2);
+					this.battlefield[2][2].setY(2);
+
+					this.battlefield[6][2] = this.armored[1];
+					this.battlefield[6][2].setX(2);
+					this.battlefield[6][2].setY(6);
 				}
 		
 				else {
 
-					this.battlefield[0][13] = cavalry[0];
-					this.battlefield[1][13] = cavalry[1];
-					this.battlefield[7][13] = cavalry[2];
-					this.battlefield[8][13] = cavalry[3];
-					this.battlefield[2][13] = specials[0];
-					this.battlefield[6][13] = specials[1];
-					this.battlefield[3][13] = archers[0];
-					this.battlefield[5][13] = archers[1];
-					this.battlefield[2][12] = armored[0];
-					this.battlefield[6][12] = armored[1];
-					this.battlefield[3][12] = specials[2];
-					this.battlefield[4][12] = specials[3];
-					this.battlefield[5][12] = specials[4];
+					this.battlefield[0][13] = this.cavalry[0];
+					the.battlefield[0][13].setX(13);
+					this.battlefield[0][13].setY(0);
 
-					setCoordinates("Ragnar", false);
+					this.battlefield[1][13] = this.cavalry[1];
+					this.battlefield[1][13].setX(13);
+					this.battlefield[1][13].setY(1);
+
+					this.battlefield[7][13] = this.cavalry[2];
+					this.battlefield[7][13].setX(13);
+					this.battlefield[7][13].setY(7);
+
+					this.battlefield[8][13] = this.cavalry[3];
+					this.battlefield[8][13].setX(13);
+					this.battlefield[8][13].setY(8);
+
+					this.battlefield[2][13] = this.specials[0];
+					this.battlefield[2][13].setX(13);
+					this.battlefield[2][13].setY(2);
+
+					this.battlefield[6][13] = this.specials[1];
+					this.battlefield[6][13].setX(13);
+					this.battlefield[6][13].setY(6);
+
+					this.battlefield[3][13] = this.archers[0];
+					this.battlefield[3][13].setX(13);
+					this.battlefield[3][13].setY(3);
+
+					this.battlefield[5][13] = this.archers[1];
+					this.battlefield[5][13].setX(13);
+					this.battlefield[5][13].setY(5);
+
+					this.battlefield[2][12] = this.armored[0];
+					this.battlefield[2][12].setX(12);
+					this.battlefield[2][12].setY(2);
+
+					this.battlefield[6][12] = this.armored[1];
+					this.battlefield[6][12].setX(12);
+					this.battlefield[6][12].setY(6);
+
+					this.battlefield[3][12] = this.specials[2];
+					this.battlefield[3][12].setX(12);
+					this.battlefield[3][12].setY(3);
+
+					this.battlefield[4][12] = this.specials[3];
+					this.battlefield[4][12].setX(12);
+					this.battlefield[4][12].setY(4);
+
+					this.battlefield[5][12] = this.specials[4];
+					this.battlefield[5][12].setX(12);
+					this.battlefield[5][12].setY(5);
 				}
 				
 				break;
@@ -302,518 +744,6 @@ public class Battlefield {
 				break;
         }                 
     }
-
-	public void setCoordinates(String genName, boolean isHost) {
-
-		switch(genName) {
-
-			//test
-			case "Ghandi":
-				break;
-				
-			case "Sun Tzu":
-
-				if(isHost) {
-
-					
-					cannons[0].setX(2);
-					cannons[0].setY(0);
-					
-					cannons[1].setX(6);
-					cannons[1].setY(0);
-
-					engineers[0].setX(3);
-					engineers[0].setY(0);
-
-					engineers[1].setX(7);
-					engineers[1].setY(0);
-
-					specials[0].setX(3);
-					specials[0].setY(1);
-
-					specials[1].setX(5);
-					specials[1].setY(1);
-
-					infantry[0].setX(3);
-					infantry[0].setY(2);
-
-					infantry[1].setX(4);
-					infantry[1].setY(2);
-
-					infantry[2].setX(5);
-					infantry[2].setY(2);
-
-					armored[0].setX(2);
-					armored[0].setY(2);
-
-					armored[1].setX(6);
-					armored[1].setY(2);
-				}
-				
-				else {
-
-					cannons[0].setX(2);
-					cannons[0].setY(14);
-
-					cannons[1].setX(6);
-					cannons[1].setY(14);
-
-					engineers[0].setX(3);
-					engineers[0].setY(14);
-
-					engineers[1].setX(7);
-					engineers[1].setY(14);
-
-					specials[0].setX(3);
-					specials[0].setY(13);
-
-					specials[1].setX(5);
-					specials[1].setY(13);
-
-					infantry[0].setX(3);
-					infantry[0].setY(12);
-
-					infantry[1].setX(4);
-					infantry[1].setY(12);
-
-					infantry[2].setX(5);
-					infantry[2].setY(12);
-
-					armored[0].setX(2);
-					armored[0].setY(12);
-
-					armored[1].setX(6);
-					armored[1].setY(12);
-				}
-
-				break;
-
-			case "Nobunaga Oda":
-		
-				if(isHost) {
-
-					ballistas[0].setX(4);
-					ballistas[0].setY(0);
-
-					engineers[0].setX(5);
-					engineers[0].setY(0);
-
-					cavalry[0].setX(1);
-					cavalry[0].setY(1);
-
-					cavalry[1].setX(7);
-					cavalry[1].setY(1);
-
-					archers[0].setX(2);
-					archers[0].setY(1);
-
-					archers[1].setX(3);
-					archers[1].setY(1);
-
-					archers[2].setX(5);
-					archers[2].setY(1);
-
-					archers[3].setX(6);
-					archers[3].setY(1);
-
-					infantry[0].setX(2);
-					infantry[0].setY(2);
-
-					infantry[1].setX(6);
-					infantry[1].setY(2);
-
-					specials[0].setX(3);
-					specials[0].setY(2);
-
-					specials[1].setX(5);
-					specials[1].setY(2);
-
-					armored[0].setX(4);
-					armored[0].setY(2);
-				}
-
-				else {
-
-					ballistas[0].setX(4);
-					ballistas[0].setY(14);
-
-					engineers[0].setX(5);
-					engineers[0].setY(14);
-
-					cavalry[0].setX(1);
-					cavalry[0].setY(13);
-
-					cavalry[1].setX(7);
-					cavalry[1].setY(13);
-
-					archers[0].setX(2);
-					archers[0].setY(13);
-
-					archers[1].setX(3);
-					archers[1].setY(13);
-
-					archers[2].setX(5);
-					archers[2].setY(13);
-
-					archers[3].setX(6);
-					archers[3].setY(13);
-
-					infantry[0].setX(2);
-					infantry[0].setY(12);
-
-					infantry[1].setX(6);
-					infantry[1].setY(12);
-
-					specials[0].setX(3);
-					specials[0].setY(12);
-
-					specials[1].setX(5);
-					specials[1].setY(12);
-
-					armored[0].setX(4);
-					armored[0].setY(12);
-				}
-
-				break;
-
-			case "King Arthur":
-		
-				if(isHost) {
-
-					catapults[0].setX(2);
-					catapults[0].setY(0);
-
-					catapults[1].setX(5);
-					catapults[1].setY(0);
-
-					engineers[0].setX(3);
-					engineers[0].setY(0);
-
-					engineers[1].setX(6);
-					engineers[1].setY(0);
-
-					cavalry[0].setX(1);
-					cavalry[0].setY(1);
-
-					cavalry[1].setX(7);
-					cavalry[1].setY(1);
-
-					archers[0].setX(3);
-					archers[0].setY(1);
-
-					archers[1].setX(5);
-					archers[1].setY(1);
-
-					infantry[0].setX(2);
-					infantry[0].setY(2);
-
-					infantry[1].setX(4);
-					infantry[1].setY(2);
-
-					infantry[2].setX(6);
-					infantry[2].setY(2);
-
-					specials[0].setX(3);
-					specials[0].setY(2);
-
-					specials[1].setX(5);
-					specials[1].setY(2);
-				}
-
-				else {
-
-					catapults[0].setX(2);
-					catapults[0].setY(14);
-
-					catapults[1].setX(5);
-					catapults[1].setY(14);
-
-					engineers[0].setX(3);
-					engineers[0].setY(14);
-
-					engineers[1].setX(6);
-					engineers[1].setY(14);
-
-					cavalry[0].setX(1);
-					cavalry[0].setY(13);
-
-					cavalry[1].setX(7);
-					cavalry[1].setY(13);
-
-					archers[0].setX(3);
-					archers[0].setY(13);
-
-					archers[1].setX(5);
-					archers[1].setY(13);
-
-					infantry[0].setX(2);
-					infantry[0].setY(12);
-
-					infantry[1].setX(4);
-					infantry[1].setY(12);
-
-					infantry[2].setX(6);
-					infantry[2].setY(12);
-
-					specials[0].setX(3);
-					specials[0].setY(12);
-
-					specials[1].setX(5);
-					specials[1].setY(12);
-				}
-
-				break;
-
-			case "Julius Caesar":
-
-				if(isHost) {
-
-					catapults[0].setX(2);
-					catapults[0].setY(0);
-
-					ballistas[0].setX(5);
-					ballistas[0].setY(0);
-
-					engineers[0].setX(3);
-					engineers[0].setY(0);
-
-					engineers[1].setX(6);
-					engineers[1].setY(0);
-
-					archers[0].setX(3);
-					archers[0].setY(1);
-
-					archers[1].setX(5);
-					archers[1].setY(1);
-
-					specials[0].setX(2);
-					specials[0].setY(2);
-
-					specials[1].setX(6);
-					specials[1].setY(2);
-
-					armored[0].setX(3);
-					armored[0].setY(2);
-
-					armored[1].setX(4);
-					armored[1].setY(2);
-
-					armored[2].setX(5);
-					armored[2].setY(2);
-				}
-
-				else {
-
-					catapults[0].setX(2);
-					catapults[0].setY(14);
-
-					ballistas[0].setX(5);
-					ballistas[0].setY(14);
-
-					engineers[0].setX(3);
-					engineers[0].setY(14);
-
-					engineers[1].setX(6);
-					engineers[1].setY(14);
-
-					archers[0].setX(3);
-					archers[0].setY(13);
-
-					archers[1].setX(5);
-					archers[1].setY(13);
-
-					specials[0].setX(2);
-					specials[0].setY(12);
-
-					specials[1].setX(6);
-					specials[1].setY(12);
-
-					armored[0].setX(3);
-					armored[0].setY(12);
-
-					armored[1].setX(4);
-					armored[1].setY(12);
-
-					armored[2].setX(5);
-					armored[2].setY(12);
-				}
-
-				break;
-
-			case "Leonida":
-
-				if(isHost) {
-
-					catapults[0].setX(4);
-					catapults[0].setY(0);
-
-					engineers[0].setX(5);
-					engineers[0].setY(0);
-
-					cavalry[0].setX(1);
-					cavalry[0].setY(1);
-
-					cavalry[1].setX(7);
-					cavalry[1].setY(1);
-
-					archers[0].setX(2);
-					archers[0].setY(1);
-
-					archers[1].setX(3);
-					archers[1].setY(1);
-
-					archers[2].setX(5);
-					archers[2].setY(1);
-
-					archers[3].setX(6);
-					archers[3].setY(1);
-
-					specials[0].setX(2);
-					specials[0].setY(2);
-
-					specials[1].setX(3);
-					specials[1].setY(2);
-
-					specials[2].setX(5);
-					specials[2].setY(2);
-
-					specials[3].setX(6);
-					specials[3].setY(2);
-				}
-
-				else {
-
-					catapults[0].setX(4);
-					catapults[0].setY(14);
-
-					engineers[0].setX(5);
-					engineers[0].setY(14);
-
-					cavalry[0].setX(1);
-					cavalry[0].setY(13);
-
-					cavalry[1].setX(7);
-					cavalry[1].setY(13);
-
-					archers[0].setX(2);
-					archers[0].setY(13);
-
-					archers[1].setX(3);
-					archers[1].setY(13);
-
-					archers[2].setX(5);
-					archers[2].setY(13);
-
-					archers[3].setX(6);
-					archers[3].setY(13);
-
-					specials[0].setX(2);
-					specials[0].setY(12);
-
-					specials[1].setX(3);
-					specials[1].setY(12);
-
-					specials[2].setX(5);
-					specials[2].setY(12);
-
-					specials[3].setX(6);
-					specials[3].setY(12);
-				}
-
-				break;
-
-			case "Ragnar":
-
-				if(isHost) {
-
-					cavalry[0].setX(0);
-					cavalry[0].setY(1);
-
-					cavalry[1].setX(1);
-					cavalry[1].setY(1);
-
-					cavalry[2].setX(7);
-					cavalry[2].setY(1);
-
-					cavalry[3].setX(8);
-					cavalry[3].setY(1);
-
-					specials[0].setX(2);
-					specials[0].setY(1);
-
-					specials[1].setX(6);
-					specials[1].setY(1);
-
-					archers[0].setX(3);
-					archers[0].setY(1);
-
-					archers[1].setX(5);
-					archers[1].setY(1);
-
-					armored[0].setX(2);
-					armored[0].setY(2);
-
-					armored[1].setX(6);
-					armored[1].setY(2);
-
-					specials[2].setX(3);
-					specials[2].setY(2);
-
-					specials[3].setX(4);
-					specials[3].setY(2);
-
-					specials[4].setX(5);
-					specials[4].setY(2);
-				}
-
-				else {
-
-					cavalry[0].setX(0);
-					cavalry[0].setY(13);
-
-					cavalry[1].setX(1);
-					cavalry[1].setY(13);
-
-					cavalry[2].setX(7);
-					cavalry[2].setY(13);
-
-					cavalry[3].setX(8);
-					cavalry[3].setY(13);
-
-					specials[0].setX(2);
-					specials[0].setY(13);
-
-					specials[1].setX(6);
-					specials[1].setY(13);
-
-					archers[0].setX(3);
-					archers[0].setY(13);
-
-					archers[1].setX(5);
-					archers[1].setY(13);
-
-					armored[0].setX(2);
-					armored[0].setY(12);
-
-					armored[1].setX(6);
-					armored[1].setY(12);
-
-					specials[2].setX(3);
-					specials[2].setY(12);
-
-					specials[3].setX(4);
-					specials[3].setY(12);
-
-					specials[4].setX(5);
-					specials[4].setY(12);
-				}
-
-				break;
-
-			default:
-				break;
-		}
-	}
 
 	public Units getUnit(int x, int y){
 		
