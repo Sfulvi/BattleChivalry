@@ -411,7 +411,7 @@ public class Battlefield {
 				this.catapults = ((piece.Army)player.getGeneral().army).getCatapults();
 				this.ballistas = ((piece.Army)player.getGeneral().army).getBallistas();
 				this.engineers = ((piece.Army)player.getGeneral().army).getEngineers();
-				this.archers = ((piece.Army)player.getGeneral().army).getArchers
+				this.archers = ((piece.Army)player.getGeneral().army).getArchers();
 				this.specials = ((piece.Army)player.getGeneral().army).getSpecials();
 				this.armored = ((piece.Army)player.getGeneral().army).getArmored();
 
@@ -686,7 +686,7 @@ public class Battlefield {
 				else {
 
 					this.battlefield[0][13] = this.cavalry[0];
-					the.battlefield[0][13].setX(13);
+					this.battlefield[0][13].setX(13);
 					this.battlefield[0][13].setY(0);
 
 					this.battlefield[1][13] = this.cavalry[1];
