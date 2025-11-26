@@ -150,7 +150,7 @@ public class SiegeMachines implements Units{
     public void attack(int targetX, int targetY, Battlefield field) throws MyException{
 
 
-        if(targetY > 12 && targetY < 2){
+        if(targetX > 12 && targetX < 2){
 
             /* Errore: Non puoi colpire quella zona */
             throw new MyException("Non puoi colpire quella zona");

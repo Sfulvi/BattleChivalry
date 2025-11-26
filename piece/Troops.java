@@ -214,12 +214,9 @@ public class Troops implements Units{
         if (isValidMove(newX, newY, field)) {
             setX(newX);                                     //valori nella truppa
             setY(newY);
-            field.battlefield[newX][newY] = this;           //valori nel campo
-            field.battlefield[currentX][currentY] = null;   //svuoto la casella vecchia
+            field.battlefield[newY][newX] = this;           //valori nel campo
+            field.battlefield[currentY][currentX] = null;   //svuoto la casella vecchia
             setStamina(getStamina() - 1);
-        } else {
-            // movimento non valido
-            throw new MyException("movimento non valido");
         }
     
     }
@@ -246,18 +243,19 @@ public class Troops implements Units{
         return distance <= range;
     }
 
-    private boolean isValidMove(int newX, int newY, Battlefield field) {
+    private boolean isValidMove(int newX, int newY, Battlefield field) throws MyException {
             if (newX < 0 || newX > 14 || newY < 0 || newY > 8) {
                 //fuori dal campo
-                return false;
+                throw new MyException("fuori campi");
                 
-            } else if (field.battlefield[newX][newY] != null) {
+            } else if (field.battlefield[newY][newX] != null) {
                 //casella occupata
-                return false;
+                throw new MyException("cella occupata");
     
             } else if (getStamina() < 1) {
                 //stamina esaurita
-                return false;
+                throw new MyException("stamina esaurita");
+
             } else {
                 //tutto ok
                 return true;

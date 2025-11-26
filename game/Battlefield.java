@@ -747,7 +747,7 @@ public class Battlefield {
 
 	public Units getUnit(int x, int y){
 		
-		return this.battlefield[x][y];
+		return this.battlefield[y][x];
 	}
 
     @Override

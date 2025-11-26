@@ -27,6 +27,7 @@ public class Test1 {
         }catch(MyException e){
             System.out.println(e);
         }
+
         System.out.println(field.toString());
         // Test di movimento su Troops
         System.out.println(field.battlefield[2][2].toString());
