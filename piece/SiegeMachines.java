@@ -115,30 +115,30 @@ public class SiegeMachines implements Units{
 
     public void recharge(Battlefield field) {
 
-        if(hasEngineer(field)==true) {
+        
+        /* Controlla se ha attaccato o é in standby */
+        if(getHasAttacked()==true && getStandby()==0){ 
 
-            if(getHasAttacked()==true && getStandby()==0){
+            setRecharged(false);
+            setStandby(getRechargeTime());
 
-                setRecharged(false);
-                setStandby(getRechargeTime());
+        }else if(getHasAttacked()==true && getStandby()!=0){ 
 
-            }else if(getHasAttacked()==true && getStandby()!=0){
+            setStandby(getStandby()-1);
 
-                setStandby(getStandby()-1);
+            if(getStandby()==0){
 
-                if(getStandby()==0){
-
-                    setRecharged(true);
-                
-                }
-
-            }
+                setRecharged(true);
             
-            if(getRecharged()==true){
-
-                setHasAttacked(false);
-
             }
+
+        }
+        
+        /* Prepara la macchina per attaccare */
+        if(getRecharged()==true){
+
+            setHasAttacked(false);
+
         }
 
     }

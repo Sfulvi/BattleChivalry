@@ -10,16 +10,33 @@ public class Engineer extends Troops {
         super(name, 20, 10, 1, 1, 1, 2, faction);	
     }
     
+    
 
     public void rechargeSiegeMachine(int machineX, int machineY, Battlefield field) throws MyException{
 
         
         // controlla le posizioni
-        if (field.battlefield[machineX][machineY] instanceof SiegeMachines) { //casella sopra
-            setStamina(getStamina()-1);
-            // funzione di ricarica
+        if (field.battlefield[machineY][machineX] instanceof SiegeMachines) { //casella sopra
+            
+            SiegeMachines machine = (SiegeMachines) field.battlefield[machineY][machineX];
+            
+            if (machine.hasAttacked == false) { // controllo se la macchina e' gia carica
+
+                throw new MyException("macchina da assedio gia carica");
+
+            } else if (getStamina() <= 0) { // controllo stamina
+
+                throw new MyException("ingegnere senza stamina");
+
+            } else {
+                machine.recharge();
+                setStamina(getStamina()-1);
+                // tutto ok, ricarica
+            }
+
+            
         }else{
-            throw new MyException("bersaglio non supportato");
+            throw new MyException("macchina da assedio non trovata");
         }
     }
         
