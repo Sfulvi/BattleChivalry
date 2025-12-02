@@ -26,6 +26,8 @@ public class Test1 {
             field.battlefield[4][1].move(field, 8);
         }catch(MyException e){
             System.out.println(e);
+        }catch(NullPointerException e){
+            System.out.println("Cella vuota");
         }
 
         System.out.println(field.toString());
@@ -35,6 +37,35 @@ public class Test1 {
             field.battlefield[2][2].move(field, 3);
         }catch(MyException e){
             System.out.println(e);
+        }catch(NullPointerException e){
+            System.out.println("Cella vuota");
+        }
+        System.out.println(field.toString());
+
+        // Test di movimento su stamina esaurita con movimento
+        System.out.println(field.battlefield[3][2].toString());
+        try{
+            field.battlefield[3][2].move(field, 4);
+        }catch(MyException e){
+            System.out.println(e);
+        }catch(NullPointerException e){
+            System.out.println("Cella vuota");
+        }
+
+        try{
+            field.battlefield[3][3].move(field, 4);
+        }catch(MyException e){
+            System.out.println(e);
+        }catch(NullPointerException e){
+            System.out.println("Cella vuota");
+        }
+
+        try{
+            field.battlefield[3][4].move(field, 4);
+        }catch(MyException e){
+            System.out.println(e);
+        }catch(NullPointerException e){
+            System.out.println("Cella vuota");
         }
         System.out.println(field.toString());
     }
