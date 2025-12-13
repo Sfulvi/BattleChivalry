@@ -127,21 +127,19 @@ public class BattleGroundGUI {
         int cellSize = 70;
         JPanel gameGrid = uploadBG(cellSize);
 
-        //MouseListener
+        //MouseListener con calcolo per capira quale cella è stata cliccata
         gameGrid.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //coordinate relative al panel gameGrid
+                // coordinate relative al panel generalGrid
                 int x = e.getX();
                 int y = e.getY();
-                //calcolo per capire quale cella è stata cliccata
-                /* sta cafonata è l'unico modo per far si che il bordo della casella sia considerato parte di quella casella, 
-                il -1 alla fine fa si che la prima casella ha coordinate 0;0 , suggerimenti sono ben accetti*/
-                int cellX = (x + cellSize - 1)/cellSize - 1;
-                int cellY = (y + cellSize - 1)/cellSize - 1;
+                int cellX = (x) / cellSize;
+                int cellY = (y) / cellSize;
+                // testing temporaneo
                 System.err.println("cell: X=" + cellX + "Y=" + cellY);
             }
-        });
+        });;
 
         //importazione statistiche giocatore e truppe
         //W.I.P.
@@ -356,4 +354,5 @@ public class BattleGroundGUI {
             new BattleGroundGUI("", "");
         });
     }
+
 }
