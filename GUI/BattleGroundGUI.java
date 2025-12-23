@@ -131,12 +131,12 @@ public class BattleGroundGUI {
         gameGrid.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // coordinate relative al panel generalGrid
+                //coordinate relative al panel generalGrid
                 int x = e.getX();
                 int y = e.getY();
                 int cellX = (x) / cellSize;
                 int cellY = (y) / cellSize;
-                // testing temporaneo
+                //testing temporaneo
                 System.err.println("cell: X=" + cellX + "Y=" + cellY);
             }
         });;
