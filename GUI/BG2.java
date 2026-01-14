@@ -9,6 +9,7 @@ import java.util.Map;
 public class BG2 {
     private String general1;
     private String general2;
+    private JPanel selectedCell = null;
 
     public BG2(String general1, String general2) {
         this.general1 = general1;
@@ -85,52 +86,35 @@ public class BG2 {
                 JLabel unitLabel = new JLabel(unitIcon);
                 bgCell.add(unitLabel);
 
+                bgCell.putClientProperty("x", x);
+                bgCell.putClientProperty("y", y);
 
-        bgCell.putClientProperty("x", x);
-        bgCell.putClientProperty("y", y);
+                bgCell.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        JPanel cell = (JPanel) e.getSource();
 
-        bgCell.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                JPanel cell = (JPanel) e.getSource();
-                int cx = (int) cell.getClientProperty("x");
-                int cy = (int) cell.getClientProperty("y");
+                        //ripristino il bordo della cella selezionata in precedenza
+                        if (selectedCell != null) {
+                            selectedCell.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+                        }
 
-                System.out.println("cell: X=" + cx + " Y=" + cy);
-                System.out.println("Unit: " + matrice[cy][cx]);
+                        //evidenzio la cella selezionata
+                        cell.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                        selectedCell = cell;
+
+                        int cx = (int) cell.getClientProperty("x");
+                        int cy = (int) cell.getClientProperty("y");
+
+                        System.out.println("cell: X=" + cx + " Y=" + cy);
+                        System.out.println("Unit: " + matrice[cy][cx]);
+                    }                    
+                });
+
+                gameGrid.add(bgCell);
             }
-            
-        });
-
-        gameGrid.add(bgCell);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
-             
+        }
+                
         gameGrid.setBorder(gridBorder);
         return gameGrid;
     }
