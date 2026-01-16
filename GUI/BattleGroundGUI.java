@@ -9,6 +9,7 @@ import java.util.Map;
 public class BattleGroundGUI {
     private String general1;
     private String general2;
+    private JPanel selectedCell = null;
 
     public BattleGroundGUI(String general1, String general2) {
         this.general1 = general1;
@@ -67,14 +68,13 @@ public class BattleGroundGUI {
         Border gridBorder = BorderFactory.createLineBorder(Color.BLACK, 3); //colore,spessore
         Border cellBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
         //dimensione celle
-        Dimension cellDimension = new Dimension(cellSize, cellSize);
+         Dimension cellDimension = new Dimension(cellSize, cellSize);
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 15; x++) {
                 JPanel bgCell = new JPanel();
                 bgCell.setPreferredSize(cellDimension);
                 bgCell.setBorder(cellBorder);
                 Color baseGreen = Color.decode("#92D050"); //colore delle caselle considerate basi
-                
                 if (x <= 2 || x >= 12) {
                     bgCell.setBackground(baseGreen);
                 } else {
@@ -85,9 +85,42 @@ public class BattleGroundGUI {
                 ImageIcon unitIcon = getCurrentIcon(currentUnit);
                 JLabel unitLabel = new JLabel(unitIcon);
                 bgCell.add(unitLabel);
+
+                bgCell.putClientProperty("x", x);
+                bgCell.putClientProperty("y", y);
+
+                bgCell.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        JPanel cell = (JPanel) e.getSource();
+
+                        //ripristino il bordo della cella selezionata in precedenza
+                        if (selectedCell != null) {
+                            selectedCell.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+                        }
+
+                        //evidenzio la cella selezionata
+                        cell.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                        selectedCell = cell;
+
+                        int cx = (int) cell.getClientProperty("x");
+                        int cy = (int) cell.getClientProperty("y");
+
+                        System.out.println("cell: X=" + cx + " Y=" + cy);
+
+                        if (matrice[cy][cx].equals("X")) {
+                            System.out.println("No unit");
+                        } else{
+                            System.out.println("Unit: " + matrice[cy][cx]);
+                        }
+                    
+                    }                    
+                });
+
                 gameGrid.add(bgCell);
-            } 
-        }                 
+            }
+        }
+                
         gameGrid.setBorder(gridBorder);
         return gameGrid;
     }
@@ -113,20 +146,6 @@ private void initializeBgGUI() {
 
     int cellSize = 70;
     JPanel gameGrid = uploadBG(cellSize);
-
-    //MouseListener con calcolo per capira quale cella è stata cliccata
-    gameGrid.addMouseListener(new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            //coordinate relative al panel generalGrid
-            int x = e.getX();
-            int y = e.getY();
-            int cellX = (x) / cellSize;
-            int cellY = (y) / cellSize;
-            //testing temporaneo
-            System.err.println("cell: X=" + cellX + "Y=" + cellY);
-        }
-    });;
 
         //importazione statistiche giocatore e truppe
         //W.I.P.
