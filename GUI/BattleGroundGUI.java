@@ -299,15 +299,15 @@ private void initializeBgGUI() {
                     compassGrid.add(compassButtonNW);
                     compassGrid.add(compassButtonN);
                     compassGrid.add(compassButtonNE);
-                    compassGrid.add(compassButtonE);
+                    compassGrid.add(compassButtonW);
                     JPanel compassCenter = new JPanel();
                         compassCenter.setSize(compassButtonsDimension);
                         compassCenter.setBackground(Color.WHITE);
                     compassGrid.add(compassCenter);
-                    compassGrid.add(compassButtonSE);
-                    compassGrid.add(compassButtonS);
+                    compassGrid.add(compassButtonE);
                     compassGrid.add(compassButtonSW);
-                    compassGrid.add(compassButtonW);
+                    compassGrid.add(compassButtonS);
+                    compassGrid.add(compassButtonSE);
                 //componenti pannello azioni
                 actionsPanel.add(rechargeButton);
                 actionsPanel.add(attackButton);
