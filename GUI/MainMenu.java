@@ -5,8 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainMenu {
-    static String selectedGeneral1;
-    static String selectedGeneral2;
+    static String selectedGeneral1; 
+    static String selectedGeneral2; //stringhe che passo al costruttore
+    static String GUIselectedGeneral1;
+    static String GUIselectedGeneral2; //stringhe formattate per la GUI
     static int generalsStringLength = 13;
 
     public static void main(String[] args) {
@@ -40,7 +42,7 @@ public class MainMenu {
         general1CB.addActionListener(e -> {
             JComboBox cb = (JComboBox) e.getSource();
             selectedGeneral1 = (String) cb.getSelectedItem();
-            selectedGeneral1 = String.format("%-" + generalsStringLength + "s", selectedGeneral1);
+            GUIselectedGeneral1 = String.format("%-" + generalsStringLength + "s", selectedGeneral1);
         });
 
         //combo box dei generali del secondo giocatore
@@ -48,7 +50,7 @@ public class MainMenu {
         general2CB.addActionListener(e -> {
             JComboBox cb = (JComboBox) e.getSource();
             selectedGeneral2 = (String) cb.getSelectedItem();
-            selectedGeneral2 = String.format("%" + generalsStringLength + "s", selectedGeneral2);
+            GUIselectedGeneral2 = String.format("%" + generalsStringLength + "s", selectedGeneral2);
         });
 
         //action listener del bottone che fa iniziare la partita
@@ -61,7 +63,7 @@ public class MainMenu {
                     JOptionPane.WARNING_MESSAGE);
                 } else {
                     SwingUtilities.invokeLater(() -> { //avvio della schermata di gioco
-                        new BattleGroundGUI(selectedGeneral1, selectedGeneral2);
+                        new BattleGroundGUI(GUIselectedGeneral1, GUIselectedGeneral2);
                         //chiusura di questa pagina
                         menu.dispose();
                     });
