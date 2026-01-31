@@ -1,5 +1,6 @@
 package game;
 
+import piece.Troops;
 import piece.Units;
 import piece.siegemachines.*;
 import piece.troops.*;
@@ -45,13 +46,9 @@ public class Battlefield {
         //metto il generale nella posizione (1,4) se il giocatore è host, altrimenti nella posizione (13, 4)
 		//la posizione del generale è la stessa per tutti gli eserciti
 		if(player.isHost) {
-			this.battlefield[4][1] = player.getGeneral();
-            this.battlefield[4][1].setX(1);
-            this.battlefield[4][1].setY(4);
+			this.battlefield[4][1] = java.util.Optional.of(player.getGeneral()).map(g -> { g.setX(1); g.setY(4); return g; }).orElse(null);
 		} else {
-			this.battlefield[4][13] = player.getGeneral();
-			this.battlefield[4][13].setX(13);
-			this.battlefield[4][13].setY(4);
+			this.battlefield[4][13] = java.util.Optional.of(player.getGeneral()).map(g -> { g.setX(13); g.setY(4); return g; }).orElse(null);
 		}
 		
 		//in base al generale scelto, metto le altre unità nelle loro posizioni predefinite
@@ -70,99 +67,40 @@ public class Battlefield {
 
 				if(player.isHost) {
 
-					
-					this.battlefield[2][0] = this.cannons[0];
-					this.battlefield[2][0].setX(0);
-					this.battlefield[2][0].setY(2);
+					this.battlefield[2][0] = java.util.Optional.of(this.cannons[0]).map(c -> { c.setX(0); c.setY(2); return c; }).orElse(null);
+					this.battlefield[6][0] = java.util.Optional.of(this.cannons[1]).map(c -> { c.setX(0); c.setY(6); return c; }).orElse(null);
 
-					this.battlefield[6][0] = this.cannons[1];
-					this.battlefield[6][0].setX(0);
-					this.battlefield[6][0].setY(6);
+					this.battlefield[3][0] = java.util.Optional.of(this.engineers[0]).map(e -> { e.setX(0); e.setY(3); return e; }).orElse(null);
+					this.battlefield[7][0] = java.util.Optional.of(this.engineers[1]).map(e -> { e.setX(0); e.setY(7); return e; }).orElse(null);
 
-					this.battlefield[3][0] = this.engineers[0];
-					this.battlefield[3][0].setX(0);
-					this.battlefield[3][0].setY(3);
+					this.battlefield[3][1] = java.util.Optional.of((Troops)this.specials[0]).map(s -> { s.setX(1); s.setY(3); return s; }).orElse(null);
+					this.battlefield[5][1] = java.util.Optional.of((Troops)this.specials[1]).map(s -> { s.setX(1); s.setY(5); return s; }).orElse(null);
 
-					this.battlefield[7][0] = this.engineers[1];
-					this.battlefield[7][0].setX(0);
-					this.battlefield[7][0].setY(7);
+					this.battlefield[3][2] = java.util.Optional.of(this.infantry[0]).map(i -> { i.setX(2); i.setY(3); return i; }).orElse(null);
+					this.battlefield[4][2] = java.util.Optional.of(this.infantry[1]).map(i -> { i.setX(2); i.setY(4); return i; }).orElse(null);
+					this.battlefield[5][2] = java.util.Optional.of(this.infantry[2]).map(i -> { i.setX(2); i.setY(5); return i; }).orElse(null);
 
-					this.battlefield[3][1] = this.specials[0];
-					this.battlefield[3][1].setX(1);
-					this.battlefield[3][1].setY(3);
+					this.battlefield[2][2] = java.util.Optional.of(this.armored[0]).map(a -> { a.setX(2); a.setY(2); return a; }).orElse(null);
+					this.battlefield[6][2] = java.util.Optional.of(this.armored[1]).map(a -> { a.setX(2); a.setY(6); return a; }).orElse(null);
 
-					this.battlefield[5][1] = this.specials[1];
-					this.battlefield[5][1].setX(1);
-					this.battlefield[5][1].setY(5);
+				} else {
 
-					this.battlefield[3][2] = this.infantry[0];
-					this.battlefield[3][2].setX(2);
-					this.battlefield[3][2].setY(3);
+					this.battlefield[2][14] = java.util.Optional.of(this.cannons[0]).map(c -> { c.setX(14); c.setY(2); return c; }).orElse(null);
+					this.battlefield[6][14] = java.util.Optional.of(this.cannons[1]).map(c -> { c.setX(14); c.setY(6); return c; }).orElse(null);
 
-					this.battlefield[4][2] = this.infantry[1];
-					this.battlefield[4][2].setX(2);
-					this.battlefield[4][2].setY(4);
+					this.battlefield[3][14] = java.util.Optional.of(this.engineers[0]).map(e -> { e.setX(14); e.setY(3); return e; }).orElse(null);
+					this.battlefield[7][14] = java.util.Optional.of(this.engineers[1]).map(e -> { e.setX(14); e.setY(7); return e; }).orElse(null);
 
-					this.battlefield[5][2] = this.infantry[2];
-					this.battlefield[5][2].setX(2);
-					this.battlefield[5][2].setY(5);
+					this.battlefield[3][13] = java.util.Optional.of((Troops)this.specials[0]).map(s -> { s.setX(13); s.setY(3); return s; }).orElse(null);
+					this.battlefield[5][13] = java.util.Optional.of((Troops)this.specials[1]).map(s -> { s.setX(13); s.setY(5); return s; }).orElse(null);
 
-					this.battlefield[2][2] = this.armored[0];
-					this.battlefield[2][2].setX(2);
-					this.battlefield[2][2].setY(2);
+					this.battlefield[3][12] = java.util.Optional.of(this.infantry[0]).map(i -> { i.setX(12); i.setY(3); return i; }).orElse(null);
+					this.battlefield[4][12] = java.util.Optional.of(this.infantry[1]).map(i -> { i.setX(12); i.setY(4); return i; }).orElse(null);
+					this.battlefield[5][12] = java.util.Optional.of(this.infantry[2]).map(i -> { i.setX(12); i.setY(5); return i; }).orElse(null);
 
-					this.battlefield[6][2] = this.armored[1];
-					this.battlefield[6][2].setX(2);
-					this.battlefield[6][2].setY(6);
+					this.battlefield[2][12] = java.util.Optional.of(this.armored[0]).map(a -> { a.setX(12); a.setY(2); return a; }).orElse(null);
+					this.battlefield[6][12] = java.util.Optional.of(this.armored[1]).map(a -> { a.setX(12); a.setY(6); return a; }).orElse(null);
 				}
-				
-				else {
-
-					this.battlefield[2][14] = this.cannons[0];
-					this.battlefield[2][14].setX(14);
-					this.battlefield[2][14].setY(2);
-
-					this.battlefield[6][14] = this.cannons[1];
-					this.battlefield[6][14].setX(14);
-					this.battlefield[6][14].setY(6);
-
-					this.battlefield[3][14] = this.engineers[0];
-					this.battlefield[3][14].setX(14);
-					this.battlefield[3][14].setY(3);
-
-					this.battlefield[7][14] = this.engineers[1];
-					this.battlefield[7][14].setX(14);
-					this.battlefield[7][14].setY(7);
-
-					this.battlefield[3][13] = this.specials[0];
-					this.battlefield[3][13].setX(13);
-					this.battlefield[3][13].setY(3);
-
-					this.battlefield[5][13] = this.specials[1];
-					this.battlefield[5][13].setX(13);
-					this.battlefield[5][13].setY(5);
-
-					this.battlefield[3][12] = this.infantry[0];
-					this.battlefield[3][12].setX(12);
-					this.battlefield[3][12].setY(3);
-
-					this.battlefield[4][12] = this.infantry[1];
-					this.battlefield[4][12].setX(12);
-					this.battlefield[4][12].setY(4);
-
-					this.battlefield[5][12] = this.infantry[2];
-					this.battlefield[5][12].setX(12);
-					this.battlefield[5][12].setY(5);
-
-					this.battlefield[2][12] = this.armored[0];
-					this.battlefield[2][12].setX(12);
-					this.battlefield[2][12].setY(2);
-
-					this.battlefield[6][12] = this.armored[1];
-					this.battlefield[6][12].setX(12);
-					this.battlefield[6][12].setY(6);
-				}
-				
 				break;
 
 			case "Nobunaga Oda":
@@ -176,112 +114,47 @@ public class Battlefield {
 
 				if(player.isHost) {
 			
-					this.battlefield[4][0] = this.ballistas[0];
-					this.battlefield[4][0].setX(0);
-					this.battlefield[4][0].setY(4);
+					this.battlefield[4][0] = java.util.Optional.of(this.ballistas[0]).map(b -> { b.setX(0); b.setY(4); return b; }).orElse(null);
 
-					this.battlefield[5][0] = this.engineers[0];
-					this.battlefield[5][0].setX(0);
-					this.battlefield[5][0].setY(5);
+					this.battlefield[5][0] = java.util.Optional.of(this.engineers[0]).map(e -> { e.setX(0); e.setY(5); return e; }).orElse(null);
 
-					this.battlefield[1][1] = this.cavalry[0];
-					this.battlefield[1][1].setX(1);
-					this.battlefield[1][1].setY(1);
+					this.battlefield[1][1] = java.util.Optional.of(this.cavalry[0]).map(c -> { c.setX(1); c.setY(1); return c; }).orElse(null);
+					this.battlefield[7][1] = java.util.Optional.of(this.cavalry[1]).map(c -> { c.setX(1); c.setY(7); return c; }).orElse(null);
+					
+					this.battlefield[2][1] = java.util.Optional.of(this.archers[0]).map(a -> { a.setX(1); a.setY(2); return a; }).orElse(null);
+					this.battlefield[3][1] = java.util.Optional.of(this.archers[1]).map(a -> { a.setX(1); a.setY(3); return a; }).orElse(null);
+					this.battlefield[5][1] = java.util.Optional.of(this.archers[2]).map(a -> { a.setX(1); a.setY(5); return a; }).orElse(null);
+					this.battlefield[6][1] = java.util.Optional.of(this.archers[3]).map(a -> { a.setX(1); a.setY(6); return a; }).orElse(null);
 
-					this.battlefield[7][1] = this.cavalry[1];
-					this.battlefield[7][1].setX(1);
-					this.battlefield[7][1].setY(7);
+					this.battlefield[2][2] = java.util.Optional.of(this.infantry[0]).map(i -> { i.setX(2); i.setY(2); return i; }).orElse(null);
+					this.battlefield[6][2] = java.util.Optional.of(this.infantry[1]).map(i -> { i.setX(2); i.setY(6); return i; }).orElse(null);
 
-					this.battlefield[2][1] = this.archers[0];
-					this.battlefield[2][1].setX(1);
-					this.battlefield[2][1].setY(2);
+					this.battlefield[3][2] = java.util.Optional.of((Troops)this.specials[0]).map(s -> { s.setX(2); s.setY(3); return s; }).orElse(null);
+					this.battlefield[5][2] = java.util.Optional.of((Troops)this.specials[1]).map(s -> { s.setX(2); s.setY(5); return s; }).orElse(null);
 
-					this.battlefield[3][1] = this.archers[1];
-					this.battlefield[3][1].setX(1);
-					this.battlefield[3][1].setY(3);
-
-					this.battlefield[5][1] = this.archers[2];
-					this.battlefield[5][1].setX(1);
-					this.battlefield[5][1].setY(5);
-
-					this.battlefield[6][1] = this.archers[3];
-					this.battlefield[6][1].setX(1);
-					this.battlefield[6][1].setY(6);
-
-					this.battlefield[2][2] = this.infantry[0];
-					this.battlefield[2][2].setX(2);
-					this.battlefield[2][2].setY(2);
-
-					this.battlefield[6][2] = this.infantry[1];
-					this.battlefield[6][2].setX(2);
-					this.battlefield[6][2].setY(6);
-
-					this.battlefield[3][2] = this.specials[0];
-					this.battlefield[3][2].setX(2);
-					this.battlefield[3][2].setY(3);
-
-					this.battlefield[5][2] = this.specials[1];
-					this.battlefield[5][2].setX(2);
-					this.battlefield[5][2].setY(5);
-
-					this.battlefield[4][2] = this.armored[0];
-					this.battlefield[4][2].setX(2);
-					this.battlefield[4][2].setY(4);
-				}
-		
-				else {
+					this.battlefield[4][2] = java.util.Optional.of(this.armored[0]).map(a -> { a.setX(2); a.setY(4); return a; }).orElse(null);
+				
+				} else {
 			
-					this.battlefield[4][14] = this.ballistas[0];
-					this.battlefield[4][14].setX(14);
-					this.battlefield[4][14].setY(4);
+					this.battlefield[4][14] = java.util.Optional.of(this.ballistas[0]).map(b -> { b.setX(14); b.setY(4); return b; }).orElse(null);
+					
+					this.battlefield[5][14] = java.util.Optional.of(this.engineers[0]).map(e -> { e.setX(14); e.setY(5); return e; }).orElse(null);
 
-					this.battlefield[5][14] = this.engineers[0];
-					this.battlefield[5][14].setX(14);
-					this.battlefield[5][14].setY(5);
+					this.battlefield[1][13] = java.util.Optional.of(this.cavalry[0]).map(c -> { c.setX(13); c.setY(1); return c; }).orElse(null);
+					this.battlefield[7][13] = java.util.Optional.of(this.cavalry[1]).map(c -> { c.setX(13); c.setY(7); return c; }).orElse(null);
 
-					this.battlefield[1][13] = this.cavalry[0];
-					this.battlefield[1][13].setX(13);
-					this.battlefield[1][13].setY(1);
+					this.battlefield[2][13] = java.util.Optional.of(this.archers[0]).map(a -> { a.setX(13); a.setY(2); return a; }).orElse(null);
+					this.battlefield[3][13] = java.util.Optional.of(this.archers[1]).map(a -> { a.setX(13); a.setY(3); return a; }).orElse(null);
+					this.battlefield[5][13] = java.util.Optional.of(this.archers[2]).map(a -> { a.setX(13); a.setY(5); return a; }).orElse(null);
+					this.battlefield[6][13] = java.util.Optional.of(this.archers[3]).map(a -> { a.setX(13); a.setY(6); return a; }).orElse(null);
 
-					this.battlefield[7][13] = this.cavalry[1];
-					this.battlefield[7][13].setX(13);
-					this.battlefield[7][13].setY(7);
+					this.battlefield[2][12] = java.util.Optional.of(this.infantry[0]).map(i -> { i.setX(12); i.setY(2); return i; }).orElse(null);
+					this.battlefield[6][12] = java.util.Optional.of(this.infantry[1]).map(i -> { i.setX(12); i.setY(6); return i; }).orElse(null);
 
-					this.battlefield[2][13] = this.archers[0];
-					this.battlefield[2][13].setX(13);
-					this.battlefield[2][13].setY(2);
-
-					this.battlefield[3][13] = this.archers[1];
-					this.battlefield[3][13].setX(13);
-					this.battlefield[3][13].setY(3);
-
-					this.battlefield[5][13] = this.archers[2];
-					this.battlefield[5][13].setX(13);
-					this.battlefield[5][13].setY(5);
-
-					this.battlefield[6][13] = this.archers[3];
-					this.battlefield[6][13].setX(13);
-					this.battlefield[6][13].setY(6);
-
-					this.battlefield[2][12] = this.infantry[0];
-					this.battlefield[2][12].setX(12);
-					this.battlefield[2][12].setY(2);
-
-					this.battlefield[6][12] = this.infantry[1];
-					this.battlefield[6][12].setX(12);
-					this.battlefield[6][12].setY(6);
-
-					this.battlefield[3][12] = this.specials[0];
-					this.battlefield[3][12].setX(12);
-					this.battlefield[3][12].setY(3);
-
-					this.battlefield[5][12] = this.specials[1];
-					this.battlefield[5][12].setX(12);
-					this.battlefield[5][12].setY(5);
-
-					this.battlefield[4][12] = this.armored[0];
-					this.battlefield[4][12].setX(12);
-					this.battlefield[4][12].setY(4);
+					this.battlefield[3][12] = java.util.Optional.of((Troops)this.specials[0]).map(s -> { s.setX(12); s.setY(3); return s; }).orElse(null);
+					this.battlefield[5][12] = java.util.Optional.of((Troops)this.specials[1]).map(s -> { s.setX(12); s.setY(5); return s; }).orElse(null);
+					
+					this.battlefield[4][12] = java.util.Optional.of(this.armored[0]).map(a -> { a.setX(12); a.setY(4); return a; }).orElse(null);
 				}
 				
 				break;
@@ -297,114 +170,46 @@ public class Battlefield {
 
 				if(player.isHost) {
 			
-					this.battlefield[2][0] = this.catapults[0];
-					this.battlefield[2][0].setX(0);
-					this.battlefield[2][0].setY(2);
+					this.battlefield[2][0] = java.util.Optional.of(this.catapults[0]).map(c -> { c.setX(0); c.setY(2); return c; }).orElse(null);
+					this.battlefield[5][0] = java.util.Optional.of(this.catapults[1]).map(c -> { c.setX(0); c.setY(5); return c; }).orElse(null);
 
-					this.battlefield[5][0] = this.catapults[1];
-					this.battlefield[5][0].setX(0);
-					this.battlefield[5][0].setY(5);
+					this.battlefield[3][0] = java.util.Optional.of(this.engineers[0]).map(e -> { e.setX(0); e.setY(3); return e; }).orElse(null);
+					this.battlefield[6][0] = java.util.Optional.of(this.engineers[1]).map(e -> { e.setX(0); e.setY(6); return e; }).orElse(null);
 
-					this.battlefield[3][0] = this.engineers[0];
-					this.battlefield[3][0].setX(0);
-					this.battlefield[3][0].setY(3);
+					this.battlefield[1][1] = java.util.Optional.of(this.cavalry[0]).map(c -> { c.setX(1); c.setY(1); return c; }).orElse(null);
+					this.battlefield[7][1] = java.util.Optional.of(this.cavalry[1]).map(c -> { c.setX(1); c.setY(7); return c; }).orElse(null);
 
-					this.battlefield[6][0] = this.engineers[1];
-					this.battlefield[6][0].setX(0);
-					this.battlefield[6][0].setY(6);
+					this.battlefield[3][1] = java.util.Optional.of(this.archers[0]).map(a -> { a.setX(1); a.setY(3); return a; }).orElse(null);
+					this.battlefield[5][1] = java.util.Optional.of(this.archers[1]).map(a -> { a.setX(1); a.setY(5); return a; }).orElse(null);
 
-					this.battlefield[1][1] = this.cavalry[0];
-					this.battlefield[1][1].setX(1);
-					this.battlefield[1][1].setY(1);
+					this.battlefield[2][2] = java.util.Optional.of(this.infantry[0]).map(i -> { i.setX(2); i.setY(2); return i; }).orElse(null);
+					this.battlefield[4][2] = java.util.Optional.of(this.infantry[1]).map(i -> { i.setX(2); i.setY(4); return i; }).orElse(null);
+					this.battlefield[6][2] = java.util.Optional.of(this.infantry[2]).map(i -> { i.setX(2); i.setY(6); return i; }).orElse(null);
 
-					this.battlefield[7][1] = this.cavalry[1];
-					this.battlefield[7][1].setX(1);
-					this.battlefield[7][1].setY(7);
-
-					this.battlefield[3][1] = this.archers[0];
-					this.battlefield[3][1].setX(1);
-					this.battlefield[3][1].setY(3);
-
-					this.battlefield[5][1] = this.archers[1];
-					this.battlefield[5][1].setX(1);
-					this.battlefield[5][1].setY(5);
-
-					this.battlefield[2][2] = this.infantry[0];
-					this.battlefield[2][2].setX(2);
-					this.battlefield[2][2].setY(2);
-
-					this.battlefield[4][2] = this.infantry[1];
-					this.battlefield[4][2].setX(2);
-					this.battlefield[4][2].setY(4);
-
-					this.battlefield[6][2] = this.infantry[2];
-					this.battlefield[6][2].setX(2);
-					this.battlefield[6][2].setY(6);
-
-					this.battlefield[3][2] = this.specials[0];
-					this.battlefield[3][2].setX(2);
-					this.battlefield[3][2].setY(3);
-
-					this.battlefield[5][2] = this.specials[1];
-					this.battlefield[5][2].setX(2);
-					this.battlefield[5][2].setY(5);
-				}
-		
-				else {
+					this.battlefield[3][2] = java.util.Optional.of((Troops)this.specials[0]).map(s -> { s.setX(2); s.setY(3); return s; }).orElse(null);
+					this.battlefield[5][2] = java.util.Optional.of((Troops)this.specials[1]).map(s -> { s.setX(2); s.setY(5); return s; }).orElse(null);
 			
-					this.battlefield[2][14] = this.catapults[0];
-					this.battlefield[2][14].setX(14);
-					this.battlefield[2][14].setY(2);
+				} else {
+			
+					this.battlefield[2][14] = java.util.Optional.of(this.catapults[0]).map(c -> { c.setX(14); c.setY(2); return c; }).orElse(null);
+					this.battlefield[5][14] = java.util.Optional.of(this.catapults[1]).map(c -> { c.setX(14); c.setY(5); return c; }).orElse(null);
 
-					this.battlefield[5][14] = this.catapults[1];
-					this.battlefield[5][14].setX(14);
-					this.battlefield[5][14].setY(5);
+					this.battlefield[3][14] = java.util.Optional.of(this.engineers[0]).map(e -> { e.setX(14); e.setY(3); return e; }).orElse(null);
+					this.battlefield[6][14] = java.util.Optional.of(this.engineers[1]).map(e -> { e.setX(14); e.setY(6); return e; }).orElse(null);
 
-					this.battlefield[3][14] = this.engineers[0];
-					this.battlefield[3][14].setX(14);
-					this.battlefield[3][14].setY(3);
+					this.battlefield[1][13] = java.util.Optional.of(this.cavalry[0]).map(c -> { c.setX(13); c.setY(1); return c; }).orElse(null);
+					this.battlefield[7][13] = java.util.Optional.of(this.cavalry[1]).map(c -> { c.setX(13); c.setY(7); return c; }).orElse(null);
 
-					this.battlefield[6][14] = this.engineers[1];
-					this.battlefield[6][14].setX(14);
-					this.battlefield[6][14].setY(6);
+					this.battlefield[3][13] = java.util.Optional.of(this.archers[0]).map(a -> { a.setX(13); a.setY(3); return a; }).orElse(null);
+					this.battlefield[5][13] = java.util.Optional.of(this.archers[1]).map(a -> { a.setX(13); a.setY(5); return a; }).orElse(null);
 
-					this.battlefield[1][13] = this.cavalry[0];
-					this.battlefield[1][13].setX(13);
-					this.battlefield[1][13].setY(1);
+					this.battlefield[2][12] = java.util.Optional.of(this.infantry[0]).map(i -> { i.setX(12); i.setY(2); return i; }).orElse(null);
+					this.battlefield[4][12] = java.util.Optional.of(this.infantry[1]).map(i -> { i.setX(12); i.setY(4); return i; }).orElse(null);
+					this.battlefield[6][12] = java.util.Optional.of(this.infantry[2]).map(i -> { i.setX(12); i.setY(6); return i; }).orElse(null);
 
-					this.battlefield[7][13] = this.cavalry[1];
-					this.battlefield[7][13].setX(13);
-					this.battlefield[7][13].setY(7);
-
-					this.battlefield[3][13] = this.archers[0];
-					this.battlefield[3][13].setX(13);
-					this.battlefield[3][13].setY(3);
-
-					this.battlefield[5][13] = this.archers[1];
-					this.battlefield[5][13].setX(13);
-					this.battlefield[5][13].setY(5);
-
-					this.battlefield[2][12] = this.infantry[0];
-					this.battlefield[2][12].setX(12);
-					this.battlefield[2][12].setY(2);
-
-					this.battlefield[4][12] = this.infantry[1];
-					this.battlefield[4][12].setX(12);
-					this.battlefield[4][12].setY(4);
-
-					this.battlefield[6][12] = this.infantry[2];
-					this.battlefield[6][12].setX(12);
-					this.battlefield[6][12].setY(6);
-
-					this.battlefield[3][12] = this.specials[0];
-					this.battlefield[3][12].setX(12);
-					this.battlefield[3][12].setY(3);
-
-					this.battlefield[5][12] = this.specials[1];
-					this.battlefield[5][12].setX(12);
-					this.battlefield[5][12].setY(5);
+					this.battlefield[3][12] = java.util.Optional.of((Troops)this.specials[0]).map(s -> { s.setX(12); s.setY(3); return s; }).orElse(null);
+					this.battlefield[5][12] = java.util.Optional.of((Troops)this.specials[1]).map(s -> { s.setX(12); s.setY(5); return s; }).orElse(null);
 				}
-				
 				break;
 
 			case "Julius Caesar":
@@ -417,96 +222,41 @@ public class Battlefield {
 
 				if(player.isHost) {
 			
-					this.battlefield[2][0] = this.catapults[0];
-					this.battlefield[2][0].setX(0);
-					this.battlefield[2][0].setY(2);
+					this.battlefield[2][0] = java.util.Optional.of(this.catapults[0]).map(c -> { c.setX(0); c.setY(2); return c; }).orElse(null);
 
-					this.battlefield[5][0] = this.ballistas[0];
-					this.battlefield[5][0].setX(0);
-					this.battlefield[5][0].setY(5);
+					this.battlefield[5][0] = java.util.Optional.of(this.ballistas[0]).map(b -> { b.setX(0); b.setY(5); return b; }).orElse(null);
 
-					this.battlefield[3][0] = this.engineers[0];
-					this.battlefield[3][0].setX(0);
-					this.battlefield[3][0].setY(3);
+					this.battlefield[3][0] = java.util.Optional.of(this.engineers[0]).map(e -> { e.setX(0); e.setY(3); return e; }).orElse(null);
+					this.battlefield[6][0] = java.util.Optional.of(this.engineers[1]).map(e -> { e.setX(0); e.setY(6); return e; }).orElse(null);
+					
+					this.battlefield[3][1] = java.util.Optional.of(this.archers[0]).map(a -> { a.setX(1); a.setY(3); return a; }).orElse(null);
+					this.battlefield[5][1] = java.util.Optional.of(this.archers[1]).map(a -> { a.setX(1); a.setY(5); return a; }).orElse(null);
 
-					this.battlefield[6][0] = this.engineers[1];
-					this.battlefield[6][0].setX(0);
-					this.battlefield[6][0].setY(6);
+					this.battlefield[2][2] = java.util.Optional.of((Troops)this.specials[0]).map(s -> { s.setX(2); s.setY(2); return s; }).orElse(null);
+					this.battlefield[6][2] = java.util.Optional.of((Troops)this.specials[1]).map(s -> { s.setX(2); s.setY(6); return s; }).orElse(null);
 
-					this.battlefield[3][1] = this.archers[0];
-					this.battlefield[3][1].setX(1);
-					this.battlefield[3][1].setY(3);
+					this.battlefield[3][2] = java.util.Optional.of(this.armored[0]).map(a -> { a.setX(2); a.setY(3); return a; }).orElse(null);
+					this.battlefield[4][2] = java.util.Optional.of(this.armored[1]).map(a -> { a.setX(2); a.setY(4); return a; }).orElse(null);
+					this.battlefield[5][2] = java.util.Optional.of(this.armored[2]).map(a -> { a.setX(2); a.setY(5); return a; }).orElse(null);
+				
+				} else {
 
-					this.battlefield[5][1] = this.archers[1];
-					this.battlefield[5][1].setX(1);
-					this.battlefield[5][1].setY(5);
+					this.battlefield[2][14] = java.util.Optional.of(this.catapults[0]).map(c -> { c.setX(14); c.setY(2); return c; }).orElse(null);
 
-					this.battlefield[2][2] = this.specials[0];
-					this.battlefield[2][2].setX(2);
-					this.battlefield[2][2].setY(2);
+					this.battlefield[5][14] = java.util.Optional.of(this.ballistas[0]).map(b -> { b.setX(14); b.setY(5); return b; }).orElse(null);
+					
+					this.battlefield[3][14] = java.util.Optional.of(this.engineers[0]).map(e -> { e.setX(14); e.setY(3); return e; }).orElse(null);
+					this.battlefield[6][14] = java.util.Optional.of(this.engineers[1]).map(e -> { e.setX(14); e.setY(6); return e; }).orElse(null);
 
-					this.battlefield[6][2] = this.specials[1];
-					this.battlefield[6][2].setX(2);
-					this.battlefield[6][2].setY(6);
+					this.battlefield[3][13] = java.util.Optional.of(this.archers[0]).map(a -> { a.setX(13); a.setY(3); return a; }).orElse(null);
+					this.battlefield[5][13] = java.util.Optional.of(this.archers[1]).map(a -> { a.setX(13); a.setY(5); return a; }).orElse(null);
 
-					this.battlefield[3][2] = this.armored[0];
-					this.battlefield[3][2].setX(2);
-					this.battlefield[3][2].setY(3);
-
-					this.battlefield[4][2] = this.armored[1];
-					this.battlefield[4][2].setX(2);
-					this.battlefield[4][2].setY(4);
-
-					this.battlefield[5][2] = this.armored[2];
-					this.battlefield[5][2].setX(2);
-					this.battlefield[5][2].setY(5);
-				}
-		
-				else {
-
-					this.battlefield[2][14] = this.catapults[0];
-					this.battlefield[2][14].setX(14);
-					this.battlefield[2][14].setY(2);
-
-					this.battlefield[5][14] = this.ballistas[0];
-					this.battlefield[5][14].setX(14);
-					this.battlefield[5][14].setY(5);
-
-					this.battlefield[3][14] = this.engineers[0];
-					this.battlefield[3][14].setX(14);
-					this.battlefield[3][14].setY(3);
-
-					this.battlefield[6][14] = this.engineers[1];
-					this.battlefield[6][14].setX(14);
-					this.battlefield[6][14].setY(6);
-
-					this.battlefield[3][13] = this.archers[0];
-					this.battlefield[3][13].setX(13);
-					this.battlefield[3][13].setY(3);
-
-					this.battlefield[5][13] = this.archers[1];
-					this.battlefield[5][13].setX(13);
-					this.battlefield[5][13].setY(5);
-
-					this.battlefield[2][12] = this.specials[0];
-					this.battlefield[2][12].setX(12);
-					this.battlefield[2][12].setY(2);
-
-					this.battlefield[6][12] = this.specials[1];
-					this.battlefield[6][12].setX(12);
-					this.battlefield[6][12].setY(6);
-
-					this.battlefield[3][12] = this.armored[0];
-					this.battlefield[3][12].setX(12);
-					this.battlefield[3][12].setY(3);
-
-					this.battlefield[4][12] = this.armored[1];
-					this.battlefield[4][12].setX(12);
-					this.battlefield[4][12].setY(4);
-
-					this.battlefield[5][12] = this.armored[2];
-					this.battlefield[5][12].setX(12);
-					this.battlefield[5][12].setY(5);
+					this.battlefield[2][12] = java.util.Optional.of((Troops)this.specials[0]).map(s -> { s.setX(12); s.setY(2); return s; }).orElse(null);
+					this.battlefield[6][12] = java.util.Optional.of((Troops)this.specials[1]).map(s -> { s.setX(12); s.setY(6); return s; }).orElse(null);
+					
+					this.battlefield[3][12] = java.util.Optional.of(this.armored[0]).map(a -> { a.setX(12); a.setY(3); return a; }).orElse(null);
+					this.battlefield[4][12] = java.util.Optional.of(this.armored[1]).map(a -> { a.setX(12); a.setY(4); return a; }).orElse(null);
+					this.battlefield[5][12] = java.util.Optional.of(this.armored[2]).map(a -> { a.setX(12); a.setY(5); return a; }).orElse(null);
 				}
 				
 				break;
@@ -520,106 +270,42 @@ public class Battlefield {
 
 				if(player.isHost) {
 
-					this.battlefield[4][0] = this.catapults[0];
-					this.battlefield[4][0].setX(0);
-					this.battlefield[4][0].setY(4);
+					this.battlefield[4][0] = java.util.Optional.of(this.catapults[0]).map(c -> { c.setX(0); c.setY(4); return c; }).orElse(null);
 
-					this.battlefield[5][0] = this.engineers[0];
-					this.battlefield[5][0].setX(0);
-					this.battlefield[5][0].setY(5);
+					this.battlefield[5][0] = java.util.Optional.of(this.engineers[0]).map(e -> { e.setX(0); e.setY(5); return e; }).orElse(null);
 
-					this.battlefield[1][1] = this.cavalry[0];
-					this.battlefield[1][1].setX(1);
-					this.battlefield[1][1].setY(1);
+					this.battlefield[1][1] = java.util.Optional.of(this.cavalry[0]).map(c -> { c.setX(1); c.setY(1); return c; }).orElse(null);
+					this.battlefield[7][1] = java.util.Optional.of(this.cavalry[1]).map(c -> { c.setX(1); c.setY(7); return c; }).orElse(null);
 
-					this.battlefield[7][1] = this.cavalry[1];
-					this.battlefield[7][1].setX(1);
-					this.battlefield[7][1].setY(7);
+					this.battlefield[2][1] = java.util.Optional.of(this.archers[0]).map(a -> { a.setX(1); a.setY(2); return a; }).orElse(null);
+					this.battlefield[3][1] = java.util.Optional.of(this.archers[1]).map(a -> { a.setX(1); a.setY(3); return a; }).orElse(null);
+					this.battlefield[5][1] = java.util.Optional.of(this.archers[2]).map(a -> { a.setX(1); a.setY(5); return a; }).orElse(null);
+					this.battlefield[6][1] = java.util.Optional.of(this.archers[3]).map(a -> { a.setX(1); a.setY(6); return a; }).orElse(null);
 
-					this.battlefield[2][1] = this.archers[0];
-					this.battlefield[2][1].setX(1);
-					this.battlefield[2][1].setY(2);
-
-					this.battlefield[3][1] = this.archers[1];
-					this.battlefield[3][1].setX(1);
-					this.battlefield[3][1].setY(3);
-
-					this.battlefield[5][1] = this.archers[2];
-					this.battlefield[5][1].setX(1);
-					this.battlefield[5][1].setY(5);
-
-					this.battlefield[6][1] = this.archers[3];
-					this.battlefield[6][1].setX(1);
-					this.battlefield[6][1].setY(6);
-
-					this.battlefield[2][2] = this.specials[0];
-					this.battlefield[2][2].setX(2);
-					this.battlefield[2][2].setY(2);
-
-					this.battlefield[3][2] = this.specials[1];
-					this.battlefield[3][2].setX(2);
-					this.battlefield[3][2].setY(3);
-
-					this.battlefield[5][2] = this.specials[2];
-					this.battlefield[5][2].setX(2);
-					this.battlefield[5][2].setY(5);
-
-					this.battlefield[6][2] = this.specials[3];
-					this.battlefield[6][2].setX(2);
-					this.battlefield[6][2].setY(6);
-				}
-		
-				else {
-
-					this.battlefield[4][14] = this.catapults[0];
-					this.battlefield[4][14].setX(14);
-					this.battlefield[4][14].setY(4);
-
-					this.battlefield[5][14] = this.engineers[0];
-					this.battlefield[5][14].setX(14);
-					this.battlefield[5][14].setY(5);
-
-					this.battlefield[1][13] = this.cavalry[0];
-					this.battlefield[1][13].setX(13);
-					this.battlefield[1][13].setY(1);
-
-					this.battlefield[7][13] = this.cavalry[1];
-					this.battlefield[7][13].setX(13);
-					this.battlefield[7][13].setY(7);
-
-					this.battlefield[2][13] = this.archers[0];
-					this.battlefield[2][13].setX(13);
-					this.battlefield[2][13].setY(2);
-
-					this.battlefield[3][13] = this.archers[1];
-					this.battlefield[3][13].setX(13);
-					this.battlefield[3][13].setY(3);
-
-					this.battlefield[5][13] = this.archers[2];
-					this.battlefield[5][13].setX(13);
-					this.battlefield[5][13].setY(5);
-
-					this.battlefield[6][13] = this.archers[3];
-					this.battlefield[6][13].setX(13);
-					this.battlefield[6][13].setY(6);
-
-					this.battlefield[2][12] = this.specials[0];
-					this.battlefield[2][12].setX(12);
-					this.battlefield[2][12].setY(2);
-
-					this.battlefield[3][12] = this.specials[1];
-					this.battlefield[3][12].setX(12);
-					this.battlefield[3][12].setY(3);
-
-					this.battlefield[5][12] = this.specials[2];
-					this.battlefield[5][12].setX(12);
-					this.battlefield[5][12].setY(5);
-
-					this.battlefield[6][12] = this.specials[3];
-					this.battlefield[6][12].setX(12);
-					this.battlefield[6][12].setY(6);
-				}
+					this.battlefield[2][2] = java.util.Optional.of((Troops)this.specials[0]).map(s -> { s.setX(2); s.setY(2); return s; }).orElse(null);
+					this.battlefield[3][2] = java.util.Optional.of((Troops)this.specials[1]).map(s -> { s.setX(2); s.setY(3); return s; }).orElse(null);
+					this.battlefield[5][2] = java.util.Optional.of((Troops)this.specials[2]).map(s -> { s.setX(2); s.setY(5); return s; }).orElse(null);
+					this.battlefield[6][2] = java.util.Optional.of((Troops)this.specials[3]).map(s -> { s.setX(2); s.setY(6); return s; }).orElse(null);
 				
+				} else {
+
+					this.battlefield[4][14] = java.util.Optional.of(this.catapults[0]).map(c -> { c.setX(14); c.setY(4); return c; }).orElse(null);
+
+					this.battlefield[5][14] = java.util.Optional.of(this.engineers[0]).map(e -> { e.setX(14); e.setY(5); return e; }).orElse(null);
+
+					this.battlefield[1][13] = java.util.Optional.of(this.cavalry[0]).map(c -> { c.setX(13); c.setY(1); return c; }).orElse(null);
+					this.battlefield[7][13] = java.util.Optional.of(this.cavalry[1]).map(c -> { c.setX(13); c.setY(7); return c; }).orElse(null);
+
+					this.battlefield[2][13] = java.util.Optional.of(this.archers[0]).map(a -> { a.setX(13); a.setY(2); return a; }).orElse(null);
+					this.battlefield[3][13] = java.util.Optional.of(this.archers[1]).map(a -> { a.setX(13); a.setY(3); return a; }).orElse(null);
+					this.battlefield[5][13] = java.util.Optional.of(this.archers[2]).map(a -> { a.setX(13); a.setY(5); return a; }).orElse(null);
+					this.battlefield[6][13] = java.util.Optional.of(this.archers[3]).map(a -> { a.setX(13); a.setY(6); return a; }).orElse(null);
+
+					this.battlefield[2][12] = java.util.Optional.of((Troops)this.specials[0]).map(s -> { s.setX(12); s.setY(2); return s; }).orElse(null);
+					this.battlefield[3][12] = java.util.Optional.of((Troops)this.specials[1]).map(s -> { s.setX(12); s.setY(3); return s; }).orElse(null);
+					this.battlefield[5][12] = java.util.Optional.of((Troops)this.specials[2]).map(s -> { s.setX(12); s.setY(5); return s; }).orElse(null);
+					this.battlefield[6][12] = java.util.Optional.of((Troops)this.specials[3]).map(s -> { s.setX(12); s.setY(6); return s; }).orElse(null);
+				}
 				break;
 
 			case "Ragnar":
@@ -630,112 +316,41 @@ public class Battlefield {
 
 				if(player.isHost) {
 
-					this.battlefield[0][1] = this.cavalry[0];
-					this.battlefield[0][1].setX(1);
-					this.battlefield[0][1].setY(0);
+					this.battlefield[0][1] = java.util.Optional.of(this.cavalry[0]).map(c -> { c.setX(1); c.setY(0); return c; }).orElse(null);
+					this.battlefield[1][1] = java.util.Optional.of(this.cavalry[1]).map(c -> { c.setX(1); c.setY(1); return c; }).orElse(null);
+					this.battlefield[7][1] = java.util.Optional.of(this.cavalry[2]).map(c -> { c.setX(1); c.setY(7); return c; }).orElse(null);
+					this.battlefield[8][1] = java.util.Optional.of(this.cavalry[3]).map(c -> { c.setX(1); c.setY(8); return c; }).orElse(null);
 
-					this.battlefield[1][1] = this.cavalry[1];
-					this.battlefield[1][1].setX(1);
-					this.battlefield[1][1].setY(1);
+					this.battlefield[2][1] = java.util.Optional.of((Troops)this.specials[0]).map(s -> { s.setX(1); s.setY(2); return s; }).orElse(null);
+					this.battlefield[6][1] = java.util.Optional.of((Troops)this.specials[1]).map(s -> { s.setX(1); s.setY(6); return s; }).orElse(null);
+					this.battlefield[3][2] = java.util.Optional.of((Troops)this.specials[2]).map(s -> { s.setX(2); s.setY(3); return s; }).orElse(null);
+					this.battlefield[4][2] = java.util.Optional.of((Troops)this.specials[3]).map(s -> { s.setX(2); s.setY(4); return s; }).orElse(null);
+					this.battlefield[5][2] = java.util.Optional.of((Troops)this.specials[4]).map(s -> { s.setX(2); s.setY(5); return s; }).orElse(null);
 
-					this.battlefield[7][1] = this.cavalry[2];
-					this.battlefield[7][1].setX(1);
-					this.battlefield[7][1].setY(7);
+					this.battlefield[3][1] = java.util.Optional.of(this.archers[0]).map(a -> { a.setX(1); a.setY(3); return a; }).orElse(null);
+					this.battlefield[5][1] = java.util.Optional.of(this.archers[1]).map(a -> { a.setX(1); a.setY(5); return a; }).orElse(null);
 
-					this.battlefield[8][1] = this.cavalry[3];
-					this.battlefield[8][1].setX(1);
-					this.battlefield[8][1].setY(8);
+					this.battlefield[2][2] = java.util.Optional.of(this.armored[0]).map(a -> { a.setX(2); a.setY(2); return a; }).orElse(null);
+					this.battlefield[6][2] = java.util.Optional.of(this.armored[1]).map(a -> { a.setX(2); a.setY(6); return a; }).orElse(null);
+				
+				} else {
 
-					this.battlefield[2][1] = this.specials[0];
-					this.battlefield[2][1].setX(1);
-					this.battlefield[2][1].setY(2);
+					this.battlefield[0][13] = java.util.Optional.of(this.cavalry[0]).map(c -> { c.setX(13); c.setY(0); return c; }).orElse(null);
+					this.battlefield[1][13] = java.util.Optional.of(this.cavalry[1]).map(c -> { c.setX(13); c.setY(1); return c; }).orElse(null);
+					this.battlefield[7][13] = java.util.Optional.of(this.cavalry[2]).map(c -> { c.setX(13); c.setY(7); return c; }).orElse(null);
+					this.battlefield[8][13] = java.util.Optional.of(this.cavalry[3]).map(c -> { c.setX(13); c.setY(8); return c; }).orElse(null);
 
-					this.battlefield[6][1] = this.specials[1];
-					this.battlefield[6][1].setX(1);
-					this.battlefield[6][1].setY(6);
+					this.battlefield[2][13] = java.util.Optional.of((Troops)this.specials[0]).map(s -> { s.setX(13); s.setY(2); return s; }).orElse(null);
+					this.battlefield[6][13] = java.util.Optional.of((Troops)this.specials[1]).map(s -> { s.setX(13); s.setY(6); return s; }).orElse(null);
+					this.battlefield[3][12] = java.util.Optional.of((Troops)this.specials[2]).map(s -> { s.setX(12); s.setY(3); return s; }).orElse(null);
+					this.battlefield[4][12] = java.util.Optional.of((Troops)this.specials[3]).map(s -> { s.setX(12); s.setY(4); return s; }).orElse(null);
+					this.battlefield[5][12] = java.util.Optional.of((Troops)this.specials[4]).map(s -> { s.setX(12); s.setY(5); return s; }).orElse(null);
 
-					this.battlefield[3][2] = this.specials[2];
-					this.battlefield[3][2].setX(2);
-					this.battlefield[3][2].setY(3);
+					this.battlefield[3][13] = java.util.Optional.of(this.archers[0]).map(a -> { a.setX(13); a.setY(3); return a; }).orElse(null);
+					this.battlefield[5][13] = java.util.Optional.of(this.archers[1]).map(a -> { a.setX(13); a.setY(5); return a; }).orElse(null);
 
-					this.battlefield[4][2] = this.specials[3];
-					this.battlefield[4][2].setX(2);
-					this.battlefield[4][2].setY(4);
-
-					this.battlefield[5][2] = this.specials[4];
-					this.battlefield[5][2].setX(2);
-					this.battlefield[5][2].setY(5);
-
-					this.battlefield[3][1] = this.archers[0];
-					this.battlefield[3][1].setX(1);
-					this.battlefield[3][1].setY(3);
-
-					this.battlefield[5][1] = this.archers[1];
-					this.battlefield[5][1].setX(1);
-					this.battlefield[5][1].setY(5);
-
-					this.battlefield[2][2] = this.armored[0];
-					this.battlefield[2][2].setX(2);
-					this.battlefield[2][2].setY(2);
-
-					this.battlefield[6][2] = this.armored[1];
-					this.battlefield[6][2].setX(2);
-					this.battlefield[6][2].setY(6);
-				}
-		
-				else {
-
-					this.battlefield[0][13] = this.cavalry[0];
-					this.battlefield[0][13].setX(13);
-					this.battlefield[0][13].setY(0);
-
-					this.battlefield[1][13] = this.cavalry[1];
-					this.battlefield[1][13].setX(13);
-					this.battlefield[1][13].setY(1);
-
-					this.battlefield[7][13] = this.cavalry[2];
-					this.battlefield[7][13].setX(13);
-					this.battlefield[7][13].setY(7);
-
-					this.battlefield[8][13] = this.cavalry[3];
-					this.battlefield[8][13].setX(13);
-					this.battlefield[8][13].setY(8);
-
-					this.battlefield[2][13] = this.specials[0];
-					this.battlefield[2][13].setX(13);
-					this.battlefield[2][13].setY(2);
-
-					this.battlefield[6][13] = this.specials[1];
-					this.battlefield[6][13].setX(13);
-					this.battlefield[6][13].setY(6);
-
-					this.battlefield[3][13] = this.archers[0];
-					this.battlefield[3][13].setX(13);
-					this.battlefield[3][13].setY(3);
-
-					this.battlefield[5][13] = this.archers[1];
-					this.battlefield[5][13].setX(13);
-					this.battlefield[5][13].setY(5);
-
-					this.battlefield[2][12] = this.armored[0];
-					this.battlefield[2][12].setX(12);
-					this.battlefield[2][12].setY(2);
-
-					this.battlefield[6][12] = this.armored[1];
-					this.battlefield[6][12].setX(12);
-					this.battlefield[6][12].setY(6);
-
-					this.battlefield[3][12] = this.specials[2];
-					this.battlefield[3][12].setX(12);
-					this.battlefield[3][12].setY(3);
-
-					this.battlefield[4][12] = this.specials[3];
-					this.battlefield[4][12].setX(12);
-					this.battlefield[4][12].setY(4);
-
-					this.battlefield[5][12] = this.specials[4];
-					this.battlefield[5][12].setX(12);
-					this.battlefield[5][12].setY(5);
+					this.battlefield[2][12] = java.util.Optional.of(this.armored[0]).map(a -> { a.setX(12); a.setY(2); return a; }).orElse(null);
+					this.battlefield[6][12] = java.util.Optional.of(this.armored[1]).map(a -> { a.setX(12); a.setY(6); return a; }).orElse(null);
 				}
 				
 				break;
