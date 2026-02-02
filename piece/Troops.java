@@ -130,10 +130,10 @@ public abstract class Troops implements Units{
     public void attack(int targetX, int targetY, Battlefield field) throws MyException{
         Units targetUnit = field.getUnit(targetX, targetY);
 
-        // verifica presenza di un'unità
-        if (targetUnit == null) {
-            // errore: cella vuota
-            throw new MyException("cella vuota");
+        // verifica se l'unità ha già attaccato
+        if (getHasAttacked()) {
+            // errore: unità ha già attaccato
+            throw new MyException("questa unità ha già attaccato");
         }
 
         // verifica se il bersaglio è nel range
@@ -142,14 +142,21 @@ public abstract class Troops implements Units{
             throw new MyException("bersaglio fuori portata");
         }
 
+        // verifica presenza di un'unità
+        if (targetUnit == null) {
+            // errore: cella vuota
+            throw new MyException("cella bersaglio vuota");
+        }
+
         //verifica se il bersaglio è un alleato
-       /* if ( bersaglio alleato ) {
+        if ((targetUnit instanceof Troops) && ((Troops)targetUnit).getFaction() == this.getFaction() || (targetUnit instanceof SiegeMachines) && ((SiegeMachines)targetUnit).getFaction() == this.getFaction()) {
             //errore: bersaglio alleato
-            return false;
-        } */
+            throw new MyException("bersaglio alleato");
+        }
         
         //l'attacco ha successo
         targetUnit.attacked(getAtk());
+        setStamina(getStamina() - 1);
         
         setHasAttacked(true); //solo un attacco a turno
         
@@ -227,12 +234,11 @@ public abstract class Troops implements Units{
     //funzione che calcola se l'obiettivo selezionato è a portata dell'attaccante
     private boolean isInRange(int targetX, int targetY) {
         int distance = calculateDistance(getX(), getY(), targetX, targetY);
-        int range = getRange();
-        return distance <= range;
+        return distance <= getRange();
     }
 
     private boolean isValidMove(int newX, int newY, Battlefield field) throws MyException {
-            if (newX < 0 || newX > 14 || newY < 0 || newY > 8) {
+            if (newX < 0 || newX > field.getX() - 1 || newY < 0 || newY > field.getY() - 1) {
                 //fuori dal campo
                 throw new MyException("fuori campi");
                 
@@ -240,7 +246,7 @@ public abstract class Troops implements Units{
                 //casella occupata
                 throw new MyException("cella occupata");
     
-            } else if (getStamina() < 1) {
+            } else if (getStamina() == 0) {
                 //stamina esaurita
                 throw new MyException("stamina esaurita");
 
