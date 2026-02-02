@@ -12,7 +12,7 @@ public interface Units {
     public boolean isAlive();
     public void recharge();
 
-    default void place(Units[][] battlefield, int y, int x) {
+    public default void place(Units[][] battlefield, int y, int x) {
         java.util.Optional.of(this)
             .filter(u -> u instanceof Troops)
             .map(u -> (Troops) u)
