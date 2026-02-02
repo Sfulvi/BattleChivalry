@@ -16,7 +16,7 @@ public abstract class Troops implements Units{
     private int y;
     private final boolean faction;
     
-    public Troops (String name, int hp, int atk, int range, int mov, int stamina, int maxStamina, boolean faction) {
+    public Troops (String name, int hp, int atk, int range, int mov, int maxStamina, boolean faction) {
         this.name = name;
         this.hp = hp;
         this.atk = atk;
@@ -83,33 +83,13 @@ public abstract class Troops implements Units{
     
     //metodi setter
     
-    /*public void setName(String name){
-        this.name = name;    
-    }*/
-    
     public void setHP(int hp) {
         this.hp = hp;
     }
     
-    /*public void setAtk(int atk) {
-        this.atk = atk;
-    }*/
-    
-    /*public void setRange(int range) {
-        this.range = range;
-    }*/
-    
-    /*public void setMov(int mov) {
-        this.mov = mov;
-    }*/
-    
     public void setStamina(int stamina) {
         this.stamina = stamina;
     }
-    
-    /*public void setMaxStamina(int maxStamina) {
-        this.maxStamina = maxStamina;
-    }*/
     
     public void setHasAttacked(boolean hasAttacked) {
         this.hasAttacked = hasAttacked;
@@ -123,10 +103,7 @@ public abstract class Troops implements Units{
         this.y = y;
     }
     
-    /*public void setFaction(boolean faction) {
-        this.faction = faction;
-    }*/ 
-       //funzione che definisce l'attacco
+    //funzione che definisce l'attacco
     public void attack(int targetX, int targetY, Battlefield field) throws MyException{
         Units targetUnit = field.getUnit(targetX, targetY);
 
@@ -138,22 +115,26 @@ public abstract class Troops implements Units{
 
         // verifica se il bersaglio è nel range
         if (!isInRange(targetX, targetY)) {
-            // errore: cella fuori portata
+            // errore: Cella fuori portata
             throw new MyException("bersaglio fuori portata");
         }
 
         // verifica presenza di un'unità
         if (targetUnit == null) {
-            // errore: cella vuota
+            // errore: Cella vuota
             throw new MyException("cella bersaglio vuota");
         }
 
         //verifica se il bersaglio è un alleato
-        if ((targetUnit instanceof Troops) && ((Troops)targetUnit).getFaction() == this.getFaction() || (targetUnit instanceof SiegeMachines) && ((SiegeMachines)targetUnit).getFaction() == this.getFaction()) {
-            //errore: bersaglio alleato
+        if (targetUnit.isHost() == this.isHost()) {
+            // errore: Bersaglio alleato
             throw new MyException("bersaglio alleato");
         }
-        
+
+        if(field.battlefield[targetY][targetX] instanceof SiegeMachines) {
+			// errore: Obiettivo non bersagliabile
+			throw new MyException("obiettivo non bersagliabile");
+		}
         //l'attacco ha successo
         targetUnit.attacked(getAtk());
         setStamina(getStamina() - 1);
