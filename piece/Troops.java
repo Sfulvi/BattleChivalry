@@ -3,19 +3,18 @@ package piece;
 import game.Battlefield;
 import game.MyException;
 
-public class Troops implements Units{
-    private String name;
+public abstract class Troops implements Units{
+    private final String name;
     private int hp;
-    private int atk;
-    private int range;
-    private int mov;
+    private final int atk;
+    private final int range;
+    private final int mov;
     private int stamina;
-    private int maxStamina;
+    private final int maxStamina;
     private boolean hasAttacked;
     private int x;
     private int y;
-    private int AC;
-    private boolean faction;
+    private final boolean faction;
     
     public Troops (String name, int hp, int atk, int range, int mov, int stamina, int maxStamina, boolean faction) {
         this.name = name;
@@ -23,12 +22,9 @@ public class Troops implements Units{
         this.atk = atk;
         this.range = range;
         this.mov = mov;
-        this.stamina = stamina;
         this.maxStamina = maxStamina;
+        this.stamina = maxStamina;
         this.hasAttacked = false;
-        this.x = 0;
-        this.y = 0;
-        this.AC = 1;
         this.faction = faction;
     }
     
@@ -81,43 +77,39 @@ public class Troops implements Units{
         return this.y;
     }
     
-    public int getAC() {
-        return this.AC;
-    }
-    
     public boolean getFaction() {
         return this.faction;
     }
     
     //metodi setter
     
-    public void setName(String name){
+    /*public void setName(String name){
         this.name = name;    
-    }
+    }*/
     
     public void setHP(int hp) {
         this.hp = hp;
     }
     
-    public void setAtk(int atk) {
+    /*public void setAtk(int atk) {
         this.atk = atk;
-    }
+    }*/
     
-    public void setRange(int range) {
+    /*public void setRange(int range) {
         this.range = range;
-    }
+    }*/
     
-    public void setMov(int mov) {
+    /*public void setMov(int mov) {
         this.mov = mov;
-    }
+    }*/
     
     public void setStamina(int stamina) {
         this.stamina = stamina;
     }
     
-    public void setMaxStamina(int maxStamina) {
+    /*public void setMaxStamina(int maxStamina) {
         this.maxStamina = maxStamina;
-    }
+    }*/
     
     public void setHasAttacked(boolean hasAttacked) {
         this.hasAttacked = hasAttacked;
@@ -131,13 +123,9 @@ public class Troops implements Units{
         this.y = y;
     }
     
-    public void setAC(int AC) {
-        this.AC = AC;
-    }
-    
-    public void setFaction(boolean faction) {
+    /*public void setFaction(boolean faction) {
         this.faction = faction;
-    } 
+    }*/ 
        //funzione che definisce l'attacco
     public void attack(int targetX, int targetY, Battlefield field) throws MyException{
         Units targetUnit = field.getUnit(targetX, targetY);
