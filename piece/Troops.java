@@ -130,7 +130,7 @@ public abstract class Troops implements Units{
             // errore: Bersaglio alleato
             throw new MyException("bersaglio alleato");
 
-        if(field.battlefield[targetY][targetX] instanceof SiegeMachines)
+        if(field.getUnit(targetX, targetY) instanceof SiegeMachines)
 			// errore: Obiettivo non bersagliabile
 			throw new MyException("obiettivo non bersagliabile");
 		
@@ -199,13 +199,18 @@ public abstract class Troops implements Units{
     
         // verifica se la nuova posizione è valida
         if (isValidMove(newX, newY, field)) {
-            setX(newX);                                     //valori nella truppa
+            // valori nella truppa
+            setX(newX);                                     
             setY(newY);
-            field.battlefield[newY][newX] = this;           //valori nel campo
-            field.battlefield[currentY][currentX] = null;   //svuoto la casella vecchia
+
+            Units[][] battlefield = field.getBattlefield();
+            // sposto l'unità nella nuova posizione
+            battlefield[newY][newX] = this;   
+            // aggiorno la vecchia posizione a null
+            battlefield[currentY][currentX] = null;
+
             setStamina(getStamina() - 1);
         }
-    
     }
     
     @Override
@@ -235,7 +240,7 @@ public abstract class Troops implements Units{
                 //fuori dal campo
                 throw new MyException("fuori campi");
                 
-            } else if (field.battlefield[newY][newX] != null) {
+            } else if (field.getUnit(newX, newY) != null) {
                 //casella occupata
                 throw new MyException("cella occupata");
     

@@ -7,18 +7,14 @@ import piece.Troops;
 
 public class Engineer extends Troops {
     public Engineer(String name, boolean faction) {
-        super(name, 20, 10, 1, 1, 2, faction);	
+        super(name, 20, 10, 1, 1, 2, faction);
     }
-    
-    
 
     public void rechargeSiegeMachine(int machineX, int machineY, Battlefield field) throws MyException{
-
-        
         // controlla le posizioni
-        if (field.battlefield[machineY][machineX] instanceof SiegeMachines) { //casella sopra
+        if (field.getUnit(machineX, machineY) instanceof SiegeMachines) { //casella sopra
             
-            SiegeMachines machine = (SiegeMachines) field.battlefield[machineY][machineX];
+            SiegeMachines machine = (SiegeMachines) field.getUnit(machineX, machineY);
             
             if (machine.getHasAttacked() == false) { // controllo se la macchina e' gia carica
 
@@ -33,8 +29,7 @@ public class Engineer extends Troops {
                 setStamina(getStamina()-1);
                 // tutto ok, ricarica
             }
-
-            
+    
         }else{
             throw new MyException("macchina da assedio non trovata");
         }

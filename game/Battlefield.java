@@ -11,7 +11,7 @@ public class Battlefield {
 	private static final int Y = 9;
     
 	//campo di battaglia come array di unità (ovvero truppe, macchine d'assedio e generali)
-	public Units[][] battlefield;
+	private final Units[][] battlefield;
 
 	private	Cannon[] cannons = null;
 	private Engineer[] engineers = null;

@@ -21,9 +21,8 @@ public class Test1 {
         field.deploy(player2);
         System.out.println(field.toString());
         // Test di movimento su General
-        System.out.println(field.battlefield[4][1].toString());
         try{
-            field.battlefield[4][1].move(field, 8);
+            field.getUnit(1, 4).move(field, 8);
         }catch(MyException e){
             System.out.println(e);
         }catch(NullPointerException e){
@@ -32,9 +31,8 @@ public class Test1 {
 
         System.out.println(field.toString());
         // Test di movimento su Troops
-        System.out.println(field.battlefield[2][2].toString());
         try{
-            field.battlefield[2][2].move(field, 3);
+            field.getUnit(2, 2).move(field, 3);
         }catch(MyException e){
             System.out.println(e);
         }catch(NullPointerException e){
@@ -43,9 +41,8 @@ public class Test1 {
         System.out.println(field.toString());
 
         // Test di movimento su stamina esaurita con movimento
-        System.out.println(field.battlefield[3][2].toString());
         try{
-            field.battlefield[3][2].move(field, 4);
+            field.getUnit(2, 3).move(field, 4);
         }catch(MyException e){
             System.out.println(e);
         }catch(NullPointerException e){
@@ -53,7 +50,7 @@ public class Test1 {
         }
 
         try{
-            field.battlefield[3][3].move(field, 4);
+            field.getUnit(3, 3).move(field, 4);
         }catch(MyException e){
             System.out.println(e);
         }catch(NullPointerException e){
@@ -61,7 +58,7 @@ public class Test1 {
         }
 
         try{
-            field.battlefield[3][4].move(field, 4);
+            field.getUnit(4, 3).move(field, 4);
         }catch(MyException e){
             System.out.println(e);
         }catch(NullPointerException e){
