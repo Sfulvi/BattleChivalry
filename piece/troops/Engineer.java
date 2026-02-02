@@ -20,7 +20,7 @@ public class Engineer extends Troops {
             
             SiegeMachines machine = (SiegeMachines) field.battlefield[machineY][machineX];
             
-            if (machine.hasAttacked == false) { // controllo se la macchina e' gia carica
+            if (machine.getHasAttacked() == false) { // controllo se la macchina e' gia carica
 
                 throw new MyException("macchina da assedio gia carica");
 
