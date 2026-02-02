@@ -363,6 +363,9 @@ public class Battlefield {
 		
 		return this.battlefield[y][x];
 	}
+	public void removeUnit(int x, int y){
+		this.battlefield[y][x]=null;
+	}
 
     @Override
 	public String toString(){

@@ -137,8 +137,11 @@ public abstract class Troops implements Units{
 		}
         //l'attacco ha successo
         targetUnit.attacked(getAtk());
+        // rimuovo se il bersaglio è morto
+        if(targetUnit.isAlive() == false){
+            field.removeUnit(targetX, targetY);
+        }
         setStamina(getStamina() - 1);
-        
         setHasAttacked(true); //solo un attacco a turno
         
     }
