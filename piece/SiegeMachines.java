@@ -63,7 +63,7 @@ public class SiegeMachines implements Units{
         return this.y;
     }
 
-    private void setHasAttacked(boolean hasAttacked) {
+    protected void setHasAttacked(boolean hasAttacked) {
         this.hasAttacked = hasAttacked;
     }
 
