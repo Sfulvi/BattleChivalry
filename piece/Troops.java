@@ -28,10 +28,12 @@ public abstract class Troops implements Units{
         this.faction = faction;
     }
     
+    @Override
     public boolean isAlive() {
         return hp > 0;
     }
     
+    @Override
     public boolean isHost() {
 		return faction;
 	}
@@ -104,6 +106,7 @@ public abstract class Troops implements Units{
     }
     
     //funzione che definisce l'attacco
+    @Override
     public void attack(int targetX, int targetY, Battlefield field) throws MyException{
         Units targetUnit = field.getUnit(targetX, targetY);
 
@@ -147,6 +150,7 @@ public abstract class Troops implements Units{
     }
     
     //funzione di movimento delle truppe
+    @Override
     public void move(Battlefield field, int direction) throws MyException{
         int currentX = getX();
         int currentY = getY();
@@ -200,6 +204,7 @@ public abstract class Troops implements Units{
     
     }
     
+    @Override
     public void attacked(int atk) {
 		setHP(getHP()-atk);
 	}
@@ -240,10 +245,12 @@ public abstract class Troops implements Units{
             }
         }
         
+    @Override
     public void recharge(){
         setStamina(maxStamina);
     }
 
+    @Override
     public String toString(){
 		String s="";
 

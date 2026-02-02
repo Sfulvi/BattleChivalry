@@ -6,31 +6,25 @@ import piece.troops.Engineer;
 
 public class SiegeMachines implements Units{
     
-    public String name;
-    public int atk;
-    public boolean hasAttacked;
-    public int rechargeTime;
-    public boolean recharged;
-    public int actionCost;
-    public boolean faction;
-    public int standby;
-    public int x;
-    public int y;
-
+    private final String name;
+    private final int atk;
+    private boolean hasAttacked;
+    private boolean recharged;
+    private final int rechargeTime;
+    private final boolean faction;
+    private int standby;
+    private int x;
+    private int y;
     
-    public SiegeMachines (String name, int atk, int rechargeTime, boolean recharged, int actionCost, int standby, boolean faction, boolean hasAttacked) {
+    public SiegeMachines (String name, int atk, int rechargeTime, boolean faction) {
             
-        setName(name);
-        setAtk(atk);
-        setRechargeTime(rechargeTime);
-        setRecharged(recharged);
-        setActionCost(actionCost);
-        setStandby(standby);
-        setFaction(faction);
-        setHasAttacked(hasAttacked);
-        setX(0);
-        setY(0);
-
+        this.name = name;
+        this.atk = atk;
+        this.rechargeTime = rechargeTime;
+        this.standby = 0;
+        this.faction = faction;
+        this.hasAttacked = false;
+        this.recharged = true;
     }
 
     public String getName() {
@@ -45,16 +39,12 @@ public class SiegeMachines implements Units{
         return this.hasAttacked;
     }
 
-    public int getRechargeTime() {
-        return this.rechargeTime;
-    }
-
     public boolean getRecharged() {
         return this.recharged;
     }
 
-    public int getActionCost() {
-        return this.actionCost;
+    public int getRechargeTime() {
+        return this.rechargeTime;
     }
 
     public boolean getFaction() {
@@ -73,32 +63,12 @@ public class SiegeMachines implements Units{
         return this.y;
     }
 
-    private void setName(String name) {
-        this.name = name;
-    }
-
-    private void setAtk(int atk) {
-        this.atk = atk;
-    }
-
     private void setHasAttacked(boolean hasAttacked) {
         this.hasAttacked = hasAttacked;
     }
 
-    private void setRechargeTime(int rechargeTime) {
-        this.rechargeTime = rechargeTime;
-    }
-
     private void setRecharged(boolean recharged) {
         this.recharged = recharged;
-    }
-
-    private void setActionCost(int actionCost) {
-        this.actionCost = actionCost;
-    }
-
-    private void setFaction(boolean faction) {
-        this.faction = faction;
     }
 
     private void setStandby(int standby) {
@@ -113,6 +83,11 @@ public class SiegeMachines implements Units{
         this.y = y;
     }
 
+    @Override
+    public void recharge(){
+        //metodo vuoto
+    }
+    
     public void recharge(Battlefield field) {
 
         
@@ -143,10 +118,14 @@ public class SiegeMachines implements Units{
 
     }
 
-    public void move(Battlefield position, int orientation) {    
+    @Override
+    public void move(Battlefield position, int orientation) throws MyException {
+        // Le macchine da assedio non si muovono
+        throw new MyException("Questa unità non può muoversi");
 
     }
 
+    @Override
     public void attack(int targetX, int targetY, Battlefield field) throws MyException{
 
 
@@ -180,7 +159,7 @@ public class SiegeMachines implements Units{
 
     public boolean hasEngineer(Battlefield field) {
 
-        if(field.battlefield[getY()][getX()+1] instanceof Engineer == true) { //l'ingegnere è sempre sotto
+        if(field.battlefield[getY()][getX()+1] instanceof Engineer == true) {
             return true;
         } else {
             return false;
@@ -188,19 +167,19 @@ public class SiegeMachines implements Units{
 
     }
 
+    @Override
     public boolean isHost() {
         return false;
     }
 
+    @Override
     public void attacked(int atk) {
-
+        //le macchine da assedio non possono essere attaccate
     }
 
+    @Override
     public boolean isAlive() {
         return false;
     }
 
-    public void recharge(){
-
-    }
 }

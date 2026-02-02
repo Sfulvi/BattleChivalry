@@ -8,11 +8,11 @@ import piece.Units;
 public class Catapult extends SiegeMachines {
 
     public Catapult(String name, boolean faction) {
-        super(name, 50, 4, true, 4, 0, faction, false);
+        super(name, 50, 4, faction);
 
     }
 
-    
+    @Override
     public void attack(int x, int y, Battlefield field) throws MyException {
 
 	    /* Controlli preliminari */
