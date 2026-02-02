@@ -7,7 +7,7 @@ import piece.Troops;
 
 public class Engineer extends Troops {
     public Engineer(String name, boolean faction) {
-        super(name, 20, 10, 1, 1, 1, 2, faction);	
+        super(name, 20, 10, 1, 1, 2, faction);	
     }
     
     
