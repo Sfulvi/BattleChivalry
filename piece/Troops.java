@@ -111,39 +111,35 @@ public abstract class Troops implements Units{
         Units targetUnit = field.getUnit(targetX, targetY);
 
         // verifica se l'unità ha già attaccato
-        if (getHasAttacked()) {
+        if (getHasAttacked())
             // errore: unità ha già attaccato
             throw new MyException("questa unità ha già attaccato");
-        }
 
         // verifica se il bersaglio è nel range
-        if (!isInRange(targetX, targetY)) {
+        if (!isInRange(targetX, targetY))
             // errore: Cella fuori portata
             throw new MyException("bersaglio fuori portata");
-        }
 
         // verifica presenza di un'unità
-        if (targetUnit == null) {
+        if (targetUnit == null)
             // errore: Cella vuota
             throw new MyException("cella bersaglio vuota");
-        }
 
         //verifica se il bersaglio è un alleato
-        if (targetUnit.isHost() == this.isHost()) {
+        if (targetUnit.isHost() == this.isHost())
             // errore: Bersaglio alleato
             throw new MyException("bersaglio alleato");
-        }
 
-        if(field.battlefield[targetY][targetX] instanceof SiegeMachines) {
+        if(field.battlefield[targetY][targetX] instanceof SiegeMachines)
 			// errore: Obiettivo non bersagliabile
 			throw new MyException("obiettivo non bersagliabile");
-		}
+		
         //l'attacco ha successo
         targetUnit.attacked(getAtk());
         // rimuovo se il bersaglio è morto
-        if(targetUnit.isAlive() == false){
+        if(targetUnit.isAlive() == false)
             field.removeUnit(targetX, targetY);
-        }
+
         setStamina(getStamina() - 1);
         setHasAttacked(true); //solo un attacco a turno
         
@@ -159,38 +155,46 @@ public abstract class Troops implements Units{
         int newY = -1;
     
         switch (direction) {
-            case 1: // nw
+            case 1 -> {
+                // nw
                 newX = currentX - movement;
                 newY = currentY - movement;
-                break;
-            case 2: // north
+            }
+            case 2 -> {
+                // north
                 newX = currentX;
                 newY = currentY - movement;
-                break;
-            case 3: // ne
+            }
+            case 3 -> {
+                // ne
                 newX = currentX + movement;
                 newY = currentY - movement;
-                break;
-            case 4: // east
+            }
+            case 4 -> {
+                // east
                 newX = currentX + movement;
                 newY = currentY;
-                break;
-            case 5: // se
-                newX = currentX + movement; 
+            }
+            case 5 -> {
+                // se
+                newX = currentX + movement;
                 newY = currentY + movement;
-                break;
-            case 6: // south
+            }
+            case 6 -> {
+                // south
                 newX = currentX;
                 newY = currentY + movement;
-                break;
-            case 7: // sw
+            }
+            case 7 -> {
+                // sw
                 newX = currentX - movement;
                 newY = currentY + movement;
-                break;
-            case 8: // west
+            }
+            case 8 -> {
+                // west
                 newX = currentX - movement;
                 newY=currentY;
-                break;
+            }
         }
     
         // verifica se la nuova posizione è valida
