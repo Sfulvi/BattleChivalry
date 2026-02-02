@@ -110,6 +110,11 @@ public abstract class Troops implements Units{
     public void attack(int targetX, int targetY, Battlefield field) throws MyException{
         Units targetUnit = field.getUnit(targetX, targetY);
 
+        // verifica se l'unità ha stamina
+        if(getStamina() == 0)
+            // errore: Stamina esaurita
+            throw new MyException("stamina esaurita");
+
         // verifica se l'unità ha già attaccato
         if (getHasAttacked())
             // errore: unità ha già attaccato
