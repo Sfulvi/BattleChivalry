@@ -4,7 +4,7 @@ import game.Battlefield;
 import game.MyException;
 import piece.troops.Engineer;
 
-public class SiegeMachines implements Units{
+public abstract class SiegeMachines implements Units{
     
     private final String name;
     private final int atk;
@@ -63,7 +63,7 @@ public class SiegeMachines implements Units{
         return this.y;
     }
 
-    private void setHasAttacked(boolean hasAttacked) {
+    protected void setHasAttacked(boolean hasAttacked) {
         this.hasAttacked = hasAttacked;
     }
 
@@ -82,40 +82,23 @@ public class SiegeMachines implements Units{
     public void setY(int y) {
         this.y = y;
     }
-
-    @Override
-    public void recharge(){
-        //metodo vuoto
-    }
     
-    public void recharge(Battlefield field) {
-
-        
-        /* Controlla se ha attaccato o é in standby */
+    @Override
+    public void recharge() {
+        /* Controlla se ha attaccato o è in standby */
         if(getHasAttacked()==true && getStandby()==0){ 
-
             setRecharged(false);
             setStandby(getRechargeTime());
-
         }else if(getHasAttacked()==true && getStandby()!=0){ 
-
             setStandby(getStandby()-1);
-
             if(getStandby()==0){
-
                 setRecharged(true);
-            
             }
-
         }
-        
         /* Prepara la macchina per attaccare */
-        if(getRecharged()==true){
-
+        if(getRecharged()){
             setHasAttacked(false);
-
         }
-
     }
 
     @Override
@@ -127,44 +110,35 @@ public class SiegeMachines implements Units{
 
     @Override
     public void attack(int targetX, int targetY, Battlefield field) throws MyException{
-
-
-        if(targetX > 12 && targetX < 2){
-
+        Units targetUnit = field.getUnit(targetX, targetY);
+        
+        if(targetX > 12 || targetX < 2)
             /* Errore: Non puoi colpire quella zona */
             throw new MyException("Non puoi colpire quella zona");
-
-        }else if(field.battlefield[targetY][targetX] == null) {
-
+            
+        if(targetUnit == null) 
             /* Errore: La zona é vuota */
             throw new MyException("La zona é vuota");
-                
-        }else if(field.battlefield[targetY][targetX].isHost() == getFaction()) {
 
+        if(targetUnit.isHost() == getFaction())
             /* Errore: "Il fuoco amico non sará tollerato" */
             throw new MyException("Il fuoco amico non sará tollerato");
 
-        }else if(getHasAttacked()==true || hasEngineer(field)==false){
-
+        if(getHasAttacked()==true || hasEngineer(field)==false)
             /* Errore: La macchina da assedio sta ricaricando */
             throw new MyException("La macchina da assedio sta ricaricando");
+        
+        
+        setHasAttacked(true);
+        targetUnit.attacked(getAtk());
 
-        } else {
-
-            field.battlefield[targetY][targetX].attacked(getAtk());
-
-        }
-
+        if(targetUnit.isAlive() == false)
+            field.removeUnit(targetX, targetY);
+        
     }
 
     public boolean hasEngineer(Battlefield field) {
-
-        if(field.battlefield[getY()][getX()+1] instanceof Engineer == true) {
-            return true;
-        } else {
-            return false;
-        }
-
+        return((field.getUnit(getX(), getY()+1) instanceof Engineer == true) || (field.getUnit(getX(), getY()-1) instanceof Engineer == true ));
     }
 
     @Override
