@@ -2,6 +2,9 @@ package GUI;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import game.Battlefield;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +18,8 @@ public class MainMenu {
 
     public static void main(String[] args) {
 
+        Battlefield battlefield = new Battlefield();
+        
         JFrame menu = new JFrame("Main Menu");
         menu.setLayout(new BorderLayout());
 
@@ -65,7 +70,7 @@ public class MainMenu {
                     JOptionPane.WARNING_MESSAGE);
                 } else {
                     SwingUtilities.invokeLater(() -> { //avvio della schermata di gioco
-                        new BattleGroundGUI(GUIselectedGeneral1, GUIselectedGeneral2);
+                        new BattleGroundGUI(battlefield, GUIselectedGeneral1, GUIselectedGeneral2);
                         //chiusura di questa pagina
                         menu.dispose();
                     });
