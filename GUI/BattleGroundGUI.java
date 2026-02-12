@@ -1,3 +1,5 @@
+package GUI;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -5,16 +7,21 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
+import game.Battlefield;
+import piece.Units;
 
 public class BattleGroundGUI {
+    
+    private Battlefield battlefield;
     private String general1;
     private String general2;
     private JPanel selectedCell = null;
 
-    public BattleGroundGUI(String general1, String general2) {
+    public BattleGroundGUI(Battlefield battlefield, String general1, String general2) {
+        this.battlefield = battlefield;
         this.general1 = general1;
         this.general2 = general2;
-        initializeBgGUI();
+        initializeBgGUI(battlefield);
     }
 
     //funzione che importa le icone
@@ -24,27 +31,34 @@ public class BattleGroundGUI {
         int unitsSize = 60;
         
         //assegno chiavi alle immagini e richiamo resizeIcon
-        images.put("recharge", resizeIcon("../img/icons/recharge.png",        iconsSize, iconsSize));
-        images.put("attack", resizeIcon("../img/icons/attack.png",            iconsSize, iconsSize));
-        images.put("move", resizeIcon("../img/icons/move.png",                iconsSize, iconsSize));
+        images.put("recharge", resizeIcon("img/icons/recharge.png",        iconsSize, iconsSize));
+        images.put("attack", resizeIcon("img/icons/attack.png",            iconsSize, iconsSize));
+        images.put("move", resizeIcon("img/icons/move.png",                iconsSize, iconsSize));
 
-        images.put("archer", resizeIcon("../img/troops/archer.png",           unitsSize, unitsSize));
-        images.put("armored", resizeIcon("../img/troops/armored.png",         unitsSize, unitsSize));
-        images.put("cavalry", resizeIcon("../img/troops/cavalry.png",         unitsSize, unitsSize));
-        images.put("engineer", resizeIcon("../img/troops/engineer.png",       unitsSize, unitsSize));
-        images.put("infantry", resizeIcon("../img/troops/infantry.png",       unitsSize, unitsSize));
+        images.put("archer", resizeIcon("img/troops/archer.png",           unitsSize, unitsSize));
+        images.put("armored", resizeIcon("img/troops/armored.png",         unitsSize, unitsSize));
+        images.put("cavalry", resizeIcon("img/troops/cavalry.png",         unitsSize, unitsSize));
+        images.put("engineer", resizeIcon("img/troops/engineer.png",       unitsSize, unitsSize));
+        images.put("infantry", resizeIcon("img/troops/infantry.png",       unitsSize, unitsSize));
 
-        images.put("suntzu", resizeIcon("../img/generals/sunTzu.png",         unitsSize, unitsSize));
-        images.put("nobunaga", resizeIcon("../img/generals/nobunagaOda.png",  unitsSize, unitsSize));
-        images.put("arthur", resizeIcon("../img/generals/kingArthur.png",     unitsSize, unitsSize));
-        images.put("julius", resizeIcon("../img/generals/juliusCaesar.png",   unitsSize, unitsSize));
-        images.put("leonidas", resizeIcon("../img/generals/leonidas.png",     unitsSize, unitsSize));
-        images.put("ragnar", resizeIcon("../img/generals/ragnar.png",         unitsSize, unitsSize));
-        images.put("ghandi", resizeIcon("../img/generals/ghandi.png",         unitsSize, unitsSize));
+        images.put("suntzu", resizeIcon("img/generals/sunTzu.png",         unitsSize, unitsSize));
+        images.put("nobunagaoda", resizeIcon("img/generals/nobunagaOda.png",  unitsSize, unitsSize));
+        images.put("kingarthur", resizeIcon("img/generals/kingArthur.png",     unitsSize, unitsSize));
+        images.put("juliuscaesar", resizeIcon("img/generals/juliusCaesar.png",   unitsSize, unitsSize));
+        images.put("leonida", resizeIcon("img/generals/leonidas.png",     unitsSize, unitsSize));
+        images.put("ragnar", resizeIcon("img/generals/ragnar.png",         unitsSize, unitsSize));
+        images.put("ghandi", resizeIcon("img/generals/ghandi.png",         unitsSize, unitsSize));
 
-        images.put("catapult", resizeIcon("../img/siege/catapult.png",        unitsSize, unitsSize));
+        images.put("ballista", resizeIcon("img/specials/special1.png",        unitsSize, unitsSize));
+        images.put("cannon", resizeIcon("img/specials/special1.png",        unitsSize, unitsSize));
+        images.put("catapult", resizeIcon("img/siege/catapult.png",        unitsSize, unitsSize));
 
-        images.put("special", resizeIcon("../img/specials/special1.png",       unitsSize, unitsSize));
+        images.put("berserker", resizeIcon("img/specials/berserker.png",       unitsSize, unitsSize));
+        images.put("gladiator", resizeIcon("img/specials/gladiator.png",       unitsSize, unitsSize));
+        images.put("knight", resizeIcon("img/specials/knight.png",       unitsSize, unitsSize));
+        images.put("musketeer", resizeIcon("img/specials/musketeer.png",       unitsSize, unitsSize));
+        images.put("samurai", resizeIcon("img/specials/samurai.png",       unitsSize, unitsSize));
+        images.put("spartan", resizeIcon("img/specials/spartan.png",       unitsSize, unitsSize));
         
         return images;
     }
@@ -57,10 +71,7 @@ public class BattleGroundGUI {
     }
 
     //funzione che carica e aggiorna la scacchiera
-    private JPanel uploadBG(int cellSize) {
-        //carico la matrice
-        TestMatrix provaMat = new TestMatrix();
-        String[][] matrice = provaMat.getUnitsMatrix();
+    private JPanel uploadBG(Battlefield battlefield, int cellSize) {
         //scacchiera
         JPanel gameGrid = new JPanel();
         gameGrid.setLayout(new GridLayout(9, 15));
@@ -81,8 +92,14 @@ public class BattleGroundGUI {
                     bgCell.setBackground(Color.WHITE);
                 }
 
-                String currentUnit = matrice[y][x];
-                ImageIcon unitIcon = getCurrentIcon(currentUnit);
+                // carica icona giusta in base al nome dell'unità presente in quella cella
+                Units currentUnit = battlefield.getUnit(y, x);
+                String currentUnitName = null;
+
+                if (currentUnit != null)
+                    currentUnitName = currentUnit.getClass().getSimpleName().toLowerCase();
+
+                ImageIcon unitIcon = getCurrentIcon(currentUnitName);
                 JLabel unitLabel = new JLabel(unitIcon);
                 bgCell.add(unitLabel);
 
@@ -108,10 +125,10 @@ public class BattleGroundGUI {
 
                         System.out.println("cell: X=" + cx + " Y=" + cy);
 
-                        if (matrice[cy][cx].equals("X")) {
+                        if (battlefield.getUnit(cy, cx) == null) {
                             System.out.println("No unit");
                         } else{
-                            System.out.println("Unit: " + matrice[cy][cx]);
+                            System.out.println("Unit: " + battlefield.getUnit(cy, cx).getClass().getSimpleName().toLowerCase());
                         }
                     
                     }                    
@@ -133,7 +150,7 @@ private ImageIcon getCurrentIcon(String currentUnit){
 }
 
 
-private void initializeBgGUI() {
+private void initializeBgGUI(Battlefield battlefield) {
 
     //do nomi alle icone dei bottoni
     ImageIcon rechargeIcon = images.get("recharge");
@@ -145,7 +162,7 @@ private void initializeBgGUI() {
     game.setLayout(new BorderLayout());
 
     int cellSize = 70;
-    JPanel gameGrid = uploadBG(cellSize);
+    JPanel gameGrid = uploadBG(battlefield, cellSize);
 
         //importazione statistiche giocatore e truppe
         //W.I.P.
@@ -355,10 +372,9 @@ private void initializeBgGUI() {
     game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             new BattleGroundGUI("", "");
         });
-    }
-
+    }*/
 }
