@@ -93,7 +93,7 @@ public class BattleGroundGUI {
                 }
 
                 // carica icona giusta in base al nome dell'unità presente in quella cella
-                Units currentUnit = battlefield.getUnit(y, x);
+                Units currentUnit = battlefield.getUnit(x, y);
                 String currentUnitName = null;
 
                 if (currentUnit != null)
