@@ -168,7 +168,7 @@ private void initializeBgGUI(Battlefield battlefield) {
         //W.I.P.
 
         /* 
-        Player playerStats = new Player();
+        PlayerTest playerStats = new PlayerTest();
         int playerAP = playerStats.getApDone();
         //questa viene stampata nella label playerAPLabel qui sotto
         */
