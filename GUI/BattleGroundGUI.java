@@ -12,7 +12,7 @@ import piece.Units;
 
 public class BattleGroundGUI {
     
-    private Battlefield battlefield;
+    private static Battlefield battlefield;
     private String general1;
     private String general2;
     private JPanel selectedCell = null;
@@ -103,8 +103,8 @@ public class BattleGroundGUI {
                 JLabel unitLabel = new JLabel(unitIcon);
                 bgCell.add(unitLabel);
 
-                bgCell.putClientProperty("x", x);
                 bgCell.putClientProperty("y", y);
+                bgCell.putClientProperty("x", x);
 
                 bgCell.addMouseListener(new MouseAdapter() {
                     @Override
@@ -125,10 +125,10 @@ public class BattleGroundGUI {
 
                         System.out.println("cell: X=" + cx + " Y=" + cy);
 
-                        if (battlefield.getUnit(cy, cx) == null) {
+                        if (battlefield.getUnit(cx, cy) == null) {
                             System.out.println("No unit");
                         } else{
-                            System.out.println("Unit: " + battlefield.getUnit(cy, cx).getClass().getSimpleName().toLowerCase());
+                            System.out.println("Unit: " + battlefield.getUnit(cx, cy).getClass().getSimpleName().toLowerCase());
                         }
                     
                     }                    
@@ -372,9 +372,9 @@ private void initializeBgGUI(Battlefield battlefield) {
     game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            new BattleGroundGUI("", "");
-        });
-    }*/
+            new BattleGroundGUI(battlefield, "", "");
+        });   
+    }
 }

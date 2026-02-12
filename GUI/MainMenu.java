@@ -2,6 +2,8 @@ package GUI;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.PlainDocument;
 
 import game.Battlefield;
 
@@ -14,6 +16,8 @@ public class MainMenu {
     static String selectedGeneral2; //stringhe che passo al costruttore
     static String GUIselectedGeneral1;
     static String GUIselectedGeneral2; //stringhe formattate per la GUI
+    static String player1Name;
+    static String player2Name; //nomi giocatori
     static int generalsStringLength = 13;
 
     public static void main(String[] args) {
@@ -37,17 +41,41 @@ public class MainMenu {
         startButton.setFocusPainted(false);
 
         //labels
-        JLabel titleLabel = new JLabel("Select the generals");
+        JLabel titleLabel = new JLabel("Select your names and the generals");
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 34));
+        titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 26));
 
-        JLabel player1Label = new JLabel("              Player 1..");
-        JLabel player2Label = new JLabel("              Player 2..");
+        //text field nome giocatori
+        JTextField p1NameField = new JTextField("", 10);
+        JTextField p2NameField = new JTextField("", 10);
+        
+        //impedisco di scrivere oltre 15 caratteri per il nome giocatori
+        DocumentFilter charLimitFilter = new DocumentFilter() {
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string, javax.swing.text.AttributeSet attr) throws javax.swing.text.BadLocationException {
+                if (fb.getDocument().getLength() + string.length() <= 15) {
+                    super.insertString(fb, offset, string, attr);
+                }
+            }
+            
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, javax.swing.text.AttributeSet attrs) throws javax.swing.text.BadLocationException {
+                if (fb.getDocument().getLength() - length + text.length() <= 15) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        };
+        
+        //applico il filtro ai text field
+        PlainDocument doc1 = (PlainDocument) p1NameField.getDocument();
+        doc1.setDocumentFilter(charLimitFilter);
+        PlainDocument doc2 = (PlainDocument) p2NameField.getDocument();
+        doc2.setDocumentFilter(charLimitFilter);
 
         //combo box dei generali del primo giocatore
         general1CB.setSelectedItem(null);
         general1CB.addActionListener(e -> {
-            JComboBox cb = (JComboBox) e.getSource();
+            JComboBox<?> cb = (JComboBox<?>) e.getSource();
             selectedGeneral1 = (String) cb.getSelectedItem();
             GUIselectedGeneral1 = String.format("%-" + generalsStringLength + "s", selectedGeneral1);
         });
@@ -55,7 +83,7 @@ public class MainMenu {
         //combo box dei generali del secondo giocatore
         general2CB.setSelectedItem(null);
         general2CB.addActionListener(e -> {
-            JComboBox cb = (JComboBox) e.getSource();
+            JComboBox<?> cb = (JComboBox<?>) e.getSource();
             selectedGeneral2 = (String) cb.getSelectedItem();
             GUIselectedGeneral2 = String.format("%" + generalsStringLength + "s", selectedGeneral2);
         });
@@ -68,7 +96,12 @@ public class MainMenu {
                 if (selectedGeneral1 == null || selectedGeneral2 == null) {
                     JOptionPane.showMessageDialog(menu, "You must select both generals before starting.", "Error!",
                     JOptionPane.WARNING_MESSAGE);
+                } else if (p1NameField.getText().trim().isEmpty() || p2NameField.getText().trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(menu, "You must enter both player names.", "Error!",
+                    JOptionPane.WARNING_MESSAGE);
                 } else {
+                    player1Name = p1NameField.getText();
+                    player2Name = p2NameField.getText();
                     SwingUtilities.invokeLater(() -> { //avvio della schermata di gioco
                         new BattleGroundGUI(battlefield, GUIselectedGeneral1, GUIselectedGeneral2);
                         //chiusura di questa pagina
@@ -86,21 +119,29 @@ public class MainMenu {
         menu.add(titlePanel, BorderLayout.NORTH);
 
         JPanel generalsPanel = new JPanel();
-        generalsPanel.setPreferredSize(new Dimension(400, 200));
+        generalsPanel.setPreferredSize(new Dimension(500, 200));
         generalsPanel.setLayout(new GridLayout(2, 2));
         generalsPanel.setBackground(Color.WHITE);
-        generalsPanel.add(player1Label);//0:0
-        generalsPanel.add(player2Label);//0:1
+        JPanel p1NamePanel = new JPanel();
+        p1NamePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        p1NamePanel.setBackground(Color.WHITE);
+        p1NamePanel.add(p1NameField);
+        generalsPanel.add(p1NamePanel);
+        JPanel p2NamePanel = new JPanel();
+        p2NamePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        p2NamePanel.setBackground(Color.WHITE);
+        p2NamePanel.add(p2NameField);
+        generalsPanel.add(p2NamePanel);
         JPanel g1Panel = new JPanel();
         g1Panel.setBorder(new EmptyBorder(10, 10, 10, 10));
         g1Panel.setBackground(Color.WHITE);
         g1Panel.add(general1CB);
-        generalsPanel.add(g1Panel);//1:0
+        generalsPanel.add(g1Panel);
         JPanel g2Panel = new JPanel();
         g2Panel.setBorder(new EmptyBorder(10, 10, 10, 10));
         g2Panel.setBackground(Color.WHITE);
         g2Panel.add(general2CB);
-        generalsPanel.add(g2Panel);//1:1
+        generalsPanel.add(g2Panel);
         menu.add(generalsPanel, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel();

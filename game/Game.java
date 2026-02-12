@@ -63,6 +63,6 @@ public class Game {
         battlefield.deploy(player1);
         battlefield.deploy(player2);
 
-        BattleGroundGUI gui = new BattleGroundGUI(battlefield, general1Name, general2Name);
+        new BattleGroundGUI(battlefield, general1Name, general2Name);
     }
 }
