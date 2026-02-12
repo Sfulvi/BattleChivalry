@@ -14,7 +14,7 @@ public class Test3 {
         // Popolazione campo di battaglia
         field.deploy(player1);
         field.deploy(player2);
-        System.out.println(field.toString());
+        System.out.println("\n" + field.toString());
 
     }
 }
