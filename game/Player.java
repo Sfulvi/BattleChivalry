@@ -33,7 +33,7 @@ public class Player {
         this.name = name;
     }
 
-    private void setGeneral(Generals g){
+    public void setGeneral(Generals g){
         this.general=g;
     }
     
