@@ -41,6 +41,7 @@ public class Battlefield {
         Cavalry[] cavalry;
         Archer[] archers;
         Catapult[] catapults;
+
         //metto il generale nella posizione (1,4) se il giocatore è host, altrimenti nella posizione (13, 4)
 		//la posizione del generale è la stessa per tutti gli eserciti
 		if(player.isHost) {
@@ -309,12 +310,12 @@ public class Battlefield {
                             
                             if(player.isHost) {
                                 
-                                cavalry[0].place(this.battlefield, 1, 0);
+                                cavalry[0].place(this.battlefield, 0, 1);
                                 cavalry[1].place(this.battlefield, 1, 1);
-                                cavalry[2].place(this.battlefield, 1, 7);
-                                cavalry[3].place(this.battlefield, 1, 8);
+                                cavalry[2].place(this.battlefield, 7, 1);
+                                cavalry[3].place(this.battlefield, 8, 1);
                                 
-                                specials[0].place(this.battlefield, 1, 2);
+                                specials[0].place(this.battlefield, 2, 1);
                                 specials[1].place(this.battlefield, 6, 1);
                                 specials[2].place(this.battlefield, 3, 2);
                                 specials[3].place(this.battlefield, 4, 2);
@@ -328,10 +329,10 @@ public class Battlefield {
                                 
                             } else {
                                 
-                                cavalry[0].place(this.battlefield, 13, 0);
-                                cavalry[1].place(this.battlefield, 13, 1);
-                                cavalry[2].place(this.battlefield, 13, 7);
-                                cavalry[3].place(this.battlefield, 13, 8);
+                                cavalry[0].place(this.battlefield, 0, 13);
+                                cavalry[1].place(this.battlefield, 1, 13);
+                                cavalry[2].place(this.battlefield, 7, 13);
+                                cavalry[3].place(this.battlefield, 8, 13);
                                 
                                 specials[0].place(this.battlefield, 2, 13);
                                 specials[1].place(this.battlefield, 6, 13);

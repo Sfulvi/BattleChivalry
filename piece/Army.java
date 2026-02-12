@@ -126,7 +126,7 @@ public class Army {
                                 setBallistas(ballistasK);
                                 setCatapults(catapultsK);
                 }
-			case "Julius Ceasar" -> {
+			case "Julius Caesar" -> {
                             Infantry[] infantryJ = null;
                             Archer[] archersJ = {new Archer("Archer1", faction),
                                 new Archer("Archer2", faction)};
