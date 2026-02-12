@@ -1,10 +1,12 @@
-import javax.swing.*;
-import javax.swing.border.Border;
+package GUI;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.*;
+import javax.swing.border.Border;
 
 public class BG2 {
     private String general1;

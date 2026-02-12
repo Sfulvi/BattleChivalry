@@ -1,3 +1,5 @@
+package GUI;
+
 public class TestMatrix {
     private String[][] battlefield = {
         {"X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X"},
