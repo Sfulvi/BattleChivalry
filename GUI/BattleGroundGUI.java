@@ -31,34 +31,34 @@ public class BattleGroundGUI {
         int unitsSize = 60;
         
         //assegno chiavi alle immagini e richiamo resizeIcon
-        images.put("recharge", resizeIcon("img/icons/recharge.png",        iconsSize, iconsSize));
-        images.put("attack", resizeIcon("img/icons/attack.png",            iconsSize, iconsSize));
-        images.put("move", resizeIcon("img/icons/move.png",                iconsSize, iconsSize));
+        images.put("recharge", resizeIcon("img/icons/recharge.png",     iconsSize, iconsSize));
+        images.put("attack", resizeIcon("img/icons/attack.png",         iconsSize, iconsSize));
+        images.put("move", resizeIcon("img/icons/move.png",             iconsSize, iconsSize));
 
-        images.put("archer", resizeIcon("img/troops/archer.png",           unitsSize, unitsSize));
-        images.put("armored", resizeIcon("img/troops/armored.png",         unitsSize, unitsSize));
-        images.put("cavalry", resizeIcon("img/troops/cavalry.png",         unitsSize, unitsSize));
-        images.put("engineer", resizeIcon("img/troops/engineer.png",       unitsSize, unitsSize));
-        images.put("infantry", resizeIcon("img/troops/infantry.png",       unitsSize, unitsSize));
+        images.put("archer", resizeIcon("img/troops/archer.png",        unitsSize, unitsSize));
+        images.put("armored", resizeIcon("img/troops/armored.png",      unitsSize, unitsSize));
+        images.put("cavalry", resizeIcon("img/troops/cavalry.png",      unitsSize, unitsSize));
+        images.put("engineer", resizeIcon("img/troops/engineer.png",    unitsSize, unitsSize));
+        images.put("infantry", resizeIcon("img/troops/infantry.png",    unitsSize, unitsSize));
 
-        images.put("suntzu", resizeIcon("img/generals/sunTzu.png",         unitsSize, unitsSize));
-        images.put("nobunagaoda", resizeIcon("img/generals/nobunagaOda.png",  unitsSize, unitsSize));
-        images.put("kingarthur", resizeIcon("img/generals/kingArthur.png",     unitsSize, unitsSize));
-        images.put("juliuscaesar", resizeIcon("img/generals/juliusCaesar.png",   unitsSize, unitsSize));
-        images.put("leonida", resizeIcon("img/generals/leonidas.png",     unitsSize, unitsSize));
-        images.put("ragnar", resizeIcon("img/generals/ragnar.png",         unitsSize, unitsSize));
-        images.put("ghandi", resizeIcon("img/generals/ghandi.png",         unitsSize, unitsSize));
+        images.put("suntzu", resizeIcon("img/generals/sunTzu.png",              unitsSize, unitsSize));
+        images.put("nobunagaoda", resizeIcon("img/generals/nobunagaOda.png",    unitsSize, unitsSize));
+        images.put("kingarthur", resizeIcon("img/generals/kingArthur.png",      unitsSize, unitsSize));
+        images.put("juliuscaesar", resizeIcon("img/generals/juliusCaesar.png",  unitsSize, unitsSize));
+        images.put("leonida", resizeIcon("img/generals/leonidas.png",           unitsSize, unitsSize));
+        images.put("ragnar", resizeIcon("img/generals/ragnar.png",              unitsSize, unitsSize));
+        images.put("ghandi", resizeIcon("img/generals/ghandi.png",              unitsSize, unitsSize));
 
-        images.put("ballista", resizeIcon("img/specials/special1.png",        unitsSize, unitsSize));
-        images.put("cannon", resizeIcon("img/specials/special1.png",        unitsSize, unitsSize));
-        images.put("catapult", resizeIcon("img/siege/catapult.png",        unitsSize, unitsSize));
+        images.put("ballista", resizeIcon("img/specials/special1.png",  unitsSize, unitsSize));
+        images.put("cannon", resizeIcon("img/specials/special1.png",    unitsSize, unitsSize));
+        images.put("catapult", resizeIcon("img/siege/catapult.png",     unitsSize, unitsSize));
 
-        images.put("berserker", resizeIcon("img/specials/berserker.png",       unitsSize, unitsSize));
-        images.put("gladiator", resizeIcon("img/specials/gladiator.png",       unitsSize, unitsSize));
-        images.put("knight", resizeIcon("img/specials/knight.png",       unitsSize, unitsSize));
-        images.put("musketeer", resizeIcon("img/specials/musketeer.png",       unitsSize, unitsSize));
-        images.put("samurai", resizeIcon("img/specials/samurai.png",       unitsSize, unitsSize));
-        images.put("spartan", resizeIcon("img/specials/spartan.png",       unitsSize, unitsSize));
+        images.put("berserker", resizeIcon("img/specials/berserker.png",    unitsSize, unitsSize));
+        images.put("gladiator", resizeIcon("img/specials/gladiator.png",    unitsSize, unitsSize));
+        images.put("knight", resizeIcon("img/specials/knight.png",          unitsSize, unitsSize));
+        images.put("musketeer", resizeIcon("img/specials/musketeer.png",    unitsSize, unitsSize));
+        images.put("samurai", resizeIcon("img/specials/samurai.png",        unitsSize, unitsSize));
+        images.put("spartan", resizeIcon("img/specials/spartan.png",        unitsSize, unitsSize));
         
         return images;
     }
