@@ -6,6 +6,16 @@ import javax.swing.text.DocumentFilter;
 import javax.swing.text.PlainDocument;
 
 import game.Battlefield;
+import game.Game;
+import game.Player;
+import piece.Generals;
+import piece.generals.Ghandi;
+import piece.generals.JuliusCaesar;
+import piece.generals.KingArthur;
+import piece.generals.Leonida;
+import piece.generals.NobunagaOda;
+import piece.generals.Ragnar;
+import piece.generals.SunTzu;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,7 +23,7 @@ import java.awt.event.ActionListener;
 
 public class MainMenu {
     static String selectedGeneral1; 
-    static String selectedGeneral2; //stringhe che passo al costruttore
+    static String selectedGeneral2; //stringhe che passo a player
     static String GUIselectedGeneral1;
     static String GUIselectedGeneral2; //stringhe formattate per la GUI
     static String player1Name;
@@ -22,8 +32,6 @@ public class MainMenu {
 
     public static void main(String[] args) {
 
-        Battlefield battlefield = new Battlefield();
-        
         JFrame menu = new JFrame("Main Menu");
         menu.setLayout(new BorderLayout());
 
@@ -102,8 +110,41 @@ public class MainMenu {
                 } else {
                     player1Name = p1NameField.getText();
                     player2Name = p2NameField.getText();
-                    SwingUtilities.invokeLater(() -> { //avvio della schermata di gioco
-                        new BattleGroundGUI(battlefield, GUIselectedGeneral1, GUIselectedGeneral2);
+                    SwingUtilities.invokeLater(() -> {
+                        //creazione dei player
+                        int maxAP = 10;
+                        Player player1 = new Player(player1Name, true, maxAP, null);
+                        Player player2 = new Player(player2Name, false, maxAP, null);
+                        
+                        //creazione e assegnazione delle istanze dei generali
+                        Generals general1 = switch (selectedGeneral1) {
+                            case "Sun Tzu" -> new SunTzu(true);
+                            case "Nobunaga Oda" -> new NobunagaOda(true);
+                            case "King Arthur" -> new KingArthur(true);
+                            case "Julius Caesar" -> new JuliusCaesar(true);
+                            case "Leonidas" -> new Leonida(true);
+                            case "Ragnar" -> new Ragnar(true);
+                            case "Ghandi" -> new Ghandi(true);
+                            default -> throw new IllegalArgumentException("Generale non valido");
+                        };
+                        player1.setGeneral(general1);
+
+                        Generals general2 = switch (selectedGeneral2) {
+                            case "Sun Tzu" -> new SunTzu(false);
+                            case "Nobunaga Oda" -> new NobunagaOda(false);
+                            case "King Arthur" -> new KingArthur(false);
+                            case "Julius Caesar" -> new JuliusCaesar(false);
+                            case "Leonidas" -> new Leonida(false);
+                            case "Ragnar" -> new Ragnar(false);
+                            case "Ghandi" -> new Ghandi(false);
+                            default -> throw new IllegalArgumentException("Generale non valido");
+                        };
+                        player2.setGeneral(general2);
+                        
+                        //creazione di battlefield vuoto e avvio di Game
+                        Battlefield battlefield = new Battlefield();
+                        new Game(player1, player2, battlefield, GUIselectedGeneral1, GUIselectedGeneral2);
+                        
                         //chiusura di questa pagina
                         menu.dispose();
                     });
