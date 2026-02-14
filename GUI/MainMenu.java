@@ -112,7 +112,7 @@ public class MainMenu {
                     player2Name = p2NameField.getText();
                     SwingUtilities.invokeLater(() -> {
                         //creazione dei player
-                        int maxAP = 10;
+                        int maxAP = game.Player.getMaxAp();
                         Player player1 = new Player(player1Name, true, maxAP, null);
                         Player player2 = new Player(player2Name, false, maxAP, null);
                         

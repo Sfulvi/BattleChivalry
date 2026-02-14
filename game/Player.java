@@ -4,7 +4,7 @@ import piece.Generals;
 
 public class Player {
     
-    private static final int MAX_AP = 0; //?
+    public static final int MAX_AP = 7;
     
     private String name;
     public final boolean isHost;
@@ -21,7 +21,7 @@ public class Player {
     }
     
     //getter e setter per i campi
-    public int getMaxAp() {
+    public static int getMaxAp() {
         return MAX_AP;
     }
 
