@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 import game.Battlefield;
+import game.Player;
 import piece.Units;
 
 public class BattleGroundGUI {
@@ -15,12 +16,16 @@ public class BattleGroundGUI {
     private static Battlefield battlefield;
     private String general1;
     private String general2;
+    private int player1AP;
+    private int player2AP;
     private JPanel selectedCell = null;
 
-    public BattleGroundGUI(Battlefield battlefield, String general1, String general2) {
+    public BattleGroundGUI(Battlefield battlefield, String general1, String general2, Player player1, Player player2) {
         this.battlefield = battlefield;
         this.general1 = general1;
         this.general2 = general2;
+        this.player1AP = player1.getApDone();
+        this.player2AP = player2.getApDone();
         initializeBgGUI(battlefield);
     }
 
@@ -34,6 +39,7 @@ public class BattleGroundGUI {
         images.put("recharge", resizeIcon("img/icons/recharge.png",     iconsSize, iconsSize));
         images.put("attack", resizeIcon("img/icons/attack.png",         iconsSize, iconsSize));
         images.put("move", resizeIcon("img/icons/move.png",             iconsSize, iconsSize));
+        images.put("hourglass", resizeIcon("img/icons/hourglass.png",   iconsSize, iconsSize));
 
         images.put("archer", resizeIcon("img/troops/archer.png",        unitsSize, unitsSize));
         images.put("armored", resizeIcon("img/troops/armored.png",      unitsSize, unitsSize));
@@ -156,6 +162,7 @@ private void initializeBgGUI(Battlefield battlefield) {
     ImageIcon rechargeIcon = images.get("recharge");
     ImageIcon attackIcon   = images.get("attack");
     ImageIcon moveIcon     = images.get("move");
+    ImageIcon turnIcon     = images.get("hourglass");
 
 
     JFrame game = new JFrame("Battle Ground"); //tutta la finestra
@@ -192,6 +199,10 @@ private void initializeBgGUI(Battlefield battlefield) {
         moveButton.setBackground(Color.WHITE);
         moveButton.setPreferredSize(actionButtonsDimension);
         moveButton.setFocusPainted(false);
+    JButton skipTurnButton = new JButton("Skip turn", turnIcon);
+        skipTurnButton.setBackground(Color.WHITE);
+        skipTurnButton.setPreferredSize(actionButtonsDimension);
+        skipTurnButton.setFocusPainted(false);
 
     JButton compassButtonNW = new JButton("NW");
         compassButtonNW.setSize(compassButtonsDimension);
@@ -265,22 +276,26 @@ private void initializeBgGUI(Battlefield battlefield) {
         unitAC.setPreferredSize(statsLabelsDimension);
         unitAC.setFont(statsTitle.getFont().deriveFont(0, 20));
 
-    JLabel playerAPLabel = new JLabel("Action Points left: " /* + playerAP */+ "     ");
+    JLabel playerAPLabel = new JLabel("Action Points left: " + player1AP + "     ");
         playerAPLabel.setPreferredSize(new Dimension(200, 20));
         playerAPLabel.setFont(playerAPLabel.getFont().deriveFont(Font.BOLD, 16));
         playerAPLabel.setVerticalAlignment(SwingConstants.CENTER);
         playerAPLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+    /*
+    divido la gui in 3
+    la parte destra contiene le statistiche
+    la parte sinistra contiene il campo e il titolo
+    la parte in basso contiene i bottoni per le azioni
+    */
 
-    //divido la gui in due, la parte destra contiene le statistiche e la parte sinistra contiene il resto
+    /* PARTI E PANNELLI */ 
 
-    /* PANNELLI */ 
-
-    //metà sinistra
-    JPanel leftHalf = new JPanel();
-        leftHalf.setLayout(new BorderLayout());
-            Border lhBorder = BorderFactory.createLineBorder(Color.WHITE, 15);
-        leftHalf.setBorder(lhBorder);
+    //lato sinistro
+    JPanel leftSide = new JPanel();
+        leftSide.setLayout(new BorderLayout());
+            Border lsBorder = BorderFactory.createLineBorder(Color.WHITE, 15);
+        leftSide.setBorder(lsBorder);
         //pannello per il titolo
         JPanel mainTitle = new JPanel();
             mainTitle.setPreferredSize(new Dimension(90, 100));
@@ -292,10 +307,45 @@ private void initializeBgGUI(Battlefield battlefield) {
             mainTitle.add(general1Label, BorderLayout.WEST);
             mainTitle.add(versusContainer, BorderLayout.CENTER);
             mainTitle.add(general2Label, BorderLayout.EAST);
-    leftHalf.add(mainTitle, BorderLayout.NORTH);
-    leftHalf.add(gameGrid, BorderLayout.CENTER);
+    leftSide.add(mainTitle, BorderLayout.NORTH);
+    leftSide.add(gameGrid, BorderLayout.CENTER);
+    game.add (leftSide, BorderLayout.WEST);
 
-        //pannello per le azioni
+    //lato destro
+    JPanel rightSide = new JPanel();
+    rightSide.setLayout(new BorderLayout());
+
+        //pannello che mostra le statistiche della truppa selezionata
+        JPanel statsPanel = new JPanel();
+            statsPanel.setPreferredSize(new Dimension(300, 700));
+            statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.Y_AXIS));
+            statsPanel.setBackground(Color.WHITE);
+        statsPanel.add(Box.createVerticalStrut(110));
+        statsPanel.add(statsTitle);
+        statsPanel.add(Box.createVerticalStrut(40));
+        statsPanel.add(unitName);
+        statsPanel.add(Box.createVerticalStrut(40));
+        statsPanel.add(unitHp);
+        statsPanel.add(Box.createVerticalStrut(40));
+        statsPanel.add(unitStamina);
+        statsPanel.add(Box.createVerticalStrut(40));
+        statsPanel.add(unitRange);
+        statsPanel.add(Box.createVerticalStrut(40));
+        statsPanel.add(unitAtk);
+        statsPanel.add(Box.createVerticalStrut(40));
+        statsPanel.add(unitMov);
+        statsPanel.add(Box.createVerticalStrut(40));
+        statsPanel.add(unitAC);
+    rightSide.add(statsPanel, BorderLayout.CENTER);
+    game.add(rightSide, BorderLayout.EAST);
+
+    //lato sotto
+    JPanel bottomSide = new JPanel();
+        bottomSide.setLayout(new BorderLayout());
+            Border bsBorder = BorderFactory.createLineBorder(Color.WHITE, 15);
+        bottomSide.setBorder(bsBorder);
+    
+            //pannello per le azioni
         JPanel bottomPanel = new JPanel();
             bottomPanel.setPreferredSize(new Dimension(0, 190));
             bottomPanel.setBackground(Color.WHITE);
@@ -305,7 +355,7 @@ private void initializeBgGUI(Battlefield battlefield) {
                 actionsContainer.setBackground(Color.WHITE);
                 JPanel actionsPanel = new JPanel();
                     actionsPanel.setBackground(Color.WHITE);
-                    int actPanWidth = (actionButtonsSize*4+20), actPanHeight = actionButtonsSize + 10 ; //3 elementi e 2 spaziature da 10
+                    int actPanWidth = ((actionButtonsSize+5)*5), actPanHeight = actionButtonsSize + 10 ; //5 elementi e 2 spaziature da 10
                     actionsPanel.setPreferredSize(new Dimension(actPanWidth, actPanHeight));
                     actionsPanel.setBorder(BorderFactory.createEmptyBorder());
                     actionsPanel.setLayout(new FlowLayout());
@@ -330,40 +380,13 @@ private void initializeBgGUI(Battlefield battlefield) {
                 actionsPanel.add(attackButton);
                 actionsPanel.add(moveButton);
                 actionsPanel.add(compassGrid);
+                actionsPanel.add(skipTurnButton);
             actionsContainer.add(actionsPanel);
         bottomPanel.add(actionsContainer);
         bottomPanel.add(Box.createHorizontalStrut(30));
         bottomPanel.add(playerAPLabel);
-    leftHalf.add(bottomPanel, BorderLayout.SOUTH);
-    game.add(leftHalf, BorderLayout.CENTER);
-
-    //pannello con elementi interattivi
-    JPanel rightHalf = new JPanel();
-    rightHalf.setLayout(new BorderLayout());
-
-        //pannello che mostra le statistiche della truppa selezionata
-        JPanel statsPanel = new JPanel();
-            statsPanel.setPreferredSize(new Dimension(300, 700));
-            statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.Y_AXIS));
-            statsPanel.setBackground(Color.WHITE);
-        statsPanel.add(Box.createVerticalStrut(110));
-        statsPanel.add(statsTitle);
-        statsPanel.add(Box.createVerticalStrut(40));
-        statsPanel.add(unitName);
-        statsPanel.add(Box.createVerticalStrut(40));
-        statsPanel.add(unitHp);
-        statsPanel.add(Box.createVerticalStrut(40));
-        statsPanel.add(unitStamina);
-        statsPanel.add(Box.createVerticalStrut(40));
-        statsPanel.add(unitRange);
-        statsPanel.add(Box.createVerticalStrut(40));
-        statsPanel.add(unitAtk);
-        statsPanel.add(Box.createVerticalStrut(40));
-        statsPanel.add(unitMov);
-        statsPanel.add(Box.createVerticalStrut(40));
-        statsPanel.add(unitAC);
-    rightHalf.add(statsPanel, BorderLayout.CENTER);
-    game.add(rightHalf, BorderLayout.EAST);
+    bottomSide.add(bottomPanel);
+    game.add(bottomSide, BorderLayout.SOUTH);
     
     game.setResizable(false); //finestra non ridimensionabile
     game.pack(); //adatta in automatico la dimensione della finestra
@@ -374,7 +397,7 @@ private void initializeBgGUI(Battlefield battlefield) {
     
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            new BattleGroundGUI(battlefield, "", "");
+            new BattleGroundGUI(battlefield, "", "", null, null);
         });   
     }
 }
