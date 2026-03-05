@@ -6,7 +6,6 @@ import javax.swing.text.DocumentFilter;
 import javax.swing.text.PlainDocument;
 
 import game.Battlefield;
-import game.Game;
 import game.Player;
 import piece.Generals;
 import piece.generals.Ghandi;
@@ -30,8 +29,14 @@ public class MainMenu {
     static String player2Name; //nomi giocatori
     static int generalsStringLength = 13;
 
-    public static void main(String[] args) {
+    public MainMenu(Battlefield battlefield) {
 
+        initializeMainMenu(battlefield);
+    }
+
+    private void initializeMainMenu(Battlefield battlefield)
+    {
+        
         JFrame menu = new JFrame("Main Menu");
         menu.setLayout(new BorderLayout());
 
@@ -141,14 +146,15 @@ public class MainMenu {
                         };
                         player2.setGeneral(general2);
                         
-                        //creazione di battlefield vuoto e avvio di Game
-                        Battlefield battlefield = new Battlefield();
-                        new Game(player1, player2, battlefield, GUIselectedGeneral1, GUIselectedGeneral2);
+                        battlefield.deploy(player1);
+                        battlefield.deploy(player2);
                         
+                        //creazione di battlefield vuoto e avvio di Game
+                        new BattleGroundGUI(battlefield, GUIselectedGeneral1, GUIselectedGeneral2, player1, player2);
+
                         //chiusura di questa pagina
                         menu.dispose();
                     });
-
                 }
             }
         });
