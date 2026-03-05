@@ -13,7 +13,7 @@ import piece.Units;
 
 public class BattleGroundGUI {
     
-    private static Battlefield battlefield;
+    private Battlefield battlefield;
     private String general1;
     private String general2;
     private int player1AP;
@@ -393,11 +393,5 @@ private void initializeBgGUI(Battlefield battlefield) {
     game.setLocationRelativeTo(null); //centra la finestra
     game.setVisible(true);
     game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-    
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new BattleGroundGUI(battlefield, "", "", null, null);
-        });   
     }
 }
