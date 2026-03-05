@@ -1,18 +1,21 @@
 package game;
 
-import GUI.BattleGroundGUI;
-
+import GUI.MainMenu;
 
 public class Game {
-    
-   
-    //costruttore che accetta i giocatori e il campo di battaglia
-    public Game(Player player1, Player player2, Battlefield battlefield, String general1Name, String general2Name) {
-        // Schiera gli eserciti sul campo di battaglia
-        battlefield.deploy(player1);
-        battlefield.deploy(player2);
+
+    public Battlefield battlefield;
+    public Player player1;
+    public Player player2;
+    public int maxAp;
+
+    // action point massimi per turno
+    private static final int MAX_AP = 10;
+
+    public static void main(String[] args) {
         
-        //avvia la GUI del campo di battaglia
-        new BattleGroundGUI(battlefield, general1Name, general2Name, player1, player2);
+        Battlefield battlefield = new Battlefield();
+
+        MainMenu gui = new MainMenu(battlefield);
     }
 }
