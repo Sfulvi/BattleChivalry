@@ -56,7 +56,7 @@ public class MainMenu {
         //labels
         JLabel titleLabel = new JLabel("Select your names and the generals");
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 26));
+        titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 20));
 
         //text field nome giocatori
         JTextField p1NameField = new JTextField("", 10);
