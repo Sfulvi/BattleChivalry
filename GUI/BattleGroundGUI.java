@@ -181,27 +181,27 @@ private void initializeBgGUI(Battlefield battlefield) {
         */
 
     /* BOTTONI */
-    int actionButtonsSize = 180;
+    int actionButtonsSize = 50;
     Dimension actionButtonsDimension = new Dimension(actionButtonsSize, actionButtonsSize);
-    int compassButtonsSize = 60;
+    int compassButtonsSize = 55;
     Dimension compassButtonsDimension = new Dimension(compassButtonsSize, compassButtonsSize);
 
 
-    JButton rechargeButton = new JButton("Recharge", rechargeIcon);
+    JButton rechargeButton = new JButton("", rechargeIcon);
         rechargeButton.setBackground(Color.WHITE);
-        rechargeButton.setPreferredSize(actionButtonsDimension);
+        rechargeButton.setMaximumSize(actionButtonsDimension);
         rechargeButton.setFocusPainted(false);
-    JButton attackButton = new JButton("Attack", attackIcon);
+    JButton attackButton = new JButton("", attackIcon);
         attackButton.setBackground(Color.WHITE);
-        attackButton.setPreferredSize(actionButtonsDimension);
+        attackButton.setMaximumSize(actionButtonsDimension);
         attackButton.setFocusPainted(false);
-    JButton moveButton = new JButton("Move", moveIcon);
+    JButton moveButton = new JButton("", moveIcon);
         moveButton.setBackground(Color.WHITE);
-        moveButton.setPreferredSize(actionButtonsDimension);
+        moveButton.setMaximumSize(actionButtonsDimension);
         moveButton.setFocusPainted(false);
-    JButton skipTurnButton = new JButton("Skip turn", turnIcon);
+    JButton skipTurnButton = new JButton("", turnIcon);
         skipTurnButton.setBackground(Color.WHITE);
-        skipTurnButton.setPreferredSize(actionButtonsDimension);
+        skipTurnButton.setMaximumSize(actionButtonsDimension);
         skipTurnButton.setFocusPainted(false);
 
     JButton compassButtonNW = new JButton("NW");
@@ -238,7 +238,7 @@ private void initializeBgGUI(Battlefield battlefield) {
         compassButtonW.setFocusPainted(false);
 
     /* LABELS */
-    Dimension statsLabelsDimension = new Dimension(100, 70);
+    Dimension statsLabelsDimension = new Dimension(100, 30);
     Font generalsFont = new Font("Monospaced", Font.BOLD, 40);
 
     JLabel general1Label = new JLabel(general1);
@@ -251,7 +251,7 @@ private void initializeBgGUI(Battlefield battlefield) {
 
 
     JLabel statsTitle = new JLabel("Unit's statistics:");
-        statsTitle.setHorizontalAlignment(SwingConstants.CENTER);
+        statsTitle.setHorizontalAlignment(SwingConstants.LEFT);
         statsTitle.setFont(statsTitle.getFont().deriveFont(Font.BOLD, 24));
 
     JLabel unitName = new JLabel("Unit: ");
@@ -317,76 +317,60 @@ private void initializeBgGUI(Battlefield battlefield) {
 
         //pannello che mostra le statistiche della truppa selezionata
         JPanel statsPanel = new JPanel();
-            statsPanel.setPreferredSize(new Dimension(300, 700));
-            statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.Y_AXIS));
-            statsPanel.setBackground(Color.WHITE);
+        statsPanel.setPreferredSize(new Dimension(300, 700));
+        statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.Y_AXIS));
+        statsPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        statsPanel.setBackground(Color.WHITE);
+
+        //griglia con i bottoni che fungono da bussola
+        JPanel compassGrid = new JPanel();
+        compassGrid.setLayout(new GridLayout(3, 3));
+        compassGrid.setMaximumSize(new Dimension(compassButtonsSize*5, compassButtonsSize*5));
+        compassGrid.setAlignmentX(Component.LEFT_ALIGNMENT);
+        compassGrid.add(compassButtonNW);
+        compassGrid.add(compassButtonN);
+        compassGrid.add(compassButtonNE);
+        compassGrid.add(compassButtonW);
+        JPanel compassCenter = new JPanel();
+        compassCenter.setSize(compassButtonsDimension);
+        compassCenter.setBackground(Color.WHITE);
+        compassGrid.add(compassCenter);
+        compassGrid.add(compassButtonE);
+        compassGrid.add(compassButtonSW);
+        compassGrid.add(compassButtonS);
+        compassGrid.add(compassButtonSE);
+
+        JPanel actionGrid = new JPanel();
+        actionGrid.setLayout(new GridLayout(2, 2));
+        actionGrid.setMaximumSize(new Dimension(actionButtonsSize*5, actionButtonsSize*5));
+        actionGrid.setAlignmentX(Component.LEFT_ALIGNMENT);
+        actionGrid.add(rechargeButton);
+        actionGrid.add(attackButton);
+        actionGrid.add(moveButton);
+        actionGrid.add(skipTurnButton);
+        
         statsPanel.add(Box.createVerticalStrut(110));
         statsPanel.add(statsTitle);
-        statsPanel.add(Box.createVerticalStrut(40));
+        statsPanel.add(Box.createVerticalStrut(5));
         statsPanel.add(unitName);
-        statsPanel.add(Box.createVerticalStrut(40));
+        statsPanel.add(Box.createVerticalStrut(5));
         statsPanel.add(unitHp);
-        statsPanel.add(Box.createVerticalStrut(40));
+        statsPanel.add(Box.createVerticalStrut(5));
         statsPanel.add(unitStamina);
-        statsPanel.add(Box.createVerticalStrut(40));
+        statsPanel.add(Box.createVerticalStrut(5));
         statsPanel.add(unitRange);
-        statsPanel.add(Box.createVerticalStrut(40));
+        statsPanel.add(Box.createVerticalStrut(5));
         statsPanel.add(unitAtk);
-        statsPanel.add(Box.createVerticalStrut(40));
+        statsPanel.add(Box.createVerticalStrut(5));
         statsPanel.add(unitMov);
-        statsPanel.add(Box.createVerticalStrut(40));
+        statsPanel.add(Box.createVerticalStrut(5));
         statsPanel.add(unitAC);
-    rightSide.add(statsPanel, BorderLayout.CENTER);
+        statsPanel.add(Box.createVerticalStrut(30));
+        statsPanel.add(compassGrid);
+        statsPanel.add(Box.createVerticalStrut(50));
+        statsPanel.add(actionGrid);
+    rightSide.add(statsPanel, BorderLayout.NORTH);
     game.add(rightSide, BorderLayout.EAST);
-
-    //lato sotto
-    JPanel bottomSide = new JPanel();
-        bottomSide.setLayout(new BorderLayout());
-            Border bsBorder = BorderFactory.createLineBorder(Color.WHITE, 15);
-        bottomSide.setBorder(bsBorder);
-    
-            //pannello per le azioni
-        JPanel bottomPanel = new JPanel();
-            bottomPanel.setPreferredSize(new Dimension(0, 190));
-            bottomPanel.setBackground(Color.WHITE);
-            bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
-            //pannello azioni con i bottoni di attacco e movimento
-            JPanel actionsContainer = new JPanel();
-                actionsContainer.setBackground(Color.WHITE);
-                JPanel actionsPanel = new JPanel();
-                    actionsPanel.setBackground(Color.WHITE);
-                    int actPanWidth = ((actionButtonsSize+5)*5), actPanHeight = actionButtonsSize + 10 ; //5 elementi e 2 spaziature da 10
-                    actionsPanel.setPreferredSize(new Dimension(actPanWidth, actPanHeight));
-                    actionsPanel.setBorder(BorderFactory.createEmptyBorder());
-                    actionsPanel.setLayout(new FlowLayout());
-                    //griglia con i bottoni che fungono da bussola
-                    JPanel compassGrid = new JPanel();
-                        compassGrid.setLayout(new GridLayout(3, 3));
-                        compassGrid.setPreferredSize(new Dimension(compassButtonsSize*3, compassButtonsSize*3));
-                    compassGrid.add(compassButtonNW);
-                    compassGrid.add(compassButtonN);
-                    compassGrid.add(compassButtonNE);
-                    compassGrid.add(compassButtonW);
-                    JPanel compassCenter = new JPanel();
-                        compassCenter.setSize(compassButtonsDimension);
-                        compassCenter.setBackground(Color.WHITE);
-                    compassGrid.add(compassCenter);
-                    compassGrid.add(compassButtonE);
-                    compassGrid.add(compassButtonSW);
-                    compassGrid.add(compassButtonS);
-                    compassGrid.add(compassButtonSE);
-                //componenti pannello azioni
-                actionsPanel.add(rechargeButton);
-                actionsPanel.add(attackButton);
-                actionsPanel.add(moveButton);
-                actionsPanel.add(compassGrid);
-                actionsPanel.add(skipTurnButton);
-            actionsContainer.add(actionsPanel);
-        bottomPanel.add(actionsContainer);
-        bottomPanel.add(Box.createHorizontalStrut(30));
-        bottomPanel.add(playerAPLabel);
-    bottomSide.add(bottomPanel);
-    game.add(bottomSide, BorderLayout.SOUTH);
     
     game.setResizable(false); //finestra non ridimensionabile
     game.pack(); //adatta in automatico la dimensione della finestra
