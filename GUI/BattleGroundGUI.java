@@ -107,6 +107,15 @@ public class BattleGroundGUI {
 
                 ImageIcon unitIcon = getCurrentIcon(currentUnitName);
                 JLabel unitLabel = new JLabel(unitIcon);
+                if (currentUnit != null && currentUnit.isHost()) {
+                    unitLabel.setOpaque(true);
+                    unitLabel.setBackground(Color.BLUE);
+                }
+                else
+                {
+                    unitLabel.setOpaque(true);
+                    unitLabel.setBackground(Color.RED);
+                }
                 bgCell.add(unitLabel);
 
                 bgCell.putClientProperty("y", y);
@@ -275,12 +284,9 @@ private void initializeBgGUI(Battlefield battlefield) {
     JLabel unitAC = new JLabel("Action cost: ");
         unitAC.setPreferredSize(statsLabelsDimension);
         unitAC.setFont(statsTitle.getFont().deriveFont(0, 20));
-
     JLabel playerAPLabel = new JLabel("Action Points left: " + player1AP + "     ");
-        playerAPLabel.setPreferredSize(new Dimension(200, 20));
-        playerAPLabel.setFont(playerAPLabel.getFont().deriveFont(Font.BOLD, 16));
-        playerAPLabel.setVerticalAlignment(SwingConstants.CENTER);
-        playerAPLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        playerAPLabel.setPreferredSize(statsLabelsDimension);
+        playerAPLabel.setFont(playerAPLabel.getFont().deriveFont(0, 20));
 
     /*
     divido la gui in 3
@@ -349,7 +355,7 @@ private void initializeBgGUI(Battlefield battlefield) {
         actionGrid.add(moveButton);
         actionGrid.add(skipTurnButton);
         
-        statsPanel.add(Box.createVerticalStrut(110));
+        statsPanel.add(Box.createVerticalStrut(100));
         statsPanel.add(statsTitle);
         statsPanel.add(Box.createVerticalStrut(5));
         statsPanel.add(unitName);
@@ -365,10 +371,12 @@ private void initializeBgGUI(Battlefield battlefield) {
         statsPanel.add(unitMov);
         statsPanel.add(Box.createVerticalStrut(5));
         statsPanel.add(unitAC);
-        statsPanel.add(Box.createVerticalStrut(30));
+        statsPanel.add(Box.createVerticalStrut(20));
         statsPanel.add(compassGrid);
-        statsPanel.add(Box.createVerticalStrut(50));
+        statsPanel.add(Box.createVerticalStrut(40));
         statsPanel.add(actionGrid);
+        statsPanel.add(Box.createVerticalStrut(10));
+        statsPanel.add(playerAPLabel);
     rightSide.add(statsPanel, BorderLayout.NORTH);
     game.add(rightSide, BorderLayout.EAST);
     
