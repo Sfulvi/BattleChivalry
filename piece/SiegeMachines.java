@@ -143,7 +143,7 @@ public abstract class SiegeMachines implements Units{
 
     @Override
     public boolean isHost() {
-        return false;
+        return this.faction;
     }
 
     @Override
