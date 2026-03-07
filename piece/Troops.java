@@ -243,7 +243,7 @@ public abstract class Troops implements Units{
     private boolean isValidMove(int newX, int newY, Battlefield field) throws MyException {
             if (newX < 0 || newX > field.getX() - 1 || newY < 0 || newY > field.getY() - 1) {
                 //fuori dal campo
-                throw new MyException("fuori campi");
+                throw new MyException("fuori campo di battaglia");
                 
             } else if (field.getUnit(newX, newY) != null) {
                 //casella occupata
