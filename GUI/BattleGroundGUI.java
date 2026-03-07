@@ -8,7 +8,9 @@ import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 import game.Battlefield;
+import game.Game;
 import game.Player;
+import piece.Troops;
 import piece.Units;
 
 public class BattleGroundGUI {
@@ -18,15 +20,20 @@ public class BattleGroundGUI {
     private String general2;
     private int player1AP;
     private int player2AP;
-    private JPanel selectedCell = null;
 
-    public BattleGroundGUI(Battlefield battlefield, String general1, String general2, Player player1, Player player2) {
+    private JPanel selectedCell = null;
+    private JPanel gameGrid;
+    private JPanel leftSide;
+
+    private JLabel unitName, unitHp, unitStamina, unitRange, unitAtk, unitMov, unitAC;
+
+    public BattleGroundGUI(Battlefield battlefield, String general1, String general2, Player player1, Player player2, Game controller) {
         this.battlefield = battlefield;
         this.general1 = general1;
         this.general2 = general2;
         this.player1AP = player1.getApDone();
         this.player2AP = player2.getApDone();
-        initializeBgGUI(battlefield);
+        initializeBgGUI(battlefield, controller);
     }
 
     //funzione che importa le icone
@@ -77,7 +84,7 @@ public class BattleGroundGUI {
     }
 
     //funzione che carica e aggiorna la scacchiera
-    private JPanel uploadBG(Battlefield battlefield, int cellSize) {
+    private JPanel uploadBG(Battlefield battlefield, int cellSize, Game controller) {
         //scacchiera
         JPanel gameGrid = new JPanel();
         gameGrid.setLayout(new GridLayout(9, 15));
@@ -150,6 +157,8 @@ public class BattleGroundGUI {
                 });
 
                 gameGrid.add(bgCell);
+                
+                bgCell.addMouseListener(controller);
             }
         }
                 
@@ -165,7 +174,7 @@ private ImageIcon getCurrentIcon(String currentUnit){
 }
 
 
-private void initializeBgGUI(Battlefield battlefield) {
+private void initializeBgGUI(Battlefield battlefield, Game controller) {
 
     //do nomi alle icone dei bottoni
     ImageIcon rechargeIcon = images.get("recharge");
@@ -178,7 +187,7 @@ private void initializeBgGUI(Battlefield battlefield) {
     game.setLayout(new BorderLayout());
 
     int cellSize = 70;
-    JPanel gameGrid = uploadBG(battlefield, cellSize);
+    gameGrid = uploadBG(battlefield, cellSize, controller);
 
         //importazione statistiche giocatore e truppe
         //W.I.P.
@@ -197,51 +206,63 @@ private void initializeBgGUI(Battlefield battlefield) {
 
 
     JButton rechargeButton = new JButton("", rechargeIcon);
+        rechargeButton.setActionCommand("recharge");
         rechargeButton.setBackground(Color.WHITE);
         rechargeButton.setMaximumSize(actionButtonsDimension);
         rechargeButton.setFocusPainted(false);
     JButton attackButton = new JButton("", attackIcon);
+        attackButton.setActionCommand("attack");
         attackButton.setBackground(Color.WHITE);
         attackButton.setMaximumSize(actionButtonsDimension);
         attackButton.setFocusPainted(false);
     JButton moveButton = new JButton("", moveIcon);
+        moveButton.setActionCommand("move");
         moveButton.setBackground(Color.WHITE);
         moveButton.setMaximumSize(actionButtonsDimension);
         moveButton.setFocusPainted(false);
     JButton skipTurnButton = new JButton("", turnIcon);
+        skipTurnButton.setActionCommand("skipturn");
         skipTurnButton.setBackground(Color.WHITE);
         skipTurnButton.setMaximumSize(actionButtonsDimension);
         skipTurnButton.setFocusPainted(false);
 
     JButton compassButtonNW = new JButton("NW");
+        compassButtonNW.setActionCommand("1");
         compassButtonNW.setSize(compassButtonsDimension);
         compassButtonNW.setBackground(Color.WHITE);
         compassButtonNW.setFocusPainted(false);
     JButton compassButtonN = new JButton("N");
+        compassButtonN.setActionCommand("2");
         compassButtonN.setSize(compassButtonsDimension);
         compassButtonN.setBackground(Color.WHITE);
         compassButtonN.setFocusPainted(false);
-    JButton compassButtonNE = new JButton("NE"); 
+    JButton compassButtonNE = new JButton("NE");
+        compassButtonNE.setActionCommand("3"); 
         compassButtonNE.setSize(compassButtonsDimension);
         compassButtonNE.setBackground(Color.WHITE);
         compassButtonNE.setFocusPainted(false);
     JButton compassButtonE = new JButton("E");
+        compassButtonE.setActionCommand("4");
         compassButtonE.setSize(compassButtonsDimension);
         compassButtonE.setBackground(Color.WHITE);
         compassButtonE.setFocusPainted(false);
     JButton compassButtonSE = new JButton("SE");
+        compassButtonSE.setActionCommand("5");
         compassButtonSE.setSize(compassButtonsDimension);
         compassButtonSE.setBackground(Color.WHITE);
         compassButtonSE.setFocusPainted(false);
     JButton compassButtonS = new JButton("S");
+        compassButtonS.setActionCommand("6");
         compassButtonS.setSize(compassButtonsDimension);
         compassButtonS.setBackground(Color.WHITE);
         compassButtonS.setFocusPainted(false);
     JButton compassButtonSW = new JButton("SW");
+        compassButtonSW.setActionCommand("7");
         compassButtonSW.setSize(compassButtonsDimension);
         compassButtonSW.setBackground(Color.WHITE);
         compassButtonSW.setFocusPainted(false);
     JButton compassButtonW = new JButton("W");
+        compassButtonW.setActionCommand("8");
         compassButtonW.setSize(compassButtonsDimension);
         compassButtonW.setBackground(Color.WHITE);
         compassButtonW.setFocusPainted(false);
@@ -263,25 +284,25 @@ private void initializeBgGUI(Battlefield battlefield) {
         statsTitle.setHorizontalAlignment(SwingConstants.LEFT);
         statsTitle.setFont(statsTitle.getFont().deriveFont(Font.BOLD, 24));
 
-    JLabel unitName = new JLabel("Unit: ");
+    unitName = new JLabel("Unit: ");
         unitName.setPreferredSize(statsLabelsDimension);
         unitName.setFont(statsTitle.getFont().deriveFont(0, 20));
-    JLabel unitHp = new JLabel("HP: ");
+    unitHp = new JLabel("HP: ");
         unitHp.setPreferredSize(statsLabelsDimension);
         unitHp.setFont(statsTitle.getFont().deriveFont(0, 20));
-    JLabel unitStamina = new JLabel("Stamina: ");
+    unitStamina = new JLabel("Stamina: ");
         unitStamina.setPreferredSize(statsLabelsDimension);
         unitStamina.setFont(statsTitle.getFont().deriveFont(0, 20));
-    JLabel unitRange = new JLabel("Range: ");
+    unitRange = new JLabel("Range: ");
         unitRange.setPreferredSize(statsLabelsDimension);
         unitRange.setFont(statsTitle.getFont().deriveFont(0, 20));
-    JLabel unitAtk = new JLabel("Attack: ");
+    unitAtk = new JLabel("Attack: ");
         unitAtk.setPreferredSize(statsLabelsDimension);
         unitAtk.setFont(statsTitle.getFont().deriveFont(0, 20));
-    JLabel unitMov = new JLabel("Movement:");
+    unitMov = new JLabel("Movement:");
         unitMov.setPreferredSize(statsLabelsDimension);
         unitMov.setFont(statsTitle.getFont().deriveFont(0, 20));
-    JLabel unitAC = new JLabel("Action cost: ");
+    unitAC = new JLabel("Action cost: ");
         unitAC.setPreferredSize(statsLabelsDimension);
         unitAC.setFont(statsTitle.getFont().deriveFont(0, 20));
     JLabel playerAPLabel = new JLabel("Action Points left: " + player1AP + "     ");
@@ -298,7 +319,7 @@ private void initializeBgGUI(Battlefield battlefield) {
     /* PARTI E PANNELLI */ 
 
     //lato sinistro
-    JPanel leftSide = new JPanel();
+    leftSide = new JPanel();
         leftSide.setLayout(new BorderLayout());
             Border lsBorder = BorderFactory.createLineBorder(Color.WHITE, 15);
         leftSide.setBorder(lsBorder);
@@ -379,11 +400,52 @@ private void initializeBgGUI(Battlefield battlefield) {
         statsPanel.add(playerAPLabel);
     rightSide.add(statsPanel, BorderLayout.NORTH);
     game.add(rightSide, BorderLayout.EAST);
+
+    rechargeButton.addActionListener(controller);
+    attackButton.addActionListener(controller);
+    moveButton.addActionListener(controller);
+    skipTurnButton.addActionListener(controller);
+
+    compassButtonNW.addActionListener(controller);
+    compassButtonN.addActionListener(controller);
+    compassButtonNE.addActionListener(controller);
+    compassButtonW.addActionListener(controller);
+    compassButtonE.addActionListener(controller);
+    compassButtonSW.addActionListener(controller);
+    compassButtonS.addActionListener(controller);
+    compassButtonSE.addActionListener(controller);
     
     game.setResizable(false); //finestra non ridimensionabile
     game.pack(); //adatta in automatico la dimensione della finestra
     game.setLocationRelativeTo(null); //centra la finestra
     game.setVisible(true);
     game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void updateGUI(Game controller)
+    {
+        gameGrid = uploadBG(battlefield, 70, controller);
+        leftSide.remove(1);
+        leftSide.add(gameGrid, BorderLayout.CENTER);
+        leftSide.revalidate();
+        leftSide.repaint();
+    }
+
+    public void showUnitStats(int x, int y)
+    {
+        Units unit = this.battlefield.getUnit(x, y);
+
+        if (unit instanceof Troops)
+        {
+            Troops troop = (Troops) unit;
+            
+            this.unitName.setText("Unit: " + troop.getClass().getSimpleName().toLowerCase());
+            this.unitHp.setText("HP: " + troop.getHP());
+            this.unitStamina.setText("Stamina: " + troop.getStamina());
+            this.unitRange.setText("Range: " + troop.getRange());
+            this.unitAtk.setText("Attack: " + troop.getAtk());
+            this.unitMov.setText("Movement: " + troop.getMov());
+            this.unitAC.setText("");
+        }
     }
 }
