@@ -22,12 +22,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainMenu {
-    static String selectedGeneral1; 
-    static String selectedGeneral2; //stringhe che passo a player
-    static String GUIselectedGeneral1;
-    static String GUIselectedGeneral2; //stringhe formattate per la GUI
-    static String player1Name;
-    static String player2Name; //nomi giocatori
+
+    private static final int MAX_AP = 10;
+    
+    static String selectedGeneral1, selectedGeneral2; //stringhe che passo a player
+    static String GUIselectedGeneral1, GUIselectedGeneral2; //stringhe formattate per la GUI
+    private Player player1, player2;
+    static String player1Name, player2Name; //nomi giocatori
     static int generalsStringLength = 13;
 
     public MainMenu(Battlefield battlefield, Game controller) {
@@ -118,9 +119,9 @@ public class MainMenu {
                     player2Name = p2NameField.getText();
                     SwingUtilities.invokeLater(() -> {
                         //creazione dei player
-                        int maxAP = game.Player.getMaxAp();
-                        Player player1 = new Player(player1Name, true, maxAP, null);
-                        Player player2 = new Player(player2Name, false, maxAP, null);
+                        int maxAP = MAX_AP;
+                        player1 = new Player(player1Name, true, maxAP, null);
+                        player2 = new Player(player2Name, false, maxAP, null);
                         
                         //creazione e assegnazione delle istanze dei generali
                         Generals general1 = switch (selectedGeneral1) {
@@ -154,6 +155,7 @@ public class MainMenu {
                         BattleGroundGUI gui = new BattleGroundGUI(battlefield, GUIselectedGeneral1, GUIselectedGeneral2, player1, player2, controller);
 
                         controller.setGUI(gui);
+                        controller.setPlayers(player1, player2);
 
                         //chiusura di questa pagina
                         menu.dispose();
