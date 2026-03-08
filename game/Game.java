@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import GUI.BattleGroundGUI;
+import piece.SiegeMachines;
 
 public class Game implements ActionListener, MouseListener {
 
@@ -19,19 +20,21 @@ public class Game implements ActionListener, MouseListener {
     private BattleGroundGUI gui;
     private Player player1;
     private Player player2;
+    private boolean currentPlayer;
 
     private int x1, y1, x2, y2, direction;
 
     public Game(Battlefield battlefield) {
         
         this.battlefield = battlefield;
+        this.currentPlayer = true;
         resetCoordinates();
     }
 
     // metodo per gestire il click di una cella sul campo
     @Override
-    public void mouseClicked(MouseEvent e) {
-
+    public void mouseClicked(MouseEvent e)
+    {
         JPanel clicked = (JPanel) e.getSource();
     
         if (x1 == -1)
@@ -52,15 +55,43 @@ public class Game implements ActionListener, MouseListener {
 
     // metodo per gestire il click di un bottone bussola o azione
     @Override
-    public void actionPerformed(ActionEvent e) {
-        
+    public void actionPerformed(ActionEvent e)
+    {    
         switch (e.getActionCommand()) {
             
             case "attack" ->
             {
                 try
                 {
-                    this.battlefield.getUnit(x1, y1).attack(x2, y2, battlefield);
+                    if (this.x1 != -1 && this.x2 != -1)
+                        if (this.battlefield.getUnit(x1, y1) != null)
+                        {
+                            // ho selezionato entrambe le caselle e la prima casella non è vuota
+                            this.battlefield.getUnit(x1, y1).attack(x2, y2, battlefield);
+                            
+                            // se dopo l'attacco un generale muore finisce la partita
+                            if (!this.player1.getGeneral().isAlive())
+                            {
+                                JOptionPane.showMessageDialog(null, "generale morto, vince " + this.player2.getName());
+                                this.gui.closeGame();
+                            }
+                            else if (!this.player2.getGeneral().isAlive())
+                            {
+                                JOptionPane.showMessageDialog(null, "generale morto, vince " + this.player1.getName());
+                                this.gui.closeGame();
+                            }
+
+                            decreaseAP();
+                            this.gui.updateGUI(this);
+                            this.gui.updatePlayerAP(this.currentPlayer);
+
+                            if (depletedAP())
+                                endTurn();
+                        }
+                        else
+                            JOptionPane.showMessageDialog(null, "cella unità vuota");
+                    else
+                        JOptionPane.showMessageDialog(null, "seleziona prima entrambe le caselle");
                 }
                 catch (MyException ex)
                 {
@@ -75,8 +106,23 @@ public class Game implements ActionListener, MouseListener {
             {
                 try
                 {
-                    this.battlefield.getUnit(x1, y1).move(battlefield, this.direction);
-                    this.gui.updateGUI(this);
+                    if (this.x1 != -1 && this.direction != -1)
+                        if (this.battlefield.getUnit(x1, y1) != null)
+                        {
+                            // ho selezionato casella e direzione e la casella non è vuota
+                            this.battlefield.getUnit(x1, y1).move(battlefield, this.direction);
+                            
+                            decreaseAP();
+                            this.gui.updateGUI(this);
+                            this.gui.updatePlayerAP(this.currentPlayer);
+
+                            if (depletedAP())
+                                endTurn();
+                        }
+                        else
+                            JOptionPane.showMessageDialog(null, "cella unità vuota");
+                    else
+                        JOptionPane.showMessageDialog(null, "seleziona prima la casella e la direzione sulla bussola");
                 }
                 catch (MyException ex)
                 {
@@ -89,7 +135,21 @@ public class Game implements ActionListener, MouseListener {
             }
             case "recharge" ->
             {
-                this.battlefield.getUnit(x1, y1).recharge();
+                if (this.battlefield.getUnit(x1, y1) != null)
+                    if (this.battlefield.getUnit(x1, y1) instanceof SiegeMachines)
+                    {
+                        this.battlefield.getUnit(x1, y1).recharge();
+
+                        decreaseAP();
+                        this.gui.updatePlayerAP(this.currentPlayer);
+
+                            if (depletedAP())
+                                endTurn();
+                    }
+                    else
+                        JOptionPane.showMessageDialog(null, "solo le macchine d'assedio si possono ricaricare");
+                else
+                    JOptionPane.showMessageDialog(null, "cella unità vuota");
                 resetCoordinates();
             }
             case "skipturn" ->
@@ -107,9 +167,36 @@ public class Game implements ActionListener, MouseListener {
     
     private void endTurn()
     {
+        if (this.currentPlayer)
+        {
+            this.currentPlayer = false;
+            this.player2.setApDone(MAX_AP);
+        }
+        else
+        {
+            this.currentPlayer = true;
+            this.player1.setApDone(MAX_AP);
+        }
 
+        this.gui.updateActivePlayer(currentPlayer);
     }
 
+    private void decreaseAP()
+    {
+        if (currentPlayer)
+            player1.setApDone(player1.getApDone() - 1);
+        else
+            player2.setApDone(player2.getApDone() - 1);
+    }
+    
+    private boolean depletedAP()
+    {
+        if (currentPlayer)
+            return player1.getApDone() == 0;
+        else
+            return player2.getApDone() == 0;
+    }
+    
     private void resetCoordinates()
     {
         this.x1 = this.x2 = this.y1 = this.y2 = this.direction = -1;
@@ -118,6 +205,11 @@ public class Game implements ActionListener, MouseListener {
     public void setGUI(BattleGroundGUI gui)
     {
         this.gui = gui;
+    }
+    public void setPlayers(Player player1, Player player2)
+    {
+        this.player1 = player1;
+        this.player2 = player2;
     }
     
     @Override
