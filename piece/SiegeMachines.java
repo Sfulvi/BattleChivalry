@@ -112,15 +112,20 @@ public abstract class SiegeMachines implements Units{
             
         if(targetUnit == null) 
             /* Errore: La zona e' vuota */
-            throw new MyException("La zona é vuota");
+            throw new MyException("Zona bersaglio vuota");
 
         if(targetUnit.isHost() == getFaction())
-            /* Errore: "Il fuoco amico e' permesso" */
+            /* Errore: "Il fuoco amico non e' permesso" */
             throw new MyException("Il fuoco amico non e' permesso");
 
-        if(getHasAttacked()==true || hasEngineer(field)==false)
-            /* Errore: La macchina da assedio sta ricaricando */
-            throw new MyException("La macchina da assedio sta ricaricando");
+        if(getHasAttacked()==true)
+            /* Errore: La macchina da assedio deve ricaricare */
+            throw new MyException("Ha gia' colpito o deve ricaricare");
+
+        if (hasEngineer(field)==false) {
+            /* Errore: Ingegnere non in posizione */
+            throw new MyException("Ingegnere non in posizione");
+        }
         
         
         setHasAttacked(true);
