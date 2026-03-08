@@ -64,8 +64,8 @@ public class BattleGroundGUI {
         images.put("ragnar", resizeIcon("img/generals/ragnar.png",              unitsSize, unitsSize));
         images.put("ghandi", resizeIcon("img/generals/ghandi.png",              unitsSize, unitsSize));
 
-        images.put("ballista", resizeIcon("img/specials/ballista.png",  unitsSize, unitsSize));
-        images.put("cannon", resizeIcon("img/specials/cannon.png",    unitsSize, unitsSize));
+        images.put("ballista", resizeIcon("img/siege/ballista.png",  unitsSize, unitsSize));
+        images.put("cannon", resizeIcon("img/siege/cannon.png",    unitsSize, unitsSize));
         images.put("catapult", resizeIcon("img/siege/catapult.png",     unitsSize, unitsSize));
 
         images.put("berserker", resizeIcon("img/specials/berserker.png",    unitsSize, unitsSize));
