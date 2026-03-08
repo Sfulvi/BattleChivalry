@@ -5,8 +5,8 @@ import piece.troops.*;
 import piece.troops.specials.*;
 
 public class Army {
-	private String general;
-	private Infantry[] infantry;
+	private String general;         /* Nome del Generale */
+	private Infantry[] infantry;    /* Array contenenti le truppe */
 	private Archer[] archers;
 	private Armored[] armored;
 	private Cavalry[] cavalry;
@@ -21,6 +21,7 @@ public class Army {
 		deploy(general,faction);
 	}
 
+    /* Questa funzione istanzia le truppe dell'armata in base al generale */
 	private void deploy(String general, boolean faction){
 		switch(general) {
 			case "Ghandi" -> {
@@ -101,7 +102,7 @@ public class Army {
 			case "King Arthur" -> {
                             Infantry[] infantryK = {new Infantry("Infantry1", faction),
                                 new Infantry("Infantry2", faction),
-                                new Infantry("Infantry3", faction)};;
+                                new Infantry("Infantry3", faction)};
                                 Archer[] archersK = {new Archer("Archer1", faction),
                                     new Archer("Archer2", faction)};
                                 Armored[] armoredK = null;
@@ -212,6 +213,8 @@ public class Army {
                 }
 			}
 	}
+
+    // Setter e Getter
 	private void setInfantry(Infantry[] i) {
 		this.infantry = i;
 	}

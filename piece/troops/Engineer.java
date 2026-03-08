@@ -10,6 +10,7 @@ public class Engineer extends Troops {
         super(name, 20, 10, 1, 1, 2, faction);
     }
 
+    /* Ricarico la macchina da assedio selezionata */
     public void rechargeSiegeMachine(int machineX, int machineY, Battlefield field) throws MyException{
         // controlla la posizione della macchina da assedio
         if (field.getUnit(machineX, machineY) instanceof SiegeMachines) {
@@ -32,11 +33,4 @@ public class Engineer extends Troops {
             throw new MyException("macchina da assedio non selezionata");
         }
     }
-        
-
-        @SuppressWarnings("unused")
-	private boolean hasEngineer() {
-	    return false;
-	}
-    
 }

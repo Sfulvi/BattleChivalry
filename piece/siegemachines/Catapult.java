@@ -12,6 +12,8 @@ public class Catapult extends SiegeMachines {
 
     }
 
+	/* La funzione d'attacco per la catapulta e' differente dalle altre macchine d'assedio.
+	 * Attorno al punto di attacco verranno inflitti anche la meta' del danno diretto del colpo */
     @Override
     public void attack(int targetX, int targetY, Battlefield field) throws MyException {
 		Units targetUnit = field.getUnit(targetX, targetY);
@@ -21,12 +23,12 @@ public class Catapult extends SiegeMachines {
             throw new MyException("Non puoi colpire quella zona");
             
         if(targetUnit == null) 
-            /* Errore: La zona é vuota */
+            /* Errore: La zona e' vuota */
             throw new MyException("La zona é vuota");
 
         if(targetUnit.isHost() == getFaction())
-            /* Errore: "Il fuoco amico non sará tollerato" */
-            throw new MyException("Il fuoco amico non sará tollerato");
+            /* Errore: "Il fuoco amico non e' permesso" */
+            throw new MyException("Il fuoco amico non e' permesso");
 
         if(getHasAttacked()==true || hasEngineer(field)==false)
             /* Errore: La macchina da assedio sta ricaricando */

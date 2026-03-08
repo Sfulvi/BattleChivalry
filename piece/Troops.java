@@ -259,6 +259,19 @@ public abstract class Troops implements Units{
         setStamina(maxStamina);
     }
 
+    /* Funzione di posizionamento truppa nel campo di battaglia */
+    @Override
+    public void place(Units[][] battlefield, int y, int x){
+        java.util.Optional.of(this)
+            .map(u -> u)
+            .ifPresent(t -> {
+                t.setX(x);
+                t.setY(y);
+            });
+
+        battlefield[y][x] = this;
+    }
+
     /* Usato per test */
     @Override
     public String toString(){

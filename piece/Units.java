@@ -4,31 +4,19 @@ import game.Battlefield;
 import game.MyException;
 
 public interface Units {
-    
+    /* Funzione di movimento dell'entita' */
     public void move(Battlefield position, int orientation)throws MyException;
+    /* Funzione di attacco dell'entita' */
     public void attack(int targetX, int targetY, Battlefield field)throws MyException;
+    /* Funzione che si infligge il danno subito da un attacco */
     public void attacked(int damage);
+    /* Funzione che mostra se e' di Player1 */
     public boolean isHost();
+    /* Funzione che ritorna se l'entita' e' in vita */
     public boolean isAlive();
+    /* Funzione di ricarica stamina */
     public void recharge();
 
-    public default void place(Units[][] battlefield, int y, int x) {
-        java.util.Optional.of(this)
-            .filter(u -> u instanceof Troops)
-            .map(u -> (Troops) u)
-            .ifPresent(t -> {
-                t.setX(x);
-                t.setY(y);
-            });
-
-        java.util.Optional.of(this)
-            .filter(u -> u instanceof SiegeMachines)
-            .map(u -> (SiegeMachines) u)
-            .ifPresent(s -> {
-                s.setX(x);
-                s.setY(y);
-            });
-        
-        battlefield[y][x] = this;
-    }
+    /* Funzione di posizionamento entita' nel campo di battaglia */
+    public void place(Units[][] battlefield, int y, int x);
 }

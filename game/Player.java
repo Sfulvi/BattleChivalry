@@ -4,12 +4,12 @@ import piece.Generals;
 
 public class Player {
     
-    public static final int MAX_AP = 7;
+    public static final int MAX_AP = 7; /* Azioni massime che si possono effettuare ogni turno */
     
-    private String name;
-    public final boolean isHost;
-    private Generals general;
-    private int apDone;
+    private String name;             /* Nome del giocatore */
+    public final boolean isHost;     /* Player1 o Player2 */
+    private Generals general;        /* Generale scelto */
+    private int apDone;              /* Azioni effettuate nel turno corrente */
     
     //costruttore
     public Player(String name, boolean host, int apDone, Generals general) {

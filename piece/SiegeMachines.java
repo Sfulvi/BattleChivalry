@@ -154,4 +154,16 @@ public abstract class SiegeMachines implements Units{
         return true;
     }
 
+    /* Funzione di posizionamento macchina d'assedio nel campo di battaglia */
+    @Override
+    public void place(Units[][] battlefield, int y, int x){
+        java.util.Optional.of(this)
+            .map(u -> u)
+            .ifPresent(s -> {
+                s.setX(x);
+                s.setY(y);
+            });
+        
+        battlefield[y][x] = this;
+    }
 }

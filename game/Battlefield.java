@@ -17,6 +17,7 @@ public class Battlefield {
     	this.battlefield = new Units[Y][X];
 	}
 
+    // Getter
 	public int getX() {
         	return X;
 	}
@@ -29,7 +30,7 @@ public class Battlefield {
 		return this.battlefield;
 	}
     
-	//metodo che schiera le unità in base al generale scelto
+	/* Metodo che schiera le unità in base al generale scelto */
 	public void deploy(Player player) {
 
         Cannon[] cannons;
@@ -353,14 +354,18 @@ public class Battlefield {
         }
     }
 
+    /* Funzione che preleva un unita' */
 	public Units getUnit(int x, int y){
 		
 		return this.battlefield[y][x];
 	}
+
+    /* Funzione che rimuove un unita' */
 	public void removeUnit(int x, int y){
 		this.battlefield[y][x]=null;
 	}
 
+    /* toString per test */
     @Override
 	public String toString(){
 		String s="";
