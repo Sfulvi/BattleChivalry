@@ -4,14 +4,14 @@ import game.Battlefield;
 import game.MyException;
 
 public abstract class Troops implements Units{
-    private final String name;               /* Nome unita */
+    private final String name;               /* Nome unita' */
     private int hp;                          /* Punti ferita */
     private final int atk;                   /* Valore di attacco */
     private final int range;                 /* Distanza attacco */
-    private final int mov;                   /* Distanza di movimento dell'unita */
-    private int stamina;                     /* Numero di mosse rimanenti di questa unita */
-    private final int maxStamina;            /* Numero massimo di movimenti per turno di questa unita */
-    private boolean hasAttacked;             /* Flag che mostra se questa unita ha attaccato durante il turno */
+    private final int mov;                   /* Distanza di movimento dell'unita' */
+    private int stamina;                     /* Numero di mosse rimanenti di questa unita' */
+    private final int maxStamina;            /* Numero massimo di movimenti per turno di questa unita' */
+    private boolean hasAttacked;             /* Flag che mostra se questa unita' ha attaccato durante il turno */
     private int x;                           /* Coordinata X */
     private int y;                           /* Coordinata Y */
     private final boolean faction;           /* Flag che determina la fazione e quindi se si tratta di Player1 o Player2 */
@@ -29,13 +29,13 @@ public abstract class Troops implements Units{
         this.faction = faction;
     }
     
-    /* Funzione che restituisce vero se l'unita e' ancora in vita */
+    /* Funzione che restituisce vero se l'unita' e' ancora in vita */
     @Override
     public boolean isAlive() {
         return hp > 0;
     }
     
-    /* Funzione che restituisce vero se l'unita appartiene a Player1 */
+    /* Funzione che restituisce vero se l'unita' appartiene a Player1 */
     @Override
     public boolean isHost() {
 		return faction;
@@ -100,27 +100,27 @@ public abstract class Troops implements Units{
     public void attack(int targetX, int targetY, Battlefield field) throws MyException{
         Units targetUnit = field.getUnit(targetX, targetY);
 
-        // verifica se l'unità ha stamina
+        // verifica se l'unita' ha stamina
         if(getStamina() == 0)
             // errore: Stamina esaurita
             throw new MyException("stamina esaurita");
 
-        // verifica se l'unità ha già attaccato
+        // verifica se l'unita' ha gia' attaccato
         if (getHasAttacked())
-            // errore: unità ha già attaccato
-            throw new MyException("questa unità ha già attaccato");
+            // errore: unita' ha gia' attaccato
+            throw new MyException("questa unita' ha già attaccato");
 
-        // verifica se il bersaglio è nel range
+        // verifica se il bersaglio e' nel range
         if (!isInRange(targetX, targetY))
             // errore: Cella fuori portata
             throw new MyException("bersaglio fuori portata");
 
-        // verifica presenza di un'unità
+        // verifica presenza di un'unita'
         if (targetUnit == null)
             // errore: Cella vuota
             throw new MyException("cella bersaglio vuota");
 
-        //verifica se il bersaglio è un alleato
+        //verifica se il bersaglio e' un alleato
         if (targetUnit.isHost() == this.isHost())
             // errore: Bersaglio alleato
             throw new MyException("bersaglio alleato");
@@ -131,7 +131,7 @@ public abstract class Troops implements Units{
 		
         //l'attacco ha successo
         targetUnit.attacked(getAtk());
-        // rimuovo se il bersaglio è morto
+        // rimuovo se il bersaglio e' morto
         if(targetUnit.isAlive() == false)
             field.removeUnit(targetX, targetY);
 
@@ -194,14 +194,14 @@ public abstract class Troops implements Units{
             }
         }
     
-        // verifica se la nuova posizione è valida
+        // verifica se la nuova posizione e' valida
         if (isValidMove(newX, newY, field)) {
             // valori nella truppa
             setX(newX);                                     
             setY(newY);
 
             Units[][] battlefield = field.getBattlefield();
-            // sposto l'unità nella nuova posizione
+            // sposto l'unita' nella nuova posizione
             battlefield[newY][newX] = this;   
             // aggiorno la vecchia posizione a null
             battlefield[currentY][currentX] = null;
@@ -219,7 +219,7 @@ public abstract class Troops implements Units{
     /* Funzione che calcola la distanza tra due punti */
     private int calculateDistance(int x1, int y1, int x2, int y2) {
         /* visto che il movimento diagonale vale come 1 casella,
-        la distanza fra due punti è la differenza maggiore fra le X e le Y */
+        la distanza fra due punti e' la differenza maggiore fra le X e le Y */
         int disX = Math.abs(x1-x2);
         int disY = Math.abs(y1-y2);
         int distance = Math.max(disX, disY);
@@ -227,7 +227,7 @@ public abstract class Troops implements Units{
         return distance;
     }
 
-    /* Funzione che calcola se l'obiettivo selezionato è a portata dell'attaccante */
+    /* Funzione che calcola se l'obiettivo selezionato e' a portata dell'attaccante */
     private boolean isInRange(int targetX, int targetY) {
         int distance = calculateDistance(getX(), getY(), targetX, targetY);
         return distance <= getRange();
