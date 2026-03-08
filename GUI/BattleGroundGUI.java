@@ -10,29 +10,31 @@ import java.util.Map;
 import game.Battlefield;
 import game.Game;
 import game.Player;
+import piece.SiegeMachines;
 import piece.Troops;
 import piece.Units;
 
 public class BattleGroundGUI {
     
     private Battlefield battlefield;
-    private String general1;
-    private String general2;
-    private int player1AP;
-    private int player2AP;
 
+    private String general1, general2;
+    private Player player1, player2;
+
+    private JFrame game;
+    
     private JPanel selectedCell = null;
     private JPanel gameGrid;
     private JPanel leftSide;
 
-    private JLabel unitName, unitHp, unitStamina, unitRange, unitAtk, unitMov, unitAC;
+    private JLabel unitName, unitHp, unitStamina, unitRange, unitAtk, unitMov, unitStandby, activePlayer, playerAPLabel;
 
     public BattleGroundGUI(Battlefield battlefield, String general1, String general2, Player player1, Player player2, Game controller) {
         this.battlefield = battlefield;
         this.general1 = general1;
         this.general2 = general2;
-        this.player1AP = player1.getApDone();
-        this.player2AP = player2.getApDone();
+        this.player1 = player1;
+        this.player2 = player2;
         initializeBgGUI(battlefield, controller);
     }
 
@@ -183,7 +185,7 @@ private void initializeBgGUI(Battlefield battlefield, Game controller) {
     ImageIcon turnIcon     = images.get("hourglass");
 
 
-    JFrame game = new JFrame("Battle Ground"); //tutta la finestra
+    game = new JFrame("Battle Ground"); //tutta la finestra
     game.setLayout(new BorderLayout());
 
     int cellSize = 70;
@@ -299,13 +301,16 @@ private void initializeBgGUI(Battlefield battlefield, Game controller) {
     unitAtk = new JLabel("Attack: ");
         unitAtk.setPreferredSize(statsLabelsDimension);
         unitAtk.setFont(statsTitle.getFont().deriveFont(0, 20));
-    unitMov = new JLabel("Movement:");
+    unitMov = new JLabel("Movement: ");
         unitMov.setPreferredSize(statsLabelsDimension);
         unitMov.setFont(statsTitle.getFont().deriveFont(0, 20));
-    unitAC = new JLabel("Action cost: ");
-        unitAC.setPreferredSize(statsLabelsDimension);
-        unitAC.setFont(statsTitle.getFont().deriveFont(0, 20));
-    JLabel playerAPLabel = new JLabel("Action Points left: " + player1AP + "     ");
+    unitStandby = new JLabel("Standby: ");
+        unitStandby.setPreferredSize(statsLabelsDimension);
+        unitStandby.setFont(statsTitle.getFont().deriveFont(0, 20));
+    activePlayer = new JLabel("Turno: " + this.player1.getName());
+        activePlayer.setPreferredSize(statsLabelsDimension);
+        activePlayer.setFont(activePlayer.getFont().deriveFont(0, 20));
+    playerAPLabel = new JLabel("Action Points left: " + this.player1.getApDone());
         playerAPLabel.setPreferredSize(statsLabelsDimension);
         playerAPLabel.setFont(playerAPLabel.getFont().deriveFont(0, 20));
 
@@ -391,11 +396,13 @@ private void initializeBgGUI(Battlefield battlefield, Game controller) {
         statsPanel.add(Box.createVerticalStrut(5));
         statsPanel.add(unitMov);
         statsPanel.add(Box.createVerticalStrut(5));
-        statsPanel.add(unitAC);
-        statsPanel.add(Box.createVerticalStrut(20));
+        statsPanel.add(unitStandby);
+        statsPanel.add(Box.createVerticalStrut(10));
         statsPanel.add(compassGrid);
-        statsPanel.add(Box.createVerticalStrut(40));
+        statsPanel.add(Box.createVerticalStrut(20));
         statsPanel.add(actionGrid);
+        statsPanel.add(Box.createVerticalStrut(10));
+        statsPanel.add(activePlayer);
         statsPanel.add(Box.createVerticalStrut(10));
         statsPanel.add(playerAPLabel);
     rightSide.add(statsPanel, BorderLayout.NORTH);
@@ -435,17 +442,51 @@ private void initializeBgGUI(Battlefield battlefield, Game controller) {
     {
         Units unit = this.battlefield.getUnit(x, y);
 
-        if (unit instanceof Troops)
+        if (unit != null)
         {
-            Troops troop = (Troops) unit;
-            
-            this.unitName.setText("Unit: " + troop.getClass().getSimpleName().toLowerCase());
-            this.unitHp.setText("HP: " + troop.getHP());
-            this.unitStamina.setText("Stamina: " + troop.getStamina());
-            this.unitRange.setText("Range: " + troop.getRange());
-            this.unitAtk.setText("Attack: " + troop.getAtk());
-            this.unitMov.setText("Movement: " + troop.getMov());
-            this.unitAC.setText("");
+            if (unit instanceof Troops)
+            {
+                Troops troop = (Troops) unit;
+                
+                this.unitName.setText("Unit: " + troop.getName());
+                this.unitHp.setText("HP: " + troop.getHP());
+                this.unitStamina.setText("Stamina: " + troop.getStamina());
+                this.unitRange.setText("Range: " + troop.getRange());
+                this.unitAtk.setText("Attack: " + troop.getAtk());
+                this.unitMov.setText("Movement: " + troop.getMov());
+            }
+            else
+            {
+                SiegeMachines siegeMachine = (SiegeMachines) unit;
+
+                this.unitName.setText("Unit: " + siegeMachine.getName());
+                this.unitAtk.setText("Attack: " + siegeMachine.getAtk());
+                this.unitStandby.setText("Standby: " + siegeMachine.getStandby());
+            }
         }
+    }
+
+    public void updateActivePlayer(boolean host)
+    {
+        if (host)
+            this.activePlayer.setText("Turno: " + this.player1.getName());
+        else
+            this.activePlayer.setText("Turno: " + this.player2.getName());
+
+        updatePlayerAP(host);
+    }
+
+    public void updatePlayerAP(boolean host)
+    {
+        if (host)
+            this.playerAPLabel.setText("Action Points left: " + this.player1.getApDone());
+        else
+            this.playerAPLabel.setText("Action Points left: " + this.player2.getApDone());
+    }
+    
+    public void closeGame()
+    {
+        this.game.dispose();
+        System.exit(0);
     }
 }
