@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 
 import GUI.BattleGroundGUI;
 import piece.SiegeMachines;
+import piece.Troops;
+import piece.Units;
 
 public class Game implements ActionListener, MouseListener {
 
@@ -42,6 +44,12 @@ public class Game implements ActionListener, MouseListener {
             // memorizza la prima casella selezionata
             x1 = (int) clicked.getClientProperty("x");
             y1 = (int) clicked.getClientProperty("y");
+
+            if (this.battlefield.getUnit(x1, y1).isHost() != this.currentPlayer)
+            {
+                JOptionPane.showMessageDialog(null, "unità avversaria");
+                resetCoordinates();
+            }
         }
         else
         {
@@ -178,6 +186,12 @@ public class Game implements ActionListener, MouseListener {
             this.player1.setApDone(MAX_AP);
         }
 
+        for (Units[] units : this.battlefield.getBattlefield())
+                for (Units unit : units)
+                    if (unit instanceof Troops)
+                        if (((Troops) unit).getFaction() == this.currentPlayer)
+                            unit.recharge();
+        
         this.gui.updateActivePlayer(currentPlayer);
     }
 
