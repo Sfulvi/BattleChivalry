@@ -257,6 +257,7 @@ public abstract class Troops implements Units{
     @Override
     public void recharge(){
         setStamina(maxStamina);
+        setHasAttacked(false);
     }
 
     /* Funzione di posizionamento truppa nel campo di battaglia */
