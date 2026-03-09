@@ -234,7 +234,7 @@ public abstract class Troops implements Units{
     }
 
     /* Funzione che conferma se l'azione di movimento e' accettabile */
-    private boolean isValidMove(int newX, int newY, Battlefield field) throws MyException {
+    protected boolean isValidMove(int newX, int newY, Battlefield field) throws MyException {
         if (newX < 0 || newX > field.getX() - 1 || newY < 0 || newY > field.getY() - 1) {
             //fuori dal campo
             throw new MyException("fuori campo di battaglia");
