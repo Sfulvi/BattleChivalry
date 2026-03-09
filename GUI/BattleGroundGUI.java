@@ -142,18 +142,6 @@ public class BattleGroundGUI {
                         //evidenzio la cella selezionata
                         cell.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                         selectedCell = cell;
-
-                        int cx = (int) cell.getClientProperty("x");
-                        int cy = (int) cell.getClientProperty("y");
-
-                        System.out.println("cell: X=" + cx + " Y=" + cy);
-
-                        if (battlefield.getUnit(cx, cy) == null) {
-                            System.out.println("No unit");
-                        } else {
-                            System.out.println("Unit: " + battlefield.getUnit(cx, cy).getClass().getSimpleName().toLowerCase());
-                        }
-
                     }
                 });
 
@@ -187,16 +175,7 @@ public class BattleGroundGUI {
         int cellSize = 70;
         gameGrid = uploadBG(battlefield, cellSize, controller);
 
-        //importazione statistiche giocatore e truppe
-        //W.I.P.
-
-        /* 
-        PlayerTest playerStats = new PlayerTest();
-        int playerAP = playerStats.getApDone();
-        //questa viene stampata nella label playerAPLabel qui sotto
-         */
-
- /* BOTTONI */
+        /* BOTTONI */
         int actionButtonsSize = 50;
         Dimension actionButtonsDimension = new Dimension(actionButtonsSize, actionButtonsSize);
         int compassButtonsSize = 55;
