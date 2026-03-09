@@ -9,9 +9,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import GUI.BattleGroundGUI;
-import piece.SiegeMachines;
 import piece.Troops;
 import piece.Units;
+import piece.troops.Engineer;
 
 public class Game implements ActionListener, MouseListener {
 
@@ -45,9 +45,9 @@ public class Game implements ActionListener, MouseListener {
             x1 = (int) clicked.getClientProperty("x");
             y1 = (int) clicked.getClientProperty("y");
 
-            if (this.battlefield.getUnit(x1, y1).isHost() != this.currentPlayer)
+            if (this.battlefield.getUnit(x1, y1) != null && this.battlefield.getUnit(x1, y1).isHost() != this.currentPlayer)
             {
-                JOptionPane.showMessageDialog(null, "unità avversaria");
+                JOptionPane.showMessageDialog(null, "not your unit");
                 resetCoordinates();
             }
         }
@@ -80,12 +80,12 @@ public class Game implements ActionListener, MouseListener {
                             // se dopo l'attacco un generale muore finisce la partita
                             if (!this.player1.getGeneral().isAlive())
                             {
-                                JOptionPane.showMessageDialog(null, "generale morto, vince " + this.player2.getName());
+                                JOptionPane.showMessageDialog(null, "general died, winner: " + this.player2.getName());
                                 this.gui.closeGame();
                             }
                             else if (!this.player2.getGeneral().isAlive())
                             {
-                                JOptionPane.showMessageDialog(null, "generale morto, vince " + this.player1.getName());
+                                JOptionPane.showMessageDialog(null, "general died, winner: " + this.player1.getName());
                                 this.gui.closeGame();
                             }
 
@@ -97,9 +97,9 @@ public class Game implements ActionListener, MouseListener {
                                 endTurn();
                         }
                         else
-                            JOptionPane.showMessageDialog(null, "cella unità vuota");
+                            JOptionPane.showMessageDialog(null, "empty cell");
                     else
-                        JOptionPane.showMessageDialog(null, "seleziona prima entrambe le caselle");
+                        JOptionPane.showMessageDialog(null, "select both cells first");
                 }
                 catch (MyException ex)
                 {
@@ -128,9 +128,9 @@ public class Game implements ActionListener, MouseListener {
                                 endTurn();
                         }
                         else
-                            JOptionPane.showMessageDialog(null, "cella unità vuota");
+                            JOptionPane.showMessageDialog(null, "empty cell");
                     else
-                        JOptionPane.showMessageDialog(null, "seleziona prima la casella e la direzione sulla bussola");
+                        JOptionPane.showMessageDialog(null, "select a cell and a direction on the compass first");
                 }
                 catch (MyException ex)
                 {
@@ -143,22 +143,33 @@ public class Game implements ActionListener, MouseListener {
             }
             case "recharge" ->
             {
-                if (this.battlefield.getUnit(x1, y1) != null)
-                    if (this.battlefield.getUnit(x1, y1) instanceof SiegeMachines)
-                    {
-                        this.battlefield.getUnit(x1, y1).recharge();
+                try
+                {
+                    if (this.x1 != -1 && this.x2 != -1)
+                        if (this.battlefield.getUnit(x1, y1) != null && this.battlefield.getUnit(x1, y1) instanceof Engineer)
+                        {
+                            // ho selezionato un ingegnere e la casella dove ricaricare
+                            ((Engineer)this.battlefield.getUnit(x1, y1)).rechargeSiegeMachine(x2, y2, battlefield);
 
-                        decreaseAP();
-                        this.gui.updatePlayerAP(this.currentPlayer);
+                            decreaseAP();
+                            this.gui.updatePlayerAP(this.currentPlayer);
 
                             if (depletedAP())
                                 endTurn();
-                    }
+                        }
+                        else
+                            JOptionPane.showMessageDialog(null, "select an engineer first");
                     else
-                        JOptionPane.showMessageDialog(null, "solo le macchine d'assedio si possono ricaricare");
-                else
-                    JOptionPane.showMessageDialog(null, "cella unità vuota");
-                resetCoordinates();
+                        JOptionPane.showMessageDialog(null, "select both cells first");
+                }
+                catch (MyException ex)
+                {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
+                finally
+                {
+                    resetCoordinates();
+                }
             }
             case "skipturn" ->
             {
