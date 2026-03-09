@@ -25,11 +25,11 @@ public class MainMenu {
 
     private static final int MAX_AP = 10;
     
-    static String selectedGeneral1, selectedGeneral2; //stringhe che passo a player
-    static String GUIselectedGeneral1, GUIselectedGeneral2; //stringhe formattate per la GUI
-    private Player player1, player2;
-    static String player1Name, player2Name; //nomi giocatori
-    static int generalsStringLength = 13;
+    private static final String selectedGeneral1, selectedGeneral2; //stringhe che passo a player
+    private static final String GUIselectedGeneral1, GUIselectedGeneral2; //stringhe formattate per la GUI
+    private static final Player player1, player2;
+    private static final String player1Name, player2Name; //nomi giocatori
+    private static final int generalsStringLength = 13;
 
     public MainMenu(Battlefield battlefield, Game controller) {
 
@@ -210,3 +210,4 @@ public class MainMenu {
         menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }
+
