@@ -106,7 +106,7 @@ public abstract class SiegeMachines implements Units{
     public void attack(int targetX, int targetY, Battlefield field) throws MyException{
         Units targetUnit = field.getUnit(targetX, targetY);
         
-        if(targetX > 12 || targetX < 2)
+        if(targetX > 12 && targetX < 2)
             /* Errore: Non puoi colpire quella zona */
             throw new MyException("You can't hit that area");
             
@@ -120,7 +120,7 @@ public abstract class SiegeMachines implements Units{
 
         if(getHasAttacked()==true)
             /* Errore: La macchina da assedio deve ricaricare */
-            throw new MyException("Already hit or does he need to reload");
+            throw new MyException("Need to reload");
 
         if (hasEngineer(field)==false) {
             /* Errore: Ingegnere non in posizione */

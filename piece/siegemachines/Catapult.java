@@ -18,7 +18,7 @@ public class Catapult extends SiegeMachines {
     public void attack(int targetX, int targetY, Battlefield field) throws MyException {
 		Units targetUnit = field.getUnit(targetX, targetY);
 
-		if(targetX > 12 || targetX < 2)
+		if(targetX > 12 && targetX < 2)
             /* Errore: Non puoi colpire quella zona */
             throw new MyException("You can't hit that area");
             
