@@ -430,8 +430,6 @@ public class BattleGroundGUI {
         gameGrid = uploadBG(battlefield, 70, controller);
         leftSide.remove(1);
         leftSide.add(gameGrid, BorderLayout.CENTER);
-        leftSide.revalidate();
-        leftSide.repaint();
     }
 
     public void showUnitStats(int x, int y) {
