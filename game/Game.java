@@ -20,47 +20,60 @@ public class Game implements ActionListener, MouseListener {
     private BattleGroundGUI gui;
     private Player player1;
     private Player player2;
-    private boolean currentPlayer;
+    private boolean currentPlayer; // giocatore attivo nel turno
 
     private int x1, y1, x2, y2, direction;
 
     public Game(Battlefield battlefield) {
 
         this.battlefield = battlefield;
-        this.currentPlayer = true;
+        this.currentPlayer = true; // inizia il giocatore 1
         resetCoordinates();
     }
 
-    // metodo per gestire il click di una cella sul campo
+    // gestisce il click di una cella sul campo
     @Override
     public void mouseClicked(MouseEvent e) {
+        
         JPanel clicked = (JPanel) e.getSource();
 
-        if (x1 == -1) {
+        if (x1 == -1)
+        {
             // memorizza la prima casella selezionata
             x1 = (int) clicked.getClientProperty("x");
             y1 = (int) clicked.getClientProperty("y");
 
-            if (this.battlefield.getUnit(x1, y1) != null && this.battlefield.getUnit(x1, y1).isHost() != this.currentPlayer) {
-                JOptionPane.showMessageDialog(null, "not your unit");
-                resetCoordinates();
+            // mostra statistiche truppa selezionata
+            this.gui.showUnitStats(x1, y1);
+
+            if (this.battlefield.getUnit(x1, y1) != null)
+            {
+                if (this.battlefield.getUnit(x1, y1).isHost() != this.currentPlayer)
+                {
+                    // ho selezionato una unità avversaria
+                    JOptionPane.showMessageDialog(null, "not your unit");
+                    resetCoordinates();
+                }
             }
+            else
+                resetCoordinates();
         } else {
             // memorizza la seconda casella selezionata
             x2 = (int) clicked.getClientProperty("x");
             y2 = (int) clicked.getClientProperty("y");
+            
             //gestione misclick per il movimento
-            if (this.battlefield.getUnit(x2, y2) != null && this.battlefield.getUnit(x2, y2).isHost() == this.currentPlayer) {
+            if (!(this.battlefield.getUnit(x1, y1) instanceof Engineer) && this.battlefield.getUnit(x2, y2) != null && this.battlefield.getUnit(x2, y2).isHost() == this.currentPlayer) {
                 x1 = x2;
                 y1 = y2;
                 x2 = y2 = -1;
+
+                this.gui.showUnitStats(x1, y1);
             }
         }
-
-        this.gui.showUnitStats(x1, y1);
     }
 
-    // metodo per gestire il click di un bottone bussola o azione
+    // gestisce il click di un bottone bussola o azione
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
@@ -68,8 +81,10 @@ public class Game implements ActionListener, MouseListener {
                 try {
                     if (this.x1 != -1 && this.x2 != -1) {
                         if (this.battlefield.getUnit(x1, y1) != null) {
+                            
                             // ho selezionato entrambe le caselle e la prima casella non è vuota
                             this.battlefield.getUnit(x1, y1).attack(x2, y2, battlefield);
+                            
                             // se dopo l'attacco un generale muore finisce la partita
                             if (!this.player1.getGeneral().isAlive()) {
                                 JOptionPane.showMessageDialog(null, "general died, winner: " + this.player2.getName());
@@ -79,8 +94,11 @@ public class Game implements ActionListener, MouseListener {
                                 this.gui.closeGame();
                             }
 
+                            if (this.battlefield.getUnit(x2, y2) == null)
+                                // se la truppa attaccata muore
+                                this.gui.updateGUI(this);
+
                             decreaseAP();
-                            this.gui.updateGUI(this);
                             this.gui.updatePlayerAP(this.currentPlayer);
 
                             if (depletedAP()) {
@@ -160,7 +178,10 @@ public class Game implements ActionListener, MouseListener {
         }
     }
 
+    // passa il turno all'altro giocatore
     private void endTurn() {
+        
+        // cambia giocatore attivo e resetta i suoi action point
         if (this.currentPlayer) {
             this.currentPlayer = false;
             this.player2.setApDone(MAX_AP);
@@ -169,6 +190,7 @@ public class Game implements ActionListener, MouseListener {
             this.player1.setApDone(MAX_AP);
         }
 
+        // resetta la stamina delle truppe del giocatore attivo
         for (Units[] units : this.battlefield.getBattlefield()) {
             for (Units unit : units) {
                 if (unit instanceof Troops) {
@@ -182,6 +204,7 @@ public class Game implements ActionListener, MouseListener {
         this.gui.updateActivePlayer(currentPlayer);
     }
 
+    // diminuisce gli action point di un giocatore a seguito di una mossa
     private void decreaseAP() {
         if (currentPlayer) {
             player1.setApDone(player1.getApDone() - 1);
@@ -190,6 +213,7 @@ public class Game implements ActionListener, MouseListener {
         }
     }
 
+    // controlla se il giocatore ha ancora mosse a disposizione nel turno corrente
     private boolean depletedAP() {
         if (currentPlayer) {
             return player1.getApDone() == 0;
@@ -198,14 +222,17 @@ public class Game implements ActionListener, MouseListener {
         }
     }
 
+    // resetta le coordinate delle celle cliccate
     private void resetCoordinates() {
         this.x1 = this.x2 = this.y1 = this.y2 = this.direction = -1;
     }
 
+    // collega controller alla gui
     public void setGUI(BattleGroundGUI gui) {
         this.gui = gui;
     }
 
+    // collega controller ai giocatori
     public void setPlayers(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
