@@ -15,6 +15,7 @@ public class Cavalry extends Troops {
 	    return false;
 	}
     
+    /* Aggiornamento di move per ridurre gli stalli */
     @Override
     public void move(Battlefield field, int direction) throws MyException{
         int currentX = getX();
