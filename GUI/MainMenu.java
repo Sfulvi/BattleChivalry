@@ -25,10 +25,10 @@ public class MainMenu {
 
     private static final int MAX_AP = 10;
     
-    private static final String selectedGeneral1, selectedGeneral2; //stringhe che passo a player
-    private static final String GUIselectedGeneral1, GUIselectedGeneral2; //stringhe formattate per la GUI
-    private static final Player player1, player2;
-    private static final String player1Name, player2Name; //nomi giocatori
+    private static String selectedGeneral1, selectedGeneral2; //stringhe che passo a player
+    private static String GUIselectedGeneral1, GUIselectedGeneral2; //stringhe formattate per la GUI
+    private static Player player1, player2;
+    private static String player1Name, player2Name; //nomi giocatori
     private static final int generalsStringLength = 13;
 
     public MainMenu(Battlefield battlefield, Game controller) {
