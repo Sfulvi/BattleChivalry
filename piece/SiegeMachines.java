@@ -95,7 +95,7 @@ public abstract class SiegeMachines implements Units{
     @Override
     public void move(Battlefield position, int orientation) throws MyException {
         // Le macchine da assedio non si muovono
-        throw new MyException("Questa unità non può muoversi");
+        throw new MyException("This unit cannot move");
 
     }
 
@@ -108,23 +108,23 @@ public abstract class SiegeMachines implements Units{
         
         if(targetX > 12 || targetX < 2)
             /* Errore: Non puoi colpire quella zona */
-            throw new MyException("Non puoi colpire quella zona");
+            throw new MyException("You can't hit that area");
             
         if(targetUnit == null) 
             /* Errore: La zona e' vuota */
-            throw new MyException("Zona bersaglio vuota");
+            throw new MyException("Empty target");
 
         if(targetUnit.isHost() == getFaction())
             /* Errore: "Il fuoco amico non e' permesso" */
-            throw new MyException("Il fuoco amico non e' permesso");
+            throw new MyException("Friendly fire is not allowed");
 
         if(getHasAttacked()==true)
             /* Errore: La macchina da assedio deve ricaricare */
-            throw new MyException("Ha gia' colpito o deve ricaricare");
+            throw new MyException("Already hit or does he need to reload");
 
         if (hasEngineer(field)==false) {
             /* Errore: Ingegnere non in posizione */
-            throw new MyException("Ingegnere non in posizione");
+            throw new MyException("Engineer not in position");
         }
         
         

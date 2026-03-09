@@ -103,31 +103,31 @@ public abstract class Troops implements Units{
         // verifica se l'unita' ha stamina
         if(getStamina() == 0)
             // errore: Stamina esaurita
-            throw new MyException("stamina esaurita");
+            throw new MyException("Stamina ended");
 
         // verifica se l'unita' ha gia' attaccato
         if (getHasAttacked())
             // errore: unita' ha gia' attaccato
-            throw new MyException("questa unita' ha già attaccato");
+            throw new MyException("This unit has already attacked");
 
         // verifica se il bersaglio e' nel range
         if (!isInRange(targetX, targetY))
             // errore: Cella fuori portata
-            throw new MyException("bersaglio fuori portata");
+            throw new MyException("Target out of range");
 
         // verifica presenza di un'unita'
         if (targetUnit == null)
             // errore: Cella vuota
-            throw new MyException("cella bersaglio vuota");
+            throw new MyException("Empty target");
 
         //verifica se il bersaglio e' un alleato
         if (targetUnit.isHost() == this.isHost())
             // errore: Bersaglio alleato
-            throw new MyException("bersaglio alleato");
+            throw new MyException("The target is an ally");
 
         if(field.getUnit(targetX, targetY) instanceof SiegeMachines)
 			// errore: Obiettivo non bersagliabile
-			throw new MyException("obiettivo non bersagliabile");
+			throw new MyException("untargetable target");
 		
         //l'attacco ha successo
         targetUnit.attacked(getAtk());
@@ -237,15 +237,15 @@ public abstract class Troops implements Units{
     protected boolean isValidMove(int newX, int newY, Battlefield field) throws MyException {
         if (newX < 0 || newX > field.getX() - 1 || newY < 0 || newY > field.getY() - 1) {
             //fuori dal campo
-            throw new MyException("fuori campo di battaglia");
+            throw new MyException("Off the battlefield");
             
         } else if (field.getUnit(newX, newY) != null) {
             //casella occupata
-            throw new MyException("cella occupata");
+            throw new MyException("Occupied cell");
 
         } else if (getStamina() == 0) {
             //stamina esaurita
-            throw new MyException("stamina esaurita");
+            throw new MyException("Stamina ended");
 
         } else {
             //tutto ok
@@ -273,6 +273,11 @@ public abstract class Troops implements Units{
         battlefield[y][x] = this;
     }
 
+    @SuppressWarnings("unused")
+	private boolean hasEngineer() {
+	    return false;
+	}
+    
     /* Usato per test */
     @Override
     public String toString(){

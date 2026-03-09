@@ -19,18 +19,18 @@ public class Engineer extends Troops {
             
             if (machine.getHasAttacked() == false) {
                 // controllo se la macchina è già carica
-                throw new MyException("macchina da assedio gia carica");
+                throw new MyException("Siege machine already loaded");
 
             } else if (getStamina() <= 0) {
                 // controllo se l'ingegnere ha stamina
-                throw new MyException("ingegnere senza stamina");
+                throw new MyException("Engineer without stamina");
             } else {
                 machine.recharge();
                 setStamina(getStamina()-1);
                 // tutto ok, ricarica
             }
         }else{
-            throw new MyException("macchina da assedio non selezionata");
+            throw new MyException("Unselected siege machine");
         }
     }
 }

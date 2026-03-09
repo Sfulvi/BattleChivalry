@@ -10,11 +10,6 @@ public class Cavalry extends Troops {
         super(name, 120, 50, 1, 2,  2, faction);	
     }
     
-        @SuppressWarnings("unused")
-	private boolean hasEngineer() {
-	    return false;
-	}
-    
     /* Aggiornamento di move per ridurre gli stalli */
     @Override
     public void move(Battlefield field, int direction) throws MyException{

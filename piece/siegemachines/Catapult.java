@@ -20,19 +20,24 @@ public class Catapult extends SiegeMachines {
 
 		if(targetX > 12 || targetX < 2)
             /* Errore: Non puoi colpire quella zona */
-            throw new MyException("Non puoi colpire quella zona");
+            throw new MyException("You can't hit that area");
             
         if(targetUnit == null) 
             /* Errore: La zona e' vuota */
-            throw new MyException("La zona é vuota");
+            throw new MyException("Empty target");
 
         if(targetUnit.isHost() == getFaction())
             /* Errore: "Il fuoco amico non e' permesso" */
-            throw new MyException("Il fuoco amico non e' permesso");
+            throw new MyException("Friendly fire is not allowed");
 
         if(getHasAttacked()==true || hasEngineer(field)==false)
             /* Errore: La macchina da assedio sta ricaricando */
-            throw new MyException("La macchina da assedio sta ricaricando");
+            throw new MyException("Already hit or does he need to reload");
+
+		if (hasEngineer(field)==false) {
+            /* Errore: Ingegnere non in posizione */
+            throw new MyException("Engineer not in position");
+        }
 			
 			
 		/* eseguo l'attacco*/
@@ -76,11 +81,6 @@ public class Catapult extends SiegeMachines {
 		}
 
 		setHasAttacked(true);		
-	}
-
-    @Override
-	public boolean hasEngineer(Battlefield field) {
-		return super.hasEngineer(field);
 	}
     
 }
